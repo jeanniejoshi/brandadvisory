@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeannie Joshi · Brand Advisory</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    /* WGSN Elemental palette */
+    --ink: #2A4A45;
+    --ink-2: #3E6F68;
+    --ink-3: #4F84A6;
+    --ink-4: #6F9090;
+    --paper: #FFFFFF;
+    --paper-2: #F7F4F5;
+    --rule: #E8E0E5;
+    --accent: #B5706A;
+    --accent2: #DDBDBA;
+    --gold: #C4A43A;
+    --warm: #FBF7F6;
+    --rose-t: #FBF3F2;
+    --ice-t: #F7F4F5;
+    --blue-t: #F3F7FA;
+    --industry: #2A4A45;
+    --industry-bg: #F8FAFA;
+    --academia: #4F84A6;
+    --academia-bg: #F3F7FA;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'Outfit', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* ============== HERO ============== */
+  .hero {
+    padding: 3rem 0 0;
+    margin-bottom: 0;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  .hero-eyebrow span,
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .hero-positioning {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-bio {
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-supporting {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-3);
+    letter-spacing: 0;
+    line-height: 1.65;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ============== SECTION ============== */
+  .section {
+    padding: 3rem 0;
+    margin: 0;
+  }
+
+  .section + .section {
+    border-top: 1px solid var(--rule);
+  }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ============== OPENING QUESTIONS ============== */
+  .questions-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .question-row {
+    display: grid;
+    grid-template-columns: 24px 100px 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.5rem 0;
+  }
+
+  .q-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .q-label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 400;
+  }
+
+  .q-text {
+    font-family: var(--serif);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  /* ============== CAREER FLOW ============== */
+  .legend { display: flex; gap: 24px; margin-bottom: 24px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--ink-3); letter-spacing: 0.5px; }
+  .legend-swatch { width: 20px; height: 4px; }
+  .legend-swatch.ind { background: var(--industry); }
+  .legend-swatch.aca { background: var(--academia); }
+
+  .composition {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+  }
+  .arrow { display: flex; align-items: center; justify-content: center; width: 24px; flex-shrink: 0; color: var(--ink-3); font-size: 16px; }
+
+  .chapter {
+    border: 2px solid var(--industry);
+    background: var(--industry-bg);
+    padding: 14px 12px;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .chapter .entity { font-family: var(--serif); font-size: 14px; font-weight: 400; letter-spacing: -0.3px; line-height: 1.2; }
+  .chapter .role { font-size: 9.5px; color: var(--ink-3); margin-top: 4px; line-height: 1.4; }
+  .current-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.85rem;
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .current-mark::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .current-mark-text {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: inherit;
+    line-height: inherit;
+  }
+
+  .academic-stack { display: flex; flex-direction: column; gap: 3px; flex: 1 1 0; min-width: 0; }
+  .academic {
+    border: 1px solid var(--academia);
+    background: var(--academia-bg);
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative;
+  }
+  .academic .entity { font-family: var(--serif); font-weight: 400; letter-spacing: -0.2px; line-height: 1.2; color: var(--ink); }
+  .academic .role { color: var(--ink-3); margin-top: 2px; line-height: 1.4; }
+  .academic .programs { margin-top: 4px; }
+  .academic .prog { font-size: 8px; color: var(--academia); line-height: 1.4; letter-spacing: 0.2px; }
+
+  .pratt { flex: 1; padding: 10px 10px; }
+  .pratt .entity { font-size: 11.5px; }
+  .pratt .role { font-size: 8.5px; }
+
+  .cuny { flex: 0 0 auto; padding: 4px 10px; }
+  .cuny .entity { font-size: 9px; line-height: 1.3; }
+  .cuny .role { font-size: 7px; }
+
+  .concurrent-end { display: flex; flex-direction: column; gap: 3px; flex: 1 1 0; min-width: 0; }
+  .concurrent-end .chapter { flex: 1; }
+  .concurrent-end .academic { padding: 5px 10px; }
+  .concurrent-end .academic .entity { font-size: 9.5px; }
+  .concurrent-end .academic .role { font-size: 7.5px; }
+
+  /* ============== GATEWAY CARDS (LEADERSHIP) ============== */
+  .gateways {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 1.5rem;
+  }
+
+  .gateways-4 {
+    grid-template-columns: 1fr 1fr 2fr;
+  }
+
+  .gateway-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    background: var(--rule);
+    gap: 1px;
+    position: relative;
+  }
+
+  .gateway-paired {
+    grid-row: 1;
+    background: var(--white, #FFFFFF);
+  }
+
+  .gateway-paired:nth-child(1) { grid-column: 1; }
+  .gateway-paired:nth-child(2) { grid-column: 2; }
+
+  .gateway-pair::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 1rem;
+    bottom: 3.5rem;
+    border-left: 1px dashed var(--accent);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .gateway-pair-link {
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    background: var(--white, #FFFFFF);
+    padding: 0.85rem 1.25rem 1.25rem;
+    text-align: center;
+    border-top: 0.5px solid var(--rule);
+  }
+
+  .gateway-pair-link a {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .gateway-pair-link a:hover {
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+  }
+
+  .gateway {
+    background: var(--white, #FFFFFF);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .gateway:hover {
+    background: var(--rose-t);
+  }
+
+  .gateway-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.7rem;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .gateway-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .gateway-kind {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+
+  .gateway-body {
+    font-size: 0.78rem;
+    line-height: 1.7;
+    color: var(--ink-2);
+    margin-bottom: 1rem;
+    flex-grow: 1;
+  }
+
+  .gateway-link {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ============== BRAND CARDS UNDER CAREER FLOW ============== */
+  .brands-zone {
+    display: flex;
+    gap: 0;
+    margin-top: 0;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .brands-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .brands-spacer {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .brands-arrow {
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  .brands-connector { width: 1px; height: 16px; background: var(--ink-3); }
+  .brands-grid { display: grid; gap: 3px; width: 100%; }
+  .brands-grid.g2 { grid-template-columns: repeat(2, 1fr); }
+  .brands-grid.g3 { grid-template-columns: repeat(3, 1fr); }
+  .brands-grid.g1 { grid-template-columns: 1fr; }
+
+  .brand-tile {
+    background: #d9d4c8;
+    padding: 8px 6px;
+    font-size: 9px;
+    color: var(--ink-2);
+    text-align: center;
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+  }
+
+  .brand-tile .brand-name { display: block; font-weight: 500; }
+  .brand-tile .brand-note { display: block; font-size: 8px; color: var(--ink-3); margin-top: 2px; font-style: italic; }
+
+  .loreal-parent {
+    background: #d9d4c8;
+    padding: 6px 4px 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    grid-column: span 3;
+  }
+  .loreal-parent .lp-name {
+    font-size: 9.5px; font-weight: 500; text-align: center;
+    color: var(--ink); padding: 2px 0; letter-spacing: 0.3px;
+  }
+  .loreal-children { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .loreal-child {
+    background: var(--paper);
+    padding: 5px 3px;
+    font-size: 8px;
+    color: var(--ink-3);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .brand-tile.acquired {
+    background: #f5edda;
+    border: 1.5px solid var(--gold);
+  }
+  .brand-tile.acquired .star {
+    color: var(--gold);
+    font-size: 11px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .brand-tile.acquired .acq-label {
+    font-size: 7px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    display: block;
+  }
+
+  /* ============== THE LATEST — sub-sections ============== */
+  .latest-sub {
+    margin-top: 1.5rem;
+  }
+
+  .latest-sub + .latest-sub {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* AI Horizons — editorial register */
+  .sub-eyebrow-serif {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+    letter-spacing: 0;
+  }
+
+  .sub-intro {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink-2);
+    line-height: 1.8;
+    margin: 0 0 1.5rem;
+    max-width: 72ch;
+  }
+
+  /* Current Projects — operational register */
+  .sub-eyebrow-sans {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+  }
+
+  .sub-frame {
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    line-height: 1.75;
+    margin: 0 0 1.5rem;
+    max-width: 72ch;
+  }
+
+  /* Smaller label for nested project lists inside Current focus */
+  .sub-list-label {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0 0 0.5rem;
+  }
+
+  /* Bulleted engagement-types list inside Current focus */
+  .focus-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    max-width: 72ch;
+  }
+
+  .focus-list li {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    line-height: 1.65;
+    padding: 0.35rem 0 0.35rem 1.4rem;
+    position: relative;
+  }
+
+  .focus-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85rem;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* POC method note — closing line inside Current focus */
+  .focus-method {
+    font-family: var(--sans);
+    font-size: 0.92rem;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 72ch;
+    margin: 0.5rem 0 0;
+    padding: 0.85rem 0 0.85rem 1.4rem;
+    border-left: 2px solid var(--accent);
+    margin-left: 0.1rem;
+  }
+
+  .focus-method strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Applied methods list — same dot pattern, method names emphasized */
+  .methods-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    max-width: 72ch;
+  }
+
+  .methods-list li {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    line-height: 1.65;
+    padding: 0.35rem 0 0.35rem 1.4rem;
+    position: relative;
+  }
+
+  .methods-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.85rem;
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .methods-list strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* ============== THE LATEST ============== */
+  .latest-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  .latest-row {
+    display: grid;
+    grid-template-columns: minmax(140px, 180px) 1fr minmax(100px, 130px);
+    gap: 1.75rem;
+    align-items: baseline;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .latest-row:first-child {
+    border-top: 1px solid var(--rule);
+  }
+
+  .latest-row:last-child {
+    border-bottom: none;
+  }
+
+  .latest-name {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .latest-desc {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+
+  .latest-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+
+  .latest-status {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .latest-year {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    color: var(--ink-2);
+    letter-spacing: 0.04em;
+  }
+
+  /* ============== THINKING + TEACHING TWO-COLUMN ============== */
+  .duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  .duo-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .duo-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  /* List rows — used by both Thinking and Teaching */
+  .row-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .row-list a, .row-list .row {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+
+  .row-list a:hover { background: var(--rose-t); }
+
+  .row-tag {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .row-tag.muted { color: var(--ink-2); font-weight: 600; }
+
+  .row-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .row-title em {
+    font-style: italic;
+  }
+
+  .row-meta {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    color: var(--ink-2);
+    letter-spacing: 0.04em;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .row-detail {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--ink-2);
+    margin-top: 0.25rem;
+    line-height: 1.55;
+  }
+
+  /* Current status badge for row-meta — matches current-mark pattern */
+  .row-current {
+    display: inline-block;
+    padding: 0.35em 0.7em;
+    background: var(--ink-2);
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+    vertical-align: middle;
+  }
+
+  .row-current::before {
+    content: none;
+  }
+
+  .duo-see-all {
+    margin-top: 1.25rem;
+  }
+
+  .duo-see-all a {
+    font-family: var(--sans);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 2px;
+  }
+
+  /* ============== BRAND WALL (large logo grid) ============== */
+  .brand-wall {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 1rem;
+  }
+
+  .brand-slot {
+    background: var(--paper);
+    aspect-ratio: 2.4 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    color: var(--ink-2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============== CONTACT ============== */
+  .contact {
+    padding: 3rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .contact-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .contact-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .contact-line {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .contact-line .at {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .contact-meta {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    color: var(--ink-2);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* ============== FOOTER ============== */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sans);
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    letter-spacing: 0.04em;
+  }
+
+  /* ============== PLACEHOLDER STYLE ============== */
+  .lorem {
+    color: var(--ink-3);
+    font-style: italic;
+  }
+
+  /* ============== RANGE SCOPE — preserve original chart palette ============== */
+  /* Restores the warm-paper / Fraunces system for just the career chart and
+     brand cards underneath. Variables redeclared inside this scope; the rest
+     of the page continues to use WGSN Elemental. */
+  .range-scope {
+    --ink: #1a1a1a;
+    --ink-2: #3d3d3d;
+    --ink-3: #6b6b6b;
+    --ink-4: #9a968d;
+    --paper: #f4f1ea;
+    --paper-2: #ebe7dd;
+    --rule: rgba(26,26,26,0.15);
+    --accent: #8a2a1a;
+    --gold: #b8893a;
+    --industry: #1a1a1a;
+    --industry-bg: #ebe7dd;
+    --academia: #5a7080;
+    --academia-bg: #eceef0;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Inter', -apple-system, system-ui, sans-serif;
+
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding: 3rem 2rem;
+    margin: 0 -2rem;
+  }
+
+  /* Bring the section eyebrow inside the scope back to the warm system look */
+  .range-scope .section-eyebrow {
+    color: var(--accent);
+  }
+  .range-scope .section-eyebrow::before {
+    background: var(--accent);
+  }
+
+  /* Chart current mark: inline bullet+text at top of cell, no rectangle */
+  .range-scope .current-mark {
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 4px;
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .range-scope .current-mark::before {
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+  }
+
+</style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- ============== HERO ============== -->
+    <section class="hero">
+      <div class="hero-eyebrow">Brand Advisory</div>
+      <h1 class="hero-name">Jeannie Joshi</h1>
+      <p class="hero-positioning">
+        Global Brand Strategy &amp; Innovation Leader | Creative Executive | Generative Design in Branding &amp; AI Governance | Design‑Tech Educator | Strategic Partnerships &amp; Culture
+      </p>
+      <p class="hero-bio">
+        Senior Advisor and Head of Brand specializing in brand innovation across consumer goods and healthcare. Advises leadership teams on brand strategy, portfolio positioning, and growth. Expertise includes corporate marketing in Corporate Affairs at Bristol Myers Squibb, design management at Bath &amp; Body Works, and founding a strategic design practice serving clients including L'Oréal, Godiva, and Hasbro. Methodology integrates cultural analysis, semiotics, and applied ethnography into innovation and strategy. Writes and speaks on brand strategy, AI governance, design futures, and generative AI in creative practice. Has taught as a Visiting Assistant Professor at Pratt Institute and Adjunct Lecturer at the University of Illinois Urbana-Champaign, and is a returning judge for the BeautyMatter NEXT Awards.
+      </p>
+      <p class="hero-supporting">
+        Harmonizing the analytic and creative, seeking solutions that proclaim vitality over time for the established brand and achieve maximum initial impact for a new brand.
+      </p>
+    </section>
+
+    <!-- ============== OPENING QUESTIONS ============== -->
+    <section class="section">
+      <div class="section-eyebrow">Brand Inquiry</div>
+
+      <div class="questions-list">
+
+        <div class="question-row">
+          <div class="q-num">i.</div>
+          <div class="q-label">Story</div>
+          <div class="q-text">What is the brand already telling — whether the company intends it or not?</div>
+        </div>
+
+        <div class="question-row">
+          <div class="q-num">ii.</div>
+          <div class="q-label">Behavior</div>
+          <div class="q-text">What are people doing with it, and what are they reaching for?</div>
+        </div>
+
+        <div class="question-row">
+          <div class="q-num">iii.</div>
+          <div class="q-label">Expression</div>
+          <div class="q-text">Where does the brand show up, and how does each expression carry the meaning?</div>
+        </div>
+
+        <div class="question-row">
+          <div class="q-num">iv.</div>
+          <div class="q-label">Value</div>
+          <div class="q-text">Where is the brand creating value — and where is value going uncaptured?</div>
+        </div>
+
+        <div class="question-row">
+          <div class="q-num">v.</div>
+          <div class="q-label">Move</div>
+          <div class="q-text">What is the smallest move that would change the trajectory?</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============== THE LATEST ============== -->
+    <section class="section">
+      <div class="section-eyebrow">The Latest</div>
+
+      <!-- Sub-section: AI Horizons -->
+      <div class="latest-sub">
+        <h3 class="sub-eyebrow-serif">AI Horizons</h3>
+        <p class="sub-intro">My relationship with AI is in active evolution, shaped by imagination, by innovation, and by the imperative to advance human experience. Technology earns its place in brand work when it aligns with purpose and amplifies what people live with. My practice is moving toward that.</p>
+
+        <div class="latest-list">
+
+          <div class="latest-row">
+            <div class="latest-name">Skinspan Lexicon</div>
+            <div class="latest-desc">A reading instrument for the language of skin, surfacing the meanings beneath product claims.</div>
+            <div class="latest-meta">
+              <span class="latest-status">In beta</span>
+              <span class="latest-year">2026</span>
+            </div>
+          </div>
+
+          <div class="latest-row">
+            <div class="latest-name">AI Playbook</div>
+            <div class="latest-desc lorem">A working tool for [one-line description, what it does, who it's for].</div>
+            <div class="latest-meta">
+              <span class="latest-status">In active use</span>
+              <span class="latest-year">2026</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Sub-section: Current focus -->
+      <div class="latest-sub">
+        <h3 class="sub-eyebrow-serif">Current focus</h3>
+        <p class="sub-intro">Current work centers on brand strategy, category definition, strategic partnerships, awards strategy, and building clearer systems for growth.</p>
+
+        <ul class="focus-list">
+          <li>Build or reposition a brand, offering, or category</li>
+          <li>Translate strategy across digital, retail, social, content, partnership, and AI-enabled environments</li>
+          <li>Re-evaluate brands that are ready for clearer traction and focus</li>
+          <li>Clarify how the brand should show up across platforms, teams, audiences, and tools</li>
+          <li>Turn strategy into messaging, design systems, and governance frameworks</li>
+        </ul>
+
+        <p class="focus-method"><strong>Proof of Concept (POC)</strong> — prototypes, that quickly test whether a brand, product, or experience idea carries meaning, viability, and direction before scale (often AI-enabled).</p>
+      </div>
+
+      <!-- Sub-section: Active engagements -->
+      <div class="latest-sub">
+        <h3 class="sub-eyebrow-sans">Active engagements</h3>
+
+        <div class="latest-list">
+
+          <div class="latest-row">
+            <div class="latest-name">Consumer brands</div>
+            <div class="latest-desc">Advise on positioning and brand innovation. Develop awards, partnerships, and visibility strategies to support brand growth and credibility. Scope: B2C brands with $5–20M+ in revenue.</div>
+            <div class="latest-meta">
+              <span class="latest-status">2025 — present</span>
+            </div>
+          </div>
+
+          <div class="latest-row">
+            <div class="latest-name">Nonprofit identity</div>
+            <div class="latest-desc">Organizing the brand identity of a cancer nonprofit so it can connect more clearly with supporters.</div>
+            <div class="latest-meta">
+              <span class="latest-status">In progress</span>
+              <span class="latest-year">2026</span>
+            </div>
+          </div>
+
+          <div class="latest-row">
+            <div class="latest-name">Vision validation</div>
+            <div class="latest-desc">Helping leadership test and clarify a new brand, category, and growth direction before expanded investment.</div>
+            <div class="latest-meta">
+              <span class="latest-status">In progress</span>
+              <span class="latest-year">2026</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============== CAREER FLOW ============== -->
+    <section class="section range-scope">
+      <div class="section-eyebrow">Range</div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-swatch ind"></span>Industry</div>
+        <div class="legend-item"><span class="legend-swatch aca"></span>Academia</div>
+      </div>
+      <div class="composition">
+
+        <div class="chapter">
+          <div class="entity">Bath &amp; Body Works</div>
+          <div class="role">Design Director · L Brands, Inc.</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="chapter">
+          <div class="entity">Joshi Design</div>
+          <div class="role">Founder, Visual Strategy &amp; Design Technology</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="academic-stack">
+          <div class="academic pratt">
+            <div class="entity">Pratt Institute</div>
+            <div class="role">Visiting Assistant Professor</div>
+            <div class="programs">
+              <div class="prog">MFA Cross-Disciplinary Studio</div>
+              <div class="prog">MS Design Systems</div>
+            </div>
+          </div>
+          <div class="academic cuny">
+            <div class="entity">New York City College of Technology (City Tech), CUNY</div>
+            <div class="role">Adjunct Lecturer, Undergraduate Communication Design</div>
+          </div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="chapter">
+          <div class="entity">Bristol Myers Squibb</div>
+          <div class="role">Director of Corporate Marketing, Corporate Affairs &amp; Communications</div>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="concurrent-end">
+          <div class="chapter">
+            <span class="current-mark"><span class="current-mark-text">Current</span></span>
+            <div class="entity">Ethno-Graphics</div>
+            <div class="role">Senior Advisor, Head of Brand</div>
+          </div>
+          <div class="academic">
+            <div class="entity">University of Illinois Urbana-Champaign (UIUC)</div>
+            <div class="role">Adjunct Lecturer, Design Inquiry</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Brand cards under the career flow chapters -->
+      <div class="brands-zone">
+
+        <div class="brands-col">
+          <div class="brands-connector"></div>
+          <div class="brands-grid g2">
+            <div class="brand-tile">
+              <div>
+                <span class="brand-name">Wexler</span>
+                <span class="brand-note">by Dr. Patricia Wexler, MD</span>
+              </div>
+            </div>
+            <div class="brand-tile">
+              <div>
+                <span class="brand-name">Henri Bendel</span>
+              </div>
+            </div>
+            <div class="brand-tile">
+              <div>
+                <span class="brand-name">American Girl Beauty</span>
+              </div>
+            </div>
+            <div class="brand-tile">
+              <div>
+                <span class="brand-name">Les Couvent des Minimes</span>
+                <span class="brand-note">L'Occitane private label</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brands-arrow"></div>
+
+        <div class="brands-col">
+          <div class="brands-connector"></div>
+          <div class="brands-grid g3">
+            <div class="loreal-parent">
+              <div class="lp-name">L'Oréal · 3 divisions</div>
+              <div class="loreal-children">
+                <div class="loreal-child">Luxe</div>
+                <div class="loreal-child">Consumer Products</div>
+                <div class="loreal-child">Professional · Multicultural</div>
+              </div>
+            </div>
+            <div class="brand-tile"><div><span class="brand-name">Godiva</span></div></div>
+            <div class="brand-tile"><div><span class="brand-name">Hasbro</span></div></div>
+            <div class="brand-tile"><div><span class="brand-name">J&amp;J Carefree</span></div></div>
+            <div class="brand-tile acquired">
+              <div>
+                <span class="star">★</span>
+                <span class="brand-name">L'arganique Beauté</span>
+                <span class="acq-label">founder-led · acquired</span>
+              </div>
+            </div>
+            <div class="brand-tile acquired">
+              <div>
+                <span class="star">★</span>
+                <span class="brand-name">Casabella</span>
+                <span class="acq-label">founder-led · acquired</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brands-arrow"></div>
+
+        <!-- Pratt/CUNY column above has no brand cards; empty placeholder to maintain alignment -->
+        <div class="brands-col"></div>
+
+        <div class="brands-arrow"></div>
+
+        <div class="brands-col">
+          <div class="brands-connector"></div>
+          <div class="brands-grid g1">
+            <div class="brand-tile"><div><span class="brand-name">Corporate Brand</span></div></div>
+          </div>
+        </div>
+
+        <div class="brands-arrow"></div>
+
+        <!-- Ethno+UIUC column above has no brand cards; empty placeholder -->
+        <div class="brands-col"></div>
+
+      </div>
+    </section>
+
+    <!-- ============== GATEWAY CARDS (LEADERSHIP) ============== -->
+    <section class="section">
+      <div class="section-eyebrow">Leadership</div>
+
+      <div class="gateways gateways-4">
+
+        <a href="#" class="gateway">
+          <div class="gateway-num">i.</div>
+          <h3 class="gateway-title">Senior Advisor, Head of Brand</h3>
+          <div class="gateway-kind">Ethno-Graphics</div>
+          <p class="gateway-body lorem">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <span class="current-mark"><span class="current-mark-text">Current</span></span>
+        </a>
+
+        <a href="#" class="gateway">
+          <div class="gateway-num">ii.</div>
+          <h3 class="gateway-title">Director, Corporate Marketing</h3>
+          <div class="gateway-kind">Bristol Myers Squibb</div>
+          <p class="gateway-body lorem">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+          <span class="gateway-link">Read the healthcare summary →</span>
+        </a>
+
+        <!-- Paired: Joshi Design + BBW share one consumer summary destination -->
+        <div class="gateway-pair">
+
+          <a href="#" class="gateway gateway-paired">
+            <div class="gateway-num">iii.</div>
+            <h3 class="gateway-title">Founder, Visual Strategy &amp; Design Technology Studio</h3>
+            <div class="gateway-kind">Joshi Design</div>
+            <p class="gateway-body lorem">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </a>
+
+          <a href="#" class="gateway gateway-paired">
+            <div class="gateway-num">iv.</div>
+            <h3 class="gateway-title">Design Director</h3>
+            <div class="gateway-kind">Bath &amp; Body Works · L Brands</div>
+            <p class="gateway-body lorem">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </a>
+
+          <div class="gateway-pair-link">
+            <a href="#">Read the consumer summary →</a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============== BRAND EXPERIENCE / BRAND WALL ============== -->
+    <section class="section">
+      <div class="section-eyebrow">Brand Experience</div>
+      <div class="brand-wall">
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+        <div class="brand-slot">logo</div>
+      </div>
+    </section>
+
+    <!-- ============== THINKING + TEACHING ============== -->
+    <section class="section">
+      <div class="duo">
+
+        <div class="duo-col">
+          <div class="duo-eyebrow">Thinking</div>
+          <div class="row-list">
+
+            <a href="#">
+              <span class="row-tag">Article</span>
+              <span>
+                <span class="row-title lorem">Lorem ipsum dolor sit amet, consectetur adipiscing.</span>
+                <div class="row-detail lorem">Sed do eiusmod tempor incididunt.</div>
+              </span>
+              <span class="row-meta">Modern Salon · 2026</span>
+            </a>
+
+            <a href="#">
+              <span class="row-tag">Talk</span>
+              <span>
+                <span class="row-title lorem">Sed do eiusmod tempor incididunt ut labore.</span>
+                <div class="row-detail lorem">Co-presented research and findings.</div>
+              </span>
+              <span class="row-meta">SDN Conference · 2025</span>
+            </a>
+
+            <a href="#">
+              <span class="row-tag">Essay</span>
+              <span>
+                <span class="row-title lorem">Ut enim ad minim veniam, quis nostrud.</span>
+                <div class="row-detail lorem">Field reading on a current cultural shift.</div>
+              </span>
+              <span class="row-meta">Field Notes</span>
+            </a>
+
+            <a href="#">
+              <span class="row-tag">Position</span>
+              <span>
+                <span class="row-title lorem">Duis aute irure dolor in reprehenderit voluptate.</span>
+                <div class="row-detail lorem">A short position on the matter.</div>
+              </span>
+              <span class="row-meta">2026</span>
+            </a>
+
+          </div>
+          <div class="duo-see-all">
+            <a href="#">Explore all thinking →</a>
+          </div>
+        </div>
+
+        <div class="duo-col">
+          <div class="duo-eyebrow">Teaching</div>
+          <div class="row-list">
+
+            <div class="row">
+              <span class="row-tag">UIUC</span>
+              <span>
+                <span class="row-title">University of Illinois Urbana-Champaign</span>
+                <div class="row-detail">Adjunct Lecturer · Design Inquiry</div>
+              </span>
+              <span class="row-meta"></span>
+            </div>
+
+            <div class="row">
+              <span class="row-tag muted">Pratt</span>
+              <span>
+                <span class="row-title">Pratt Institute</span>
+                <div class="row-detail">Visiting Assistant Professor · MFA Cross-Disciplinary Studio · MS Design Systems</div>
+              </span>
+              <span class="row-meta"></span>
+            </div>
+
+            <div class="row">
+              <span class="row-tag muted">CUNY</span>
+              <span>
+                <span class="row-title">New York City College of Technology (City Tech)</span>
+                <div class="row-detail">Adjunct Lecturer · Undergraduate Communication Design</div>
+              </span>
+              <span class="row-meta"></span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============== CONTACT ============== -->
+    <section class="contact">
+      <div class="contact-eyebrow">Correspondence</div>
+      <p class="contact-line">hello<span class="at">@</span>joshidesign.com</p>
+      <p class="contact-meta">New York</p>
+    </section>
+
+    <footer>
+      <span>© Jeannie Joshi</span>
+      <span>Brand Advisory</span>
+      <span>New York</span>
+    </footer>
+
+  </div>
+
+</body>
+</html>
