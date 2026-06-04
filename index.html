@@ -2278,7 +2278,6 @@
               </div>
               <iframe id="protoFrame" title="Prototype view" loading="lazy" style="display:none"></iframe>
             </div>
-            <p class="proto-note" id="protoNote" style="display:none"><a id="protoOpen" href="hpvnextsteps-prototypes-flow.html" target="_blank" rel="noopener">Open this view in a new tab &#8599;</a></p>
           </div>
 
           <!-- Gala invitation — completed live landing page (not a prototype) -->
@@ -2940,12 +2939,13 @@
         t.classList.toggle('active', j===cur);
         t.setAttribute('aria-selected', j===cur ? 'true' : 'false');
       });
-      var src = tabs[cur].getAttribute('data-src');
-      if(frame.getAttribute('src') !== src) frame.setAttribute('src', src);
-      if(openLink) openLink.setAttribute('href', src);
+      if(frame.getAttribute('data-doc') !== String(cur)){
+        var tpl = document.getElementById('protoDoc'+cur);
+        frame.setAttribute('data-doc', String(cur));
+        frame.setAttribute('srcdoc', tpl ? '<!DOCTYPE html>\n' + tpl.innerHTML : '');
+      }
       if(cover) cover.style.display = 'none';
       frame.style.display = 'block';
-      if(note) note.style.display = 'block';
       if(label) label.style.display = 'none';
       if(back) back.style.display = 'inline-block';
     }
@@ -2962,9 +2962,8 @@
       cur = -1;
       tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
       frame.style.display = 'none';
-      frame.removeAttribute('src');
+      frame.removeAttribute('src'); frame.removeAttribute('srcdoc'); frame.removeAttribute('data-doc');
       if(cover) cover.style.display = 'flex';
-      if(note) note.style.display = 'none';
       if(label) label.style.display = '';
       if(back) back.style.display = 'none';
     }
@@ -4010,6 +4009,1807 @@ body{font-family:"Proxima Nova","Open Sans","Gill Sans MT","Gill Sans",Corbel,Ar
 
 <!-- ============================== -->
 <!-- ============================== -->
+
+</template>
+<template id="protoDoc0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPV Next Steps — Product Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --sans:'Source Sans 3',-apple-system,sans-serif;
+            --serif:'Source Serif 4',Georgia,serif;
+            --p:#7B5BA6;--pd:#5C4080;--pp:#4A3366;
+            --pl:#E8E0F0;--lav:#B8A5D3;--ll:#F3EFF8;
+            --coral:#F4A27F;--peach:#FFEEE5;--coral-lt:#FDE8DC;
+            --teal:#00A5A8;--teal-dk:#0F6E56;--teal-lt:#E1F5EE;
+            --nv:#2D3E50;--ch:#1A2530;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:var(--sans);color:var(--ch);line-height:1.6;min-height:100vh;display:flex;flex-direction:column;background:#fff;}
+
+        /* BAR */
+        .bar{padding:14px 32px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #eee;}
+        .bar-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ch);}
+        .bar-mark{width:28px;height:28px;background:var(--p);border-radius:6px;}
+        .bar-name{font-size:14px;font-weight:600;}
+        .bar-sub{font-size:11px;color:#aaa;font-weight:500;text-transform:uppercase;letter-spacing:.08em;}
+
+        /* TABS */
+        .tabs{display:flex;gap:0;border-bottom:1px solid #eee;padding:0 32px;background:#fafafa;overflow-x:auto;}
+        .tab{padding:12px 20px;font-size:13px;font-weight:600;color:#aaa;cursor:pointer;border:none;background:none;font-family:var(--sans);border-bottom:2px solid transparent;white-space:nowrap;}
+        .tab:hover{color:var(--ch);}
+        .tab.on{color:var(--pd);border-bottom-color:var(--p);}
+        .pn{display:none;flex:1;} .pn.on{display:block;}
+        .wrap{max-width:620px;margin:0 auto;padding:40px 24px 60px;}
+
+        /* SHARED TYPE SCALE: 28 title, 22 question, 15 body, 14 value, 13 hint, 11 label */
+        .t28{font-size:28px;font-weight:600;line-height:1.2;letter-spacing:-.02em;}
+        .t22{font-size:22px;font-weight:600;line-height:1.25;}
+        .t15{font-size:15px;line-height:1.7;}
+        .t14{font-size:14px;}
+        .t13{font-size:13px;}
+        .t11{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;}
+        .sep{height:1px;background:#eee;margin:24px 0;}
+        .profile{font-size:13px;color:#999;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee;}
+        .rcat{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:600;margin-bottom:3px;}
+        .rhead{font-size:15px;font-weight:600;margin-bottom:4px;}
+        .rbody{font-size:14px;color:#777;line-height:1.7;}
+        .rsec{margin-bottom:16px;} .rsec:last-of-type{margin-bottom:0;}
+        .reset-btn{font-size:13px;cursor:pointer;background:none;border:none;margin-top:16px;text-decoration:underline;font-family:var(--sans);}
+
+        /* === C1: SCROLL/DATA === */
+        .c1 .t28,.c1 .rhead{font-family:var(--serif);}
+        .c1-sub{font-size:15px;color:#888;font-family:var(--serif);font-style:italic;margin-bottom:28px;}
+        .c1-prose{font-family:var(--serif);font-size:15px;line-height:2.1;margin-bottom:20px;}
+        .c1-prose b{font-weight:500;color:var(--pd);}
+        .c1-hl{background:var(--ll);padding:2px 6px;border-radius:3px;color:var(--pp);font-weight:500;}
+        .c1-ql{font-size:14px;font-weight:600;margin-bottom:8px;}
+        .c1-opts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
+        .c1-opt{padding:8px 16px;background:#f7f5fa;border:1px solid var(--pl);border-radius:6px;font-size:14px;color:#888;cursor:pointer;}
+        .c1-opt:hover{border-color:var(--lav);color:var(--pd);}
+        .c1-opt.s{background:var(--ll);border-color:var(--p);color:var(--pd);font-weight:600;}
+        .c1-note{font-size:13px;color:#bbb;font-family:var(--serif);font-style:italic;margin-bottom:20px;}
+        .c1-cta{display:block;width:100%;padding:14px;background:var(--p);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:var(--sans);cursor:pointer;margin-top:16px;}
+        .c1-cta:disabled{opacity:.25;cursor:default;}
+        .c1-res{display:none;} .c1-res.on{display:block;}
+        .c1 .rcat{color:var(--p);}
+        .c1 .reset-btn{color:var(--p);}
+        .c1-script{font-family:var(--sans);font-size:14px;background:var(--ll);padding:14px;border-left:3px solid var(--p);border-radius:0;color:var(--pp);line-height:1.6;margin-top:8px;}
+
+        /* === C2: TASK === */
+        .c2s{display:none;} .c2s.on{display:block;animation:ci .3s ease;}
+        @keyframes ci{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .c2-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+        .c2-brand{font-size:14px;font-weight:600;color:var(--teal-dk);}
+        .c2-count{font-size:28px;font-weight:700;color:var(--teal-dk);} .c2-count span{font-size:14px;color:#bbb;font-weight:400;}
+        .c2-hint{font-size:13px;color:#999;text-align:center;margin-bottom:24px;}
+        .c2-opts{display:flex;flex-direction:column;gap:8px;max-width:400px;margin:0 auto;}
+        .c2-opt{display:flex;align-items:center;gap:14px;padding:16px 20px;background:#f8faf9;border:1px solid #e0ece6;border-radius:10px;font-size:14px;cursor:pointer;}
+        .c2-opt:hover{border-color:#a0d4b8;}
+        .c2-opt.s{background:var(--teal-lt);border-color:#5DCAA5;}
+        .c2-dot{width:20px;height:20px;border:2px solid #ccc;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+        .c2-opt.s .c2-dot{border-color:var(--teal-dk);background:var(--teal-dk);}
+        .c2-opt.s .c2-dot::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%;}
+        .c2-nav{display:flex;justify-content:space-between;align-items:center;max-width:400px;margin:20px auto 0;}
+        .c2-back{font-size:13px;color:#bbb;background:none;border:none;cursor:pointer;font-family:var(--sans);}
+        .c2-next{padding:13px 32px;background:var(--teal-dk);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sans);opacity:.25;pointer-events:none;}
+        .c2-next.on{opacity:1;pointer-events:auto;}
+        .c2 .rcat{color:var(--teal-dk);}
+        .c2-action{background:#f8faf9;border:1px solid #e0ece6;border-radius:10px;padding:16px;margin-bottom:8px;}
+        .c2-ascript{background:var(--teal-lt);border-radius:8px;padding:12px;margin-top:8px;font-size:14px;color:#085041;line-height:1.6;}
+        .c2-ascript b{font-weight:600;}
+        .c2 .reset-btn{color:var(--teal-dk);}
+
+        /* === C3: WARM === */
+        .c3s{display:none;} .c3s.on{display:block;animation:ci .35s ease;}
+        .c3-welcome{text-align:center;padding:48px 24px;background:var(--coral-lt);border-radius:14px;margin-bottom:20px;}
+        .c3-wicon{width:48px;height:48px;background:var(--coral);border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;}
+        .c3-wh{font-family:var(--serif);font-size:22px;font-weight:500;color:#6b2e14;margin-bottom:10px;line-height:1.3;max-width:380px;margin-left:auto;margin-right:auto;}
+        .c3-wp{font-size:15px;color:#8b5030;line-height:1.7;max-width:360px;margin:0 auto 20px;}
+        .c3-wcta{padding:14px 40px;background:var(--coral);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sans);}
+        .c3-qcard{background:#fdf6f2;border:1px solid #f0d4c0;border-radius:14px;padding:24px;}
+        .c3-qframe{font-family:var(--serif);font-size:14px;color:var(--coral);font-style:italic;margin-bottom:12px;}
+        .c3-opts{display:flex;flex-direction:column;gap:8px;}
+        .c3-opt{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#fff;border:1px solid #f0d4c0;border-radius:10px;font-size:14px;cursor:pointer;}
+        .c3-opt:hover{border-color:var(--coral);}
+        .c3-opt.s{background:var(--coral-lt);border-color:var(--coral);}
+        .c3-radio{width:18px;height:18px;border:2px solid #d4a888;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+        .c3-opt.s .c3-radio{border-color:var(--coral);background:var(--coral);}
+        .c3-opt.s .c3-radio::after{content:'';width:7px;height:7px;background:#fff;border-radius:50%;}
+        .c3-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;}
+        .c3-back{font-size:13px;color:#ccc;background:none;border:none;cursor:pointer;font-family:var(--sans);}
+        .c3-next{padding:11px 28px;background:var(--coral);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sans);opacity:.25;pointer-events:none;}
+        .c3-next.on{opacity:1;pointer-events:auto;}
+        .c3-prog{text-align:center;font-size:13px;color:#ccc;margin-top:8px;}
+        .c3-rlead{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ch);line-height:1.7;margin-bottom:20px;}
+        .c3 .rcat{color:var(--coral);}
+        .c3 .rhead{font-family:var(--serif);}
+        .c3-rscript{background:var(--coral-lt);border-radius:10px;padding:16px;margin-top:14px;}
+        .c3-rscript-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--coral);font-weight:600;margin-bottom:4px;}
+        .c3-rscript p{font-family:var(--serif);font-size:14px;color:#6b2e14;line-height:1.6;font-style:italic;}
+        .c3 .reset-btn{color:var(--coral);}
+
+        /* === C4: EDITORIAL === */
+        .c4-dark{background:var(--pp);padding:32px;color:#fff;border-radius:12px 12px 0 0;}
+        .c4-mission{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--lav);line-height:1.8;max-width:480px;margin-bottom:24px;}
+        .c4-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;}
+        .c4-stat{padding:0 16px;} .c4-stat:first-child{padding-left:0;} .c4-stat:not(:last-child){border-right:1px solid rgba(255,255,255,.08);}
+        .c4-stat-num{font-family:var(--serif);font-size:48px;font-weight:500;line-height:1;}
+        .c4-stat-num span{font-size:22px;color:var(--lav);}
+        .c4-stat-label{font-size:11px;color:#9a85bf;line-height:1.4;margin-top:6px;}
+        .c4-body{background:var(--ll);display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:0 0 12px 12px;}
+        .c4-card-col{padding:32px 24px;display:flex;align-items:center;justify-content:center;}
+        .c4-card{background:#fff;border-radius:12px;padding:24px;width:100%;max-width:320px;border:1px solid var(--pl);}
+        .c4-card-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #f0ecf5;}
+        .c4-card-icon{width:28px;height:28px;background:var(--pd);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;}
+        .c4-card-title{font-size:14px;font-weight:600;color:var(--pp);}
+        .c4-card-title span{display:block;font-size:11px;color:var(--lav);font-weight:400;}
+        .c4-field{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:var(--ll);border-radius:6px;margin-bottom:5px;cursor:pointer;border:1px solid transparent;}
+        .c4-field:hover{border-color:var(--pl);}
+        .c4-field.active{border-color:var(--p);background:#fff;}
+        .c4-fl{font-size:13px;color:#999;}
+        .c4-fv{font-size:14px;font-weight:600;color:var(--pd);}
+        .c4-fv.empty{color:var(--lav);font-weight:400;}
+        .c4-dropdown{background:#fff;border:1px solid var(--pl);border-radius:8px;padding:6px;margin-bottom:5px;display:none;}
+        .c4-dropdown.open{display:block;}
+        .c4-dd-opt{padding:8px 12px;border-radius:4px;font-size:13px;cursor:pointer;color:#666;}
+        .c4-dd-opt:hover{background:var(--ll);color:var(--pd);}
+        .c4-dd-opt.s{background:var(--ll);color:var(--pd);font-weight:600;}
+        .c4-cta{display:block;width:100%;padding:14px;background:var(--pd);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;font-family:var(--sans);cursor:pointer;margin-top:12px;}
+        .c4-cta:disabled{opacity:.25;cursor:default;}
+        .c4-copy-col{padding:32px 24px;display:flex;flex-direction:column;justify-content:center;}
+        .c4-kicker{font-size:11px;color:var(--p);font-weight:600;text-transform:uppercase;letter-spacing:.15em;margin-bottom:8px;}
+        .c4-headline{font-family:var(--serif);font-size:28px;font-weight:500;color:var(--pp);line-height:1.15;margin-bottom:10px;}
+        .c4-desc{font-size:15px;color:#777;line-height:1.7;margin-bottom:20px;}
+        .c4-steps{display:flex;flex-direction:column;gap:8px;}
+        .c4-step{display:flex;align-items:center;gap:10px;font-size:13px;color:#666;}
+        .c4-step-num{width:22px;height:22px;background:var(--p);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;}
+        .c4-res{display:none;background:var(--ll);padding:24px;border-radius:0 0 12px 12px;} .c4-res.on{display:block;}
+        .c4 .rcat{color:var(--p);}
+        .c4 .rhead{font-family:var(--serif);color:var(--pp);}
+        .c4-rscript{font-family:var(--sans);font-size:14px;background:#fff;padding:14px;border-left:3px solid var(--p);border-radius:0;color:var(--pp);line-height:1.6;margin-top:8px;}
+        .c4-rscript-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--p);font-weight:600;margin-bottom:4px;}
+        .c4-rscript p{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--pp);}
+        .c4 .reset-btn{color:var(--p);}
+
+        /* === FLOW === */
+        .flw{max-width:860px;margin:0 auto;padding:40px 24px 60px;}
+        .fl-hero{margin-bottom:36px;padding-bottom:20px;border-bottom:2px solid var(--pl);}
+        .fl-hero h2{font-size:28px;font-weight:700;line-height:1.2;} .fl-hero h2 em{font-style:normal;color:var(--p);}
+        .fl-hero-sub{font-size:15px;color:#999;margin-top:6px;}
+        .fl-meta{display:flex;gap:24px;margin-top:14px;font-size:11px;color:#bbb;} .fl-meta strong{color:var(--pd);font-weight:600;}
+        .fl-sh{display:flex;align-items:center;gap:10px;margin:36px 0 18px;}
+        .fl-sh::before{content:'';width:4px;height:16px;background:var(--p);border-radius:2px;}
+        .fl-sh h3{font-size:11px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--pd);}
+        .fl-pipe{position:relative;padding-left:40px;margin-bottom:8px;}
+        .fl-pipe::before{content:'';position:absolute;left:19px;top:0;bottom:0;width:2px;background:var(--pl);}
+        .fl-node{position:relative;margin-bottom:14px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;}
+        .fl-mk{position:absolute;left:-40px;top:5px;width:40px;display:flex;justify-content:center;}
+        .fl-mk span{width:16px;height:16px;background:var(--p);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;border:3px solid #fff;box-shadow:0 0 0 2px var(--pl);}
+        .fl-mk span.risk{background:var(--coral);}
+        .fl-cd{background:#fff;border:1px solid var(--pl);border-radius:8px;padding:12px 16px;}
+        .fl-cd h4{font-size:14px;font-weight:600;margin-bottom:1px;}
+        .fl-cd-opts{font-size:11px;color:var(--p);font-weight:500;margin-top:3px;}
+        .fl-tags{padding-top:3px;display:flex;flex-wrap:wrap;gap:4px;}
+        .fl-tag{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;}
+        .fl-tag.v{background:var(--ll);color:var(--pd);} .fl-tag.s{background:var(--teal-lt);color:var(--teal-dk);} .fl-tag.r{background:var(--peach);color:#7a4020;}
+        .fl-engine{background:linear-gradient(135deg,var(--pp),var(--p));border-radius:10px;padding:20px;color:#fff;text-align:center;margin:20px 0;}
+        .fl-engine h4{font-size:15px;font-weight:700;} .fl-engine p{font-size:13px;opacity:.5;margin-top:3px;}
+        .fl-out{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+        .fl-oc{border-radius:10px;padding:16px 12px;border:1px solid;}
+        .fl-oc h5{font-size:13px;font-weight:600;margin-bottom:5px;}
+        .fl-oc ul{list-style:none;font-size:11px;line-height:1.8;} .fl-oc ul li::before{content:'·';margin-right:4px;font-weight:700;}
+        .fl-oc.ov{background:var(--ll);border-color:var(--pl);color:var(--pp);} .fl-oc.ov h5{color:var(--pd);}
+        .fl-oc.os{background:#e8f7f7;border-color:#b8e6e6;color:#0a5c5c;} .fl-oc.os h5{color:var(--teal-dk);}
+        .fl-oc.or{background:var(--coral-lt);border-color:#f0c4a8;color:#6b2e14;} .fl-oc.or h5{color:#8b3a1f;}
+        .fl-oc.on_{background:var(--peach);border-color:#f0cfb8;color:#5c3018;} .fl-oc.on_ h5{color:#7a4020;}
+        .fl-bg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+        .fl-bc{background:#fff;border:1px solid var(--pl);border-radius:8px;padding:14px;}
+        .fl-bc h5{font-size:13px;font-weight:600;margin-bottom:2px;}
+        .fl-bc-in{font-size:11px;color:var(--lav);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #f0ecf5;}
+        .fl-bc-out{margin-bottom:6px;} .fl-bc-out:last-child{margin-bottom:0;}
+        .fl-bc-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--p);font-weight:600;margin-bottom:1px;}
+        .fl-bc-val{font-size:13px;color:var(--nv);line-height:1.5;}
+        /* === DEV SPEC === */
+        .dev{max-width:860px;margin:0 auto;padding:40px 24px 60px;}
+        .dev-badge{display:inline-block;font-size:11px;font-weight:600;background:var(--peach);color:#7a4020;padding:4px 12px;border-radius:4px;margin-bottom:16px;}
+        .dev-intro{font-size:14px;color:#888;line-height:1.7;margin-bottom:28px;}
+        .dev table{width:100%;border-collapse:collapse;margin-bottom:24px;font-size:12px;line-height:1.5;}
+        .dev th{text-align:left;font-size:11px;font-weight:600;color:var(--pd);text-transform:uppercase;letter-spacing:.06em;padding:6px 8px;border-bottom:2px solid var(--pl);white-space:nowrap;}
+        .dev td{padding:6px 8px;border-bottom:1px solid #f0ecf5;vertical-align:top;color:var(--nv);}
+        .dev td:last-child{color:#888;}
+        .dev .cond{font-weight:600;color:var(--ch);}
+        .dev .any{color:#bbb;font-style:italic;}
+        .dev .no-show{background:var(--ll);}
+        .dev-sh{font-size:15px;font-weight:600;color:var(--ch);margin:28px 0 6px;padding-bottom:6px;border-bottom:1px solid #eee;}
+        .dev-dep{font-size:12px;color:var(--p);margin-bottom:12px;}
+        .dev-note{font-size:12px;color:#aaa;line-height:1.6;margin-top:20px;padding-top:14px;border-top:1px solid #eee;}
+        .foot{padding:16px 32px;text-align:center;font-size:11px;color:#ccc;border-top:1px solid #eee;}
+        @media(max-width:820px){.c4-body{grid-template-columns:1fr;}.fl-out,.fl-bg{grid-template-columns:1fr;}.tabs{padding:0 16px;}}
+    </style>
+</head>
+<body>
+
+<div class="bar">
+    <a href="#" class="bar-logo"><div class="bar-mark"></div><div class="bar-name">HPV Next Steps</div></a>
+    <div class="bar-sub">Product prototype</div>
+</div>
+<div class="tabs">
+    <button class="tab on" onclick="showTab(0)">Concept 1</button>
+    <button class="tab" onclick="showTab(1)">Concept 2</button>
+    <button class="tab" onclick="showTab(2)">Concept 3</button>
+    <button class="tab" onclick="showTab(3)">Concept 4</button>
+    <button class="tab" onclick="showTab(4)">Intake flow</button>
+    <button class="tab" onclick="showTab(5)">Developer spec</button>
+</div>
+
+<!-- C1: "I want to understand" -->
+<div class="pn on c1" id="p0"><div class="wrap">
+    <div class="t11" style="color:var(--p);margin-bottom:6px;">Concept 1 — "I want to understand"</div>
+    <div class="t28">HPV Next Steps</div>
+    <div class="c1-sub">Read through the data. Place yourself within it.</div>
+    <p class="c1-prose"><b>80%</b> of sexually active adults will get HPV. In <b>90%</b> of cases, the infection clears within two years. For the remaining <b>10%</b>, persistent infection can lead to cancer — sometimes decades later. The HPV vaccine prevents <span class="c1-hl">90% of these cancers</span> and is approved through age <b>45</b>.</p>
+    <div class="c1-ql">Where do you fall?</div><div class="c1-opts" id="c1q1"></div>
+    <div class="c1-note">Before 15: 2 doses. At 15+: 3 doses. After 45: no longer recommended.</div>
+    <p class="c1-prose">For those assigned <b>female</b> at birth, cervical screening begins at 21 and continues through 65. For those assigned <b>male</b>, there is no routine screening — but oropharyngeal cancers linked to HPV are rising fastest in this group.</p>
+    <div class="c1-ql">Sex assigned at birth</div><div class="c1-opts" id="c1q2"></div>
+    <div class="sep"></div>
+    <p class="c1-prose">The vaccine is most effective before exposure. If you started and didn't finish, you can pick up where you left off.</p>
+    <div class="c1-ql">Vaccination status</div><div class="c1-opts" id="c1q3"></div>
+    <div class="sep"></div>
+    <p class="c1-prose">Certain conditions — including <b>HIV</b> and immunosuppression — reduce the body's ability to clear HPV. Tobacco use is an established co-factor.</p>
+    <div class="c1-ql">Immune status</div><div class="c1-opts" id="c1q4"></div>
+    <div class="c1-ql" style="margin-top:14px">Tobacco use</div><div class="c1-opts" id="c1q5"></div>
+    <button class="c1-cta" id="c1cta" disabled onclick="c1Submit()">See my results</button>
+    <div class="c1-res" id="c1r"></div>
+</div></div>
+
+<!-- C2: "I need to know what to do" -->
+<div class="pn c2" id="p1"><div class="wrap">
+    <div class="t11" style="color:var(--teal-dk);margin-bottom:24px;">Concept 2 — "I need to know what to do"</div>
+    <div class="c2s on" id="c2s0"><div style="text-align:center;padding:32px 0;"><div class="t28" style="margin-bottom:8px;">HPV Next Steps</div><div class="t15" style="color:#999;max-width:340px;margin:0 auto 24px;">5 questions. Personalized guidance. 2 minutes.</div><button style="padding:14px 48px;background:var(--teal-dk);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--sans);" onclick="c2go('c2s1')">Start</button></div></div>
+    <div class="c2s" id="c2s1"><div class="c2-top"><span class="c2-brand">HPV Next Steps</span><div class="c2-count">1 <span>of 5</span></div></div><div class="t22" style="text-align:center;margin-bottom:8px;">How old are you?</div><div class="c2-hint">Determines vaccine schedule.</div><div class="c2-opts" id="c2q1"></div><div class="c2-nav"><button class="c2-back" onclick="c2go('c2s0')">Back</button><button class="c2-next" id="c2n1" onclick="c2go('c2s2')">Next</button></div></div>
+    <div class="c2s" id="c2s2"><div class="c2-top"><span class="c2-brand">HPV Next Steps</span><div class="c2-count">2 <span>of 5</span></div></div><div class="t22" style="text-align:center;margin-bottom:8px;">Sex assigned at birth?</div><div class="c2-hint">Determines which screenings apply.</div><div class="c2-opts" id="c2q2"></div><div class="c2-nav"><button class="c2-back" onclick="c2go('c2s1')">Back</button><button class="c2-next" id="c2n2" onclick="c2go('c2s3')">Next</button></div></div>
+    <div class="c2s" id="c2s3"><div class="c2-top"><span class="c2-brand">HPV Next Steps</span><div class="c2-count">3 <span>of 5</span></div></div><div class="t22" style="text-align:center;margin-bottom:8px;">Vaccinated against HPV?</div><div class="c2-hint">2 or 3 shots in the series.</div><div class="c2-opts" id="c2q3"></div><div class="c2-nav"><button class="c2-back" onclick="c2go('c2s2')">Back</button><button class="c2-next" id="c2n3" onclick="c2go('c2s4')">Next</button></div></div>
+    <div class="c2s" id="c2s4"><div class="c2-top"><span class="c2-brand">HPV Next Steps</span><div class="c2-count">4 <span>of 5</span></div></div><div class="t22" style="text-align:center;margin-bottom:8px;">Any of these apply?</div><div class="c2-hint">Affects screening schedule.</div><div class="c2-opts" id="c2q4"></div><div class="c2-nav"><button class="c2-back" onclick="c2go('c2s3')">Back</button><button class="c2-next" id="c2n4" onclick="c2go('c2s5')">Next</button></div></div>
+    <div class="c2s" id="c2s5"><div class="c2-top"><span class="c2-brand">HPV Next Steps</span><div class="c2-count">5 <span>of 5</span></div></div><div class="t22" style="text-align:center;margin-bottom:8px;">Tobacco or e-cigarettes?</div><div class="c2-hint">Known co-factor for HPV cancers.</div><div class="c2-opts" id="c2q5"></div><div class="c2-nav"><button class="c2-back" onclick="c2go('c2s4')">Back</button><button class="c2-next" id="c2n5" onclick="c2Submit()">See results</button></div></div>
+    <div class="c2s" id="c2sr"><div id="c2r"></div></div>
+</div></div>
+
+<!-- C3: "Something brought me here" -->
+<div class="pn c3" id="p2"><div class="wrap">
+    <div class="t11" style="color:var(--coral);margin-bottom:24px;">Concept 3 — "Something brought me here"</div>
+    <div class="c3s on" id="c3s0"><div class="c3-welcome"><div class="c3-wicon">&#9829;</div><div class="c3-wh">Most people don't think about HPV until something makes them pay attention.</div><p class="c3-wp">Whatever brought you here, you're in the right place. Five quick questions, then clear guidance you can take to your doctor.</p><button class="c3-wcta" onclick="c3go('c3s1')">I'm ready</button></div></div>
+    <div class="c3s" id="c3s1"><div class="c3-qcard"><div class="c3-qframe">Let's start with the basics.</div><div class="t22" style="margin-bottom:14px;">How old are you?</div><div class="c3-opts" id="c3q1"></div><div class="c3-nav"><button class="c3-back" onclick="c3go('c3s0')">Back</button><button class="c3-next" id="c3n1" onclick="c3go('c3s2')">Continue</button></div><div class="c3-prog">1 of 5</div></div></div>
+    <div class="c3s" id="c3s2"><div class="c3-qcard"><div class="c3-qframe">This helps us give you the right screening guidance.</div><div class="t22" style="margin-bottom:14px;">Sex assigned at birth?</div><div class="c3-opts" id="c3q2"></div><div class="c3-nav"><button class="c3-back" onclick="c3go('c3s1')">Back</button><button class="c3-next" id="c3n2" onclick="c3go('c3s3')">Continue</button></div><div class="c3-prog">2 of 5</div></div></div>
+    <div class="c3s" id="c3s3"><div class="c3-qcard"><div class="c3-qframe">If you're not sure, that's fine.</div><div class="t22" style="margin-bottom:14px;">Vaccinated against HPV?</div><div class="c3-opts" id="c3q3"></div><div class="c3-nav"><button class="c3-back" onclick="c3go('c3s2')">Back</button><button class="c3-next" id="c3n3" onclick="c3go('c3s4')">Continue</button></div><div class="c3-prog">3 of 5</div></div></div>
+    <div class="c3s" id="c3s4"><div class="c3-qcard"><div class="c3-qframe">This can affect how your body handles HPV.</div><div class="t22" style="margin-bottom:14px;">Any of the following apply?</div><div class="c3-opts" id="c3q4"></div><div class="c3-nav"><button class="c3-back" onclick="c3go('c3s3')">Back</button><button class="c3-next" id="c3n4" onclick="c3go('c3s5')">Continue</button></div><div class="c3-prog">4 of 5</div></div></div>
+    <div class="c3s" id="c3s5"><div class="c3-qcard"><div class="c3-qframe">Last one.</div><div class="t22" style="margin-bottom:14px;">Tobacco or e-cigarettes?</div><div class="c3-opts" id="c3q5"></div><div class="c3-nav"><button class="c3-back" onclick="c3go('c3s4')">Back</button><button class="c3-next" id="c3n5" onclick="c3Submit()">See my guidance</button></div><div class="c3-prog">5 of 5</div></div></div>
+    <div class="c3s" id="c3sr"><div id="c3r"></div></div>
+</div></div>
+
+<!-- C4: EDITORIAL -->
+<div class="pn c4" id="p3"><div style="max-width:820px;margin:0 auto;padding:40px 24px 60px;">
+    <div class="t11" style="color:var(--p);margin-bottom:20px;">Concept 4 — Editorial direction</div>
+    <div class="c4-dark">
+        <div class="c4-mission">Informed by evidence and the lived experiences of survivors, the organization works to eliminate HPV-related cancers.</div>
+        <div class="c4-stats">
+            <div class="c4-stat"><div class="c4-stat-num">6</div><div class="c4-stat-label">Types of cancer prevented by HPV vaccination</div></div>
+            <div class="c4-stat"><div class="c4-stat-num">500<span>K</span></div><div class="c4-stat-label">Deaths preventable every year worldwide</div></div>
+            <div class="c4-stat"><div class="c4-stat-num">5<span>%</span></div><div class="c4-stat-label">Of all cancers worldwide caused by HPV</div></div>
+        </div>
+    </div>
+    <div class="c4-body" id="c4body">
+        <div class="c4-card-col">
+            <div class="c4-card">
+                <div class="c4-card-head"><div class="c4-card-icon">&#9733;</div><div class="c4-card-title">HPV Next Steps<span>Personalized screening guide</span></div></div>
+                <div id="c4fields"></div>
+                <button class="c4-cta" id="c4cta" disabled onclick="c4Submit()">Get my results</button>
+            </div>
+        </div>
+        <div class="c4-copy-col">
+            <div class="c4-kicker">Free personalized tool</div>
+            <div class="c4-headline">HPV Next Steps</div>
+            <div class="c4-desc">A first-of-its-kind guide to HPV prevention and care. Answer 5 quick questions and get tailored guidance.</div>
+            <div class="c4-steps">
+                <div class="c4-step"><span class="c4-step-num">1</span>Enter your age and sex assigned at birth</div>
+                <div class="c4-step"><span class="c4-step-num">2</span>Share vaccination and health history</div>
+                <div class="c4-step"><span class="c4-step-num">3</span>Get personalized prevention guidance</div>
+            </div>
+        </div>
+    </div>
+    <div class="c4-res" id="c4r"></div>
+</div></div>
+
+<!-- INTAKE FLOW -->
+<div class="pn" id="p4"><div class="flw">
+    <div class="fl-hero"><h2><em>HPV Next Steps</em> — Intake flow</h2><p class="fl-hero-sub">5-question assessment, shared across all concepts</p><div class="fl-meta"><div><strong>Type</strong> Self-service risk tool</div><div><strong>Platform</strong> Web, responsive</div><div><strong>Data</strong> Client-side only</div><div><strong>Sources</strong> CDC, ACS, USPSTF</div></div></div>
+    <div class="fl-sh"><h3>Intake pipeline</h3></div>
+    <div class="fl-pipe">
+        <div class="fl-node"><div class="fl-mk"><span>1</span></div><div class="fl-cd"><h4>Age bracket</h4><div class="fl-cd-opts">9–14 · 15–20 · 21–26 · 27–45 · 45+</div></div><div class="fl-tags"><span class="fl-tag v">dose count</span><span class="fl-tag s">screening start</span></div></div>
+        <div class="fl-node"><div class="fl-mk"><span>2</span></div><div class="fl-cd"><h4>Sex assigned at birth</h4><div class="fl-cd-opts">Female · Male</div></div><div class="fl-tags"><span class="fl-tag s">cervical screening</span><span class="fl-tag r">oropharyngeal risk</span></div></div>
+        <div class="fl-node"><div class="fl-mk"><span>3</span></div><div class="fl-cd"><h4>Vaccination status</h4><div class="fl-cd-opts">Full · Partial · None · Unsure</div></div><div class="fl-tags"><span class="fl-tag v">catch-up path</span></div></div>
+        <div class="fl-node"><div class="fl-mk"><span class="risk">4</span></div><div class="fl-cd" style="border-color:#f0c4a8;"><h4>Immune status</h4><div class="fl-cd-opts">HIV · Immunocompromised · None · Unsure</div></div><div class="fl-tags"><span class="fl-tag r">risk flag</span><span class="fl-tag s">annual override</span></div></div>
+        <div class="fl-node"><div class="fl-mk"><span class="risk">5</span></div><div class="fl-cd" style="border-color:#f0c4a8;"><h4>Tobacco use</h4><div class="fl-cd-opts">Current · Former · Never</div></div><div class="fl-tags"><span class="fl-tag r">co-factor</span></div></div>
+    </div>
+    <div class="fl-engine"><h4>Personalization engine</h4><p>All 5 inputs combined. Branching across every answer combination.</p></div>
+    <div class="fl-sh"><h3>Output architecture</h3></div>
+    <div class="fl-out">
+        <div class="fl-oc ov"><h5>Vaccination</h5><ul><li>2-dose vs 3-dose</li><li>Age-gated eligibility</li><li>Shared decision (27–45)</li><li>Catch-up</li></ul></div>
+        <div class="fl-oc os"><h5>Screening</h5><ul><li>Pap / HPV cadence</li><li>Sex-specific routing</li><li>Immunocompromised override</li><li>Age start / stop</li></ul></div>
+        <div class="fl-oc or"><h5>Risk factors</h5><ul><li>HIV co-factor</li><li>Tobacco + cervical</li><li>Tobacco + oropharyngeal</li><li>Medication flag</li></ul></div>
+        <div class="fl-oc on_"><h5>Next step</h5><ul><li>Doctor script</li><li>"What to say"</li><li>Insurance note</li><li>Print CTA</li></ul></div>
+    </div>
+    <div class="fl-sh"><h3>Branching examples</h3></div>
+    <div class="fl-bg">
+        <div class="fl-bc"><h5>Adolescent, unvaccinated</h5><div class="fl-bc-in">9–14 · Female · No vaccine</div><div class="fl-bc-out"><div class="fl-bc-lbl">Vaccination</div><div class="fl-bc-val">Ideal time. 2 doses, 6–12 months apart.</div></div></div>
+        <div class="fl-bc"><h5>Young adult, partial</h5><div class="fl-bc-in">21–26 · Male · Partial</div><div class="fl-bc-out"><div class="fl-bc-lbl">Next step</div><div class="fl-bc-val">"I started but didn't finish. Can we schedule remaining?"</div></div></div>
+        <div class="fl-bc"><h5>Mid-adult, immunocompromised</h5><div class="fl-bc-in">27–45 · Female · None · HIV+ · Smoker</div><div class="fl-bc-out"><div class="fl-bc-lbl">Risk</div><div class="fl-bc-val">HIV + tobacco. Annual screening required.</div></div></div>
+        <div class="fl-bc"><h5>Older adult, vaccinated</h5><div class="fl-bc-in">45+ · Female · Full</div><div class="fl-bc-out"><div class="fl-bc-lbl">Screening</div><div class="fl-bc-val">Continue through 65. Does not replace screening.</div></div></div>
+    </div>
+</div></div>
+
+<!-- DEVELOPER SPEC -->
+<div class="pn" id="p5"><div class="dev">
+    <div class="dev-badge">Work in progress</div>
+    <div class="t11" style="color:var(--p);margin-bottom:6px;">Developer spec</div>
+    <div class="t28" style="margin-bottom:8px;">Decision matrix</div>
+    <div class="dev-intro">5 inputs: age (5 options), sex (2), vaccination (4), immune status (4), tobacco (3) = 480 possible combinations. The engine resolves them through 4 independent output functions. Each table below documents every rule. First match wins.</div>
+
+    <div class="dev-sh">1. Vaccination output</div>
+    <div class="dev-dep">Depends on: age + vaccination + immune. Sex and tobacco do not affect this output.</div>
+    <table>
+    <tr><th>Age</th><th>Vax</th><th>Immune</th><th>Output</th><th>Detail</th></tr>
+    <tr><td class="cond">Any</td><td class="cond">Full</td><td class="any">Any</td><td>You are vaccinated.</td><td>Series complete. No action.</td></tr>
+    <tr><td class="cond">9–14</td><td class="cond">Partial</td><td class="any">Any</td><td>Complete the 2-dose series.</td><td>Started before 15: only 2 doses, 6–12 months apart.</td></tr>
+    <tr><td class="cond">9–14</td><td class="cond">No / Unsure</td><td class="any">Any</td><td>Ideal time to vaccinate.</td><td>CDC recommends at 9. Before 15 = 2 doses only.</td></tr>
+    <tr><td class="cond">15–20</td><td class="cond">Partial</td><td class="cond">HIV / Immunocomp</td><td>Complete the series.</td><td>3 doses required regardless of age. No restart.</td></tr>
+    <tr><td class="cond">15–20</td><td class="cond">Partial</td><td class="cond">None / Unsure</td><td>Complete the series.</td><td>3 doses when starting at 15+. No restart.</td></tr>
+    <tr><td class="cond">15–20</td><td class="cond">No / Unsure</td><td class="any">Any</td><td>Get vaccinated.</td><td>Within recommended window. Through 26.</td></tr>
+    <tr><td class="cond">21–26</td><td class="cond">Partial</td><td class="cond">HIV / Immunocomp</td><td>Complete the series.</td><td>3 doses required regardless. No restart.</td></tr>
+    <tr><td class="cond">21–26</td><td class="cond">Partial</td><td class="cond">None / Unsure</td><td>Complete the series.</td><td>3 doses at 15+. No restart.</td></tr>
+    <tr><td class="cond">21–26</td><td class="cond">No / Unsure</td><td class="any">Any</td><td>Get vaccinated.</td><td>Within recommended window. Through 26.</td></tr>
+    <tr><td class="cond">27–45</td><td class="cond">Partial</td><td class="any">Any</td><td>Discuss completing with doctor.</td><td>Shared clinical decision. May still benefit.</td></tr>
+    <tr><td class="cond">27–45</td><td class="cond">No / Unsure</td><td class="any">Any</td><td>Vaccination may benefit you.</td><td>FDA-approved through 45. Shared decision.</td></tr>
+    <tr><td class="cond">Over 45</td><td class="cond">Partial / No / Unsure</td><td class="any">Any</td><td>Not recommended.</td><td>Focus on screening. Prior vax continues.</td></tr>
+    </table>
+
+    <div class="dev-sh">2. Screening output</div>
+    <div class="dev-dep">Depends on: age + sex + immune. Vaccination and tobacco do not affect this output.</div>
+    <table>
+    <tr><th>Sex</th><th>Age</th><th>Immune</th><th>Output</th><th>Detail</th></tr>
+    <tr><td class="cond">Female</td><td class="cond">9–14</td><td class="any">Any</td><td>No screening needed yet.</td><td>Begins at 21 (or 25 per ACS).</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">15–20</td><td class="cond">HIV / Immunocomp</td><td>Screening begins at 21.</td><td>May warrant earlier. Discuss with doctor.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">15–20</td><td class="cond">None / Unsure</td><td>Screening begins at 21.</td><td>Not recommended before 21.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">21–26</td><td class="cond">HIV / Immunocomp</td><td>More frequent screening.</td><td>Annual Pap, HPV, or co-testing.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">21–26</td><td class="cond">None / Unsure</td><td>Begin cervical screening.</td><td>Pap every 3 yrs. 25+: HPV every 5 (ACS).</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">27–45</td><td class="cond">HIV / Immunocomp</td><td>Annual screening.</td><td>Do not skip even if vaccinated.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">27–45</td><td class="cond">None / Unsure</td><td>Continue cervical screening.</td><td>HPV every 5, co-test every 5, or Pap every 3.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">Over 45</td><td class="cond">HIV / Immunocomp</td><td>Continue annual screening.</td><td>Annual indefinitely.</td></tr>
+    <tr><td class="cond">Female</td><td class="cond">Over 45</td><td class="cond">None / Unsure</td><td>Continue through 65.</td><td>May stop after 65 with adequate priors.</td></tr>
+    <tr><td class="cond">Male</td><td class="cond">9–14 / 15–20</td><td class="any">Any</td><td>No routine screening.</td><td>No FDA-approved test. Vaccination is priority.</td></tr>
+    <tr><td class="cond">Male</td><td class="cond">21+</td><td class="cond">HIV / Immunocomp</td><td>No routine screening. Symptoms matter.</td><td>Discuss anal Pap. Report throat, neck, ear.</td></tr>
+    <tr><td class="cond">Male</td><td class="cond">21+</td><td class="cond">None / Unsure</td><td>No routine screening. Symptoms matter.</td><td>Oropharyngeal rising. Watch neck, throat, ear.</td></tr>
+    </table>
+
+    <div class="dev-sh">3. Risk factors output</div>
+    <div class="dev-dep">Depends on: sex + immune + tobacco. Conditional — section only appears if 1+ flags present. Age and vaccination do not affect this output. Multiple flags can stack.</div>
+    <table>
+    <tr><th>Condition</th><th>Sex</th><th>Output</th></tr>
+    <tr><td class="cond">Immune = HIV</td><td class="any">Any</td><td>HIV increases persistent HPV and cancer risk. ART and screening critical.</td></tr>
+    <tr><td class="cond">Immune = Immunocompromised</td><td class="any">Any</td><td>Weakened immune system reduces HPV clearance. More frequent monitoring.</td></tr>
+    <tr><td class="cond">Immune = Unsure</td><td class="any">Any</td><td>If taking immunosuppressives, inform your doctor. May change schedule.</td></tr>
+    <tr><td class="cond">Tobacco = Yes</td><td class="cond">Female</td><td>Tobacco co-factor for cervical cancer. Quitting reduces risk.</td></tr>
+    <tr><td class="cond">Tobacco = Yes</td><td class="cond">Male</td><td>Tobacco increases head/neck cancer risk with HPV. Quitting recommended.</td></tr>
+    <tr><td class="cond">Tobacco = Former</td><td class="any">Any</td><td>Prior tobacco use may have increased risk. Quitting reduces ongoing risk.</td></tr>
+    <tr class="no-show"><td class="cond">Immune = None + Tobacco = No</td><td class="any">Any</td><td>Section not displayed. No flags to show.</td></tr>
+    </table>
+
+    <div class="dev-sh">4. Next step output</div>
+    <div class="dev-dep">Depends on: age + sex + vaccination + immune. Tobacco does not affect this output. Rules evaluated top-down, first match wins. Doctor scripts appear as callout blocks.</div>
+    <table>
+    <tr><th>Age</th><th>Vax</th><th>Sex</th><th>Immune</th><th>Output</th><th>Doctor script</th></tr>
+    <tr><td class="cond">9–14</td><td class="cond">Full</td><td class="any">Any</td><td class="any">Any</td><td>No action needed.</td><td>—</td></tr>
+    <tr><td class="cond">9–14</td><td class="cond">Other</td><td class="any">Any</td><td class="any">Any</td><td>Talk to parent/guardian.</td><td>"I'd like the HPV vaccine. Can we schedule it?"</td></tr>
+    <tr><td class="cond">15–20</td><td class="cond">No / Unsure</td><td class="any">Any</td><td class="any">Any</td><td>Ask doctor about vaccination.</td><td>"I haven't been vaccinated. Can we start today?"</td></tr>
+    <tr><td class="cond">21–26</td><td class="cond">No / Unsure</td><td class="any">Any</td><td class="any">Any</td><td>Ask doctor about vaccination.</td><td>"I haven't been vaccinated. Can we start today?"</td></tr>
+    <tr><td class="cond">27–45</td><td class="cond">No / Unsure</td><td class="any">Any</td><td class="any">Any</td><td>Discuss vaccination with doctor.</td><td>"I'm not vaccinated. Given my age, would you recommend it?"</td></tr>
+    <tr><td class="cond">Any</td><td class="cond">Partial</td><td class="any">Any</td><td class="any">Any</td><td>Schedule remaining doses.</td><td>"I started but didn't finish. Can we schedule remaining?"</td></tr>
+    <tr><td class="cond">Over 45</td><td class="cond">No / Unsure</td><td class="cond">Female</td><td class="any">Any</td><td>Confirm screening is current.</td><td>If immunocomp: "Discuss more frequent screening."</td></tr>
+    <tr><td class="cond">Over 45</td><td class="cond">No / Unsure</td><td class="cond">Male</td><td class="any">Any</td><td>Stay aware of symptoms.</td><td>If immunocomp: "Discuss more frequent screening."</td></tr>
+    <tr><td class="cond">21+</td><td class="cond">Full</td><td class="cond">Female</td><td class="any">Any</td><td>Stay current on cervical screening.</td><td>If immunocomp: "Annual screening even if vaccinated."</td></tr>
+    <tr><td class="cond">Any</td><td class="cond">Full</td><td class="cond">Male</td><td class="any">Any</td><td>Continue routine visits.</td><td>If immunocomp: "Closer monitoring may be appropriate."</td></tr>
+    </table>
+
+    <div class="dev-note">
+        <strong>Coverage:</strong> 12 vaccination rules × 12 screening rules × 7 risk flags (stackable) × 10 next-step rules. All 480 input combinations resolve deterministically — same inputs always produce same outputs.<br><br>
+        <strong>Not yet documented:</strong> Exact verbatim copy for each output string (tables show summaries). Error handling for skipped questions (current prototype requires all fields). Edge cases where "unsure" immune status generates a medication flag alongside other risk factors. Accessibility requirements for production build. Print stylesheet specifications.<br><br>
+        <strong>Sources:</strong> CDC immunization schedule, ACS cervical cancer screening guidelines, USPSTF screening recommendations. All clinical content requires medical review before production deployment.
+    </div>
+</div></div>
+
+<div class="foot">HPV Next Steps — Product prototype</div>
+
+<script>
+const QS=[{q:'age',label:'Your age',opts:[['9-14','9–14'],['15-20','15–20'],['21-26','21–26'],['27-45','27–45'],['over45','Over 45']]},{q:'sex',label:'Sex assigned at birth',opts:[['female','Female'],['male','Male']]},{q:'vax',label:'Vaccinated?',opts:[['full','Completed all doses'],['partial','Started, didn\'t finish'],['no','No'],['unsure','Not sure']]},{q:'immune',label:'Immune status',opts:[['hiv','Living with HIV'],['immunocomp','Weakened immune system'],['none','None of these'],['unsure','Not sure']]},{q:'tobacco',label:'Tobacco',opts:[['yes','Yes'],['former','Used to, quit'],['no','No']]}];
+function showTab(i){document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('on',j===i));document.querySelectorAll('.pn').forEach((p,j)=>p.classList.toggle('on',j===i));}
+
+// C1
+const c1A={age:null,sex:null,vax:null,immune:null,tobacco:null};
+function c1Init(){const ids=['c1q1','c1q2','c1q3','c1q4','c1q5'];QS.forEach((q,i)=>{const el=document.getElementById(ids[i]);q.opts.forEach(o=>{const b=document.createElement('button');b.className='c1-opt';b.textContent=o[1];b.dataset.v=o[0];b.onclick=()=>{el.querySelectorAll('.c1-opt').forEach(x=>x.classList.remove('s'));b.classList.add('s');c1A[q.q]=o[0];c1Ck();};el.appendChild(b);});});}
+function c1Ck(){document.getElementById('c1cta').disabled=!(c1A.age&&c1A.sex&&c1A.vax&&c1A.immune&&c1A.tobacco);}
+function c1Submit(){const r=BR(c1A);let h='<div class="sep"></div><div class="profile">'+r.pf+'</div>';r.secs.forEach(s=>{h+='<div class="rsec"><div class="rcat" style="color:var(--p)">'+s.cat+'</div><p class="c1-prose" style="margin-bottom:12px"><b>'+s.title+'</b> '+s.body+'</p>';if(s.co)h+='<div class="c1-script">'+s.co+'</div>';h+='</div>';});h+='<button class="reset-btn" style="color:var(--p)" onclick="c1R()">Start over</button>';const el=document.getElementById('c1r');el.innerHTML=h;el.classList.add('on');el.scrollIntoView({behavior:'smooth'});}
+function c1R(){c1A.age=c1A.sex=c1A.vax=c1A.immune=c1A.tobacco=null;document.querySelectorAll('.c1-opt').forEach(o=>o.classList.remove('s'));document.getElementById('c1cta').disabled=true;const el=document.getElementById('c1r');el.classList.remove('on');el.innerHTML='';}
+
+// C2
+const c2A={age:null,sex:null,vax:null,immune:null,tobacco:null};
+function c2go(id){document.querySelectorAll('.c2s').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function c2Init(){const ids=['c2q1','c2q2','c2q3','c2q4','c2q5'],ns=['c2n1','c2n2','c2n3','c2n4','c2n5'];QS.forEach((q,i)=>{const el=document.getElementById(ids[i]);q.opts.forEach(o=>{const d=document.createElement('div');d.className='c2-opt';d.innerHTML='<span class="c2-dot"></span>'+o[1];d.dataset.v=o[0];d.onclick=()=>{el.querySelectorAll('.c2-opt').forEach(x=>x.classList.remove('s'));d.classList.add('s');c2A[q.q]=o[0];document.getElementById(ns[i]).classList.add('on');};el.appendChild(d);});});}
+function c2Submit(){const r=BR(c2A);let h='<div class="profile">'+r.pf+'</div>';r.secs.forEach((s,i)=>{h+='<div class="c2-action"><div class="rcat" style="color:var(--teal-dk)">'+(i===0?'Do this first':s.cat)+'</div><div class="rhead">'+s.title+'</div><div class="rbody">'+s.body+'</div>';if(s.co)h+='<div class="c2-ascript">'+s.co+'</div>';h+='</div>';});h+='<button class="reset-btn" style="color:var(--teal-dk)" onclick="c2R()">Start over</button>';document.getElementById('c2r').innerHTML=h;c2go('c2sr');}
+function c2R(){c2A.age=c2A.sex=c2A.vax=c2A.immune=c2A.tobacco=null;document.querySelectorAll('.c2-opt').forEach(o=>o.classList.remove('s'));document.querySelectorAll('.c2-next').forEach(b=>b.classList.remove('on'));c2go('c2s0');}
+
+// C3
+const c3A={age:null,sex:null,vax:null,immune:null,tobacco:null};
+function c3go(id){document.querySelectorAll('.c3s').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
+function c3Init(){const ids=['c3q1','c3q2','c3q3','c3q4','c3q5'],ns=['c3n1','c3n2','c3n3','c3n4','c3n5'];QS.forEach((q,i)=>{const el=document.getElementById(ids[i]);q.opts.forEach(o=>{const d=document.createElement('div');d.className='c3-opt';d.innerHTML='<span class="c3-radio"></span>'+o[1];d.dataset.v=o[0];d.onclick=()=>{el.querySelectorAll('.c3-opt').forEach(x=>x.classList.remove('s'));d.classList.add('s');c3A[q.q]=o[0];document.getElementById(ns[i]).classList.add('on');};el.appendChild(d);});});}
+function c3Submit(){const r=BR(c3A);let h='<div class="c3-rlead">Based on what you shared, here\'s what we\'d suggest.</div><div class="profile" style="border-color:#f0d4c0">'+r.pf+'</div>';r.secs.forEach(s=>{h+='<div class="rsec"><div class="rcat" style="color:var(--coral)">'+s.cat+'</div><div class="rhead" style="font-family:var(--serif)">'+s.title+'</div><div class="rbody">'+s.body+'</div></div>';});const last=r.secs[r.secs.length-1];if(last.co)h+='<div class="c3-rscript"><div class="c3-rscript-label">Bring this to your appointment</div><p>'+last.co.replace(/<\/?strong>/g,'')+'</p></div>';h+='<button class="reset-btn" style="color:var(--coral)" onclick="c3R()">Start over</button>';document.getElementById('c3r').innerHTML=h;c3go('c3sr');}
+function c3R(){c3A.age=c3A.sex=c3A.vax=c3A.immune=c3A.tobacco=null;document.querySelectorAll('.c3-opt').forEach(o=>o.classList.remove('s'));document.querySelectorAll('.c3-next').forEach(b=>b.classList.remove('on'));c3go('c3s0');}
+
+// C4
+const c4A={age:null,sex:null,vax:null,immune:null,tobacco:null};
+let c4Open=null;
+function c4Init(){
+    const el=document.getElementById('c4fields');
+    QS.forEach((q,qi)=>{
+        const field=document.createElement('div');field.className='c4-field';field.id='c4f'+qi;
+        field.innerHTML='<span class="c4-fl">'+q.label+'</span><span class="c4-fv empty">Select</span>';
+        const dd=document.createElement('div');dd.className='c4-dropdown';dd.id='c4d'+qi;
+        q.opts.forEach(o=>{
+            const opt=document.createElement('div');opt.className='c4-dd-opt';opt.textContent=o[1];opt.dataset.v=o[0];
+            opt.onclick=(e)=>{e.stopPropagation();dd.querySelectorAll('.c4-dd-opt').forEach(x=>x.classList.remove('s'));opt.classList.add('s');c4A[q.q]=o[0];field.querySelector('.c4-fv').textContent=o[1];field.querySelector('.c4-fv').classList.remove('empty');dd.classList.remove('open');field.classList.remove('active');c4Open=null;c4Ck();};
+            dd.appendChild(opt);
+        });
+        field.onclick=()=>{document.querySelectorAll('.c4-dropdown').forEach(d=>d.classList.remove('open'));document.querySelectorAll('.c4-field').forEach(f=>f.classList.remove('active'));if(c4Open===qi){c4Open=null;}else{dd.classList.add('open');field.classList.add('active');c4Open=qi;}};
+        el.appendChild(field);el.appendChild(dd);
+    });
+}
+function c4Ck(){document.getElementById('c4cta').disabled=!(c4A.age&&c4A.sex&&c4A.vax&&c4A.immune&&c4A.tobacco);}
+function c4Submit(){const r=BR(c4A);let h='<div style="max-width:560px;margin:0 auto;padding:8px 0;"><div class="profile">'+r.pf+'</div>';r.secs.forEach(s=>{h+='<div class="rsec"><div class="rcat" style="color:var(--p)">'+s.cat+'</div><div class="rhead" style="font-family:var(--serif);color:var(--pp)">'+s.title+'</div><div class="rbody">'+s.body+'</div>';if(s.co)h+='<div class="c4-rscript"><div class="c4-rscript-label">Bring this to your appointment</div><p>'+s.co.replace(/<\/?strong>/g,'')+'</p></div>';h+='</div>';});h+='<button class="reset-btn" style="color:var(--p)" onclick="c4R()">Start over</button></div>';const el=document.getElementById('c4r');el.innerHTML=h;el.classList.add('on');document.getElementById('c4body').style.borderRadius='0';el.scrollIntoView({behavior:'smooth'});}
+function c4R(){c4A.age=c4A.sex=c4A.vax=c4A.immune=c4A.tobacco=null;c4Open=null;document.querySelectorAll('.c4-fv').forEach(v=>{v.textContent='Select';v.classList.add('empty');});document.querySelectorAll('.c4-dd-opt').forEach(o=>o.classList.remove('s'));document.querySelectorAll('.c4-dropdown').forEach(d=>d.classList.remove('open'));document.querySelectorAll('.c4-field').forEach(f=>f.classList.remove('active'));document.getElementById('c4cta').disabled=true;document.getElementById('c4r').classList.remove('on');document.getElementById('c4r').innerHTML='';document.getElementById('c4body').style.borderRadius='';}
+
+// ENGINE
+function BR(A){const{age,sex,vax,immune,tobacco}=A;const im=(immune==='hiv'||immune==='immunocomp');const al={'9-14':'9–14','15-20':'15–20','21-26':'21–26','27-45':'27–45','over45':'over 45'}[age];const sl=sex==='female'?'female':'male';let fl=[];if(immune==='hiv')fl.push('HIV+');else if(immune==='immunocomp')fl.push('immunocompromised');if(tobacco==='yes')fl.push('current tobacco');else if(tobacco==='former')fl.push('former tobacco');const pf='Age '+al+', assigned '+sl+' at birth'+(fl.length?' · '+fl.join(' · '):'');const secs=[];const v=vR(age,vax,im);secs.push({cat:'Vaccination',title:v.t,body:v.b,co:null});const s=sR(age,sex,im);secs.push({cat:'Screening',title:s.t,body:s.b,co:null});const r=rR(sex,immune,tobacco);if(r)secs.push({cat:'Risk factors',title:r.t,body:r.b,co:null});const n=nR(age,sex,vax,im);secs.push({cat:'Next step',title:n.t,body:n.b,co:n.c});return{pf,secs};}
+function vR(a,v,im){if(v==='full')return{t:'You are vaccinated.',b:'Series complete. No additional doses needed.'};if(a==='9-14'){if(v==='partial')return{t:'Complete the 2-dose series.',b:'Before 15: only 2 doses, 6–12 months apart.'};return{t:'Ideal time to vaccinate.',b:'CDC recommends starting at 9. Before 15 requires only 2 doses.'};}if(a==='15-20'||a==='21-26'){const d=im?'3 doses required regardless of age':'3 doses when starting at 15+';if(v==='partial')return{t:'Complete the series.',b:d+'. No restart needed.'};return{t:'Get vaccinated — within the recommended window.',b:'Recommended through 26. '+d+'.'};}if(a==='27-45'){if(v==='partial')return{t:'Discuss completing with your doctor.',b:'27–45: shared clinical decision. Completing may still benefit.'};return{t:'Vaccination may benefit you.',b:'FDA-approved through 45. Shared decision-making. Depends on exposure history.'};}return{t:'Not recommended at this age.',b:'Not indicated over 45. Prior vaccination continues. Focus on screening.'};}
+function sR(a,sx,im){if(sx==='female'){if(a==='9-14')return{t:'No screening needed yet.',b:'Begins at 21 (or 25, ACS).'};if(a==='15-20')return{t:'Screening begins at 21.',b:im?'Immune status may warrant earlier screening.':'Not recommended before 21.'};if(a==='21-26')return{t:im?'More frequent screening.':'Begin cervical screening.',b:im?'Annual Pap, HPV, or co-testing.':'21–29: Pap every 3 years. 25+: HPV test every 5 (ACS).'};if(a==='27-45')return{t:im?'Annual screening.':'Continue cervical screening.',b:im?'Annual. Do not skip even if vaccinated.':'HPV test every 5, co-test every 5, or Pap every 3.'};return{t:im?'Continue annual screening.':'Continue through 65.',b:im?'Annual indefinitely.':'After 65, may stop with adequate prior results.'};}if(a==='9-14'||a==='15-20')return{t:'No routine screening for males.',b:'No FDA-approved test. Vaccination is the priority.'};return{t:'No routine screening. Symptom awareness matters.',b:im?'Discuss anal Pap. Report persistent sore throat, neck lump, ear pain.':'Oropharyngeal cancers rising in males. Watch for neck lump, sore throat, difficulty swallowing.'};}
+function rR(sx,im,tb){const f=[];if(im==='hiv')f.push('HIV increases persistent HPV and cancer risk. ART and screening critical.');else if(im==='immunocomp')f.push('Weakened immune system reduces HPV clearance. More frequent monitoring recommended.');if(tb==='yes')f.push(sx==='female'?'Tobacco co-factor for cervical cancer. Quitting reduces risk.':'Tobacco increases head/neck cancer risk with HPV. Quitting recommended.');else if(tb==='former')f.push('Prior tobacco use may have increased risk. Quitting reduces ongoing risk.');if(im==='unsure')f.push('If taking immunosuppressives, inform your doctor.');if(!f.length)return null;return{t:f.length===1?'One additional factor':f.length+' factors',b:f.join(' ')};}
+function nR(a,sx,v,im){if(a==='9-14'){if(v==='full')return{t:'No action needed.',b:'Continue routine visits.',c:null};return{t:'Talk to a parent or guardian.',b:'Best time is before 15.',c:'<strong>What to say:</strong> "I\'d like the HPV vaccine. Can we schedule it?"'};}if((v==='no'||v==='unsure')&&(a==='15-20'||a==='21-26'))return{t:'Ask your doctor about vaccination.',b:'Most insurance covers it through 26.',c:'<strong>What to say:</strong> "I haven\'t been vaccinated against HPV. Can we start today?"'};if((v==='no'||v==='unsure')&&a==='27-45')return{t:'Discuss vaccination with your doctor.',b:'Bring up status, history, risk factors.',c:'<strong>What to say:</strong> "I\'m not vaccinated. Given my age, would you recommend it?"'};if(v==='partial')return{t:'Schedule remaining doses.',b:'No restart. Pick up where you left off.',c:'<strong>What to say:</strong> "I started HPV but didn\'t finish. Can we schedule remaining?"'};if(a==='over45'&&(v==='no'||v==='unsure'))return{t:sx==='female'?'Confirm screening is current.':'Stay aware of symptoms.',b:sx==='female'?'Schedule Pap/HPV if overdue.':'Report persistent throat, neck, ear, or anal symptoms.',c:im?'<strong>Important:</strong> Discuss more frequent screening given immune status.':null};if(v==='full'&&sx==='female'&&(a==='21-26'||a==='27-45'||a==='over45'))return{t:'Stay current on cervical screening.',b:'Vaccination does not replace screening.',c:im?'<strong>Important:</strong> Annual screening even if vaccinated.':null};return{t:'Continue routine visits.',b:'Stay informed about HPV-related symptoms.',c:im?'<strong>Important:</strong> Closer monitoring may be appropriate.':null};}
+c1Init();c2Init();c3Init();c4Init();
+</script>
+</body>
+</html>
+
+</template>
+<template id="protoDoc1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPV Next Steps — Visual Refinement</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pp:#3A1057;--p:#5E2585;--pm:#7B3BA8;--pl:#A06AC4;
+    --lav:#C9A4E2;--lav-s:#E8D5F5;--lav-bg:#F5EEFB;--lav-f:#FAF7FD;
+    --g50:#FAFAFB;--g100:#F4F3F6;--g200:#E8E6EC;--g300:#D0CDD6;
+    --g400:#9E99A7;--g500:#6E6878;--g700:#3D3748;--g900:#1A1522;
+    --blk:#0E0A14;--coral:#F4A27F;--peach:#FFEEE5;
+    --sans:'Outfit',-apple-system,sans-serif;
+    --serif:'Instrument Serif',Georgia,serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);color:var(--g900);background:#fff;line-height:1.55;-webkit-font-smoothing:antialiased;}
+
+  .nav{padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;background:var(--pp);}
+  .nav-logo{display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;}
+  .nav-mark{width:28px;height:28px;border:2px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .nav-mark::after{content:'';width:10px;height:10px;background:rgba(255,255,255,.5);border-radius:50%;}
+  .nav-name{font-size:.88rem;font-weight:600;color:rgba(255,255,255,.8);}
+  .nav-tag{font-size:.72rem;color:rgba(255,255,255,.35);font-weight:500;letter-spacing:.06em;}
+
+  .hero{min-height:520px;display:flex;align-items:flex-end;padding:0 40px 60px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--pp),var(--p));}
+  .hero-grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(58,16,87,0) 0%,rgba(58,16,87,.45) 45%,rgba(58,16,87,.82) 100%);z-index:1;}
+  .hero-cells{position:absolute;inset:0;z-index:0;opacity:.08;}
+  .hero-content{position:relative;z-index:2;max-width:780px;color:#fff;}
+  .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;line-height:.95;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:20px;}
+  .hero-sub{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.55;color:rgba(255,255,255,.6);max-width:520px;margin-bottom:32px;}
+  .hero-cta{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--pp);font-family:var(--sans);font-weight:700;font-size:.95rem;padding:14px 28px;border:none;cursor:pointer;transition:.3s;text-decoration:none;}
+  .hero-cta:hover{background:var(--lav-s);transform:translateY(-2px);}
+
+  .stats{background:var(--pp);padding:48px 40px;}
+  .stats-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,.1);padding-top:36px;}
+  .stat{padding:0 28px;}.stat:first-child{padding-left:0;}
+  .stat:not(:last-child){border-right:1px solid rgba(255,255,255,.06);}
+  .stat-num{font-family:var(--serif);font-size:clamp(3rem,5vw,4.5rem);font-weight:400;line-height:1;color:#fff;}
+  .stat-num span{font-size:.5em;color:var(--lav);}
+  .stat-label{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.5;margin-top:8px;}
+
+  .tool{padding:80px 40px;background:var(--lav-f);position:relative;overflow:hidden;}
+  .tool-cells{position:absolute;inset:0;opacity:.04;}
+  .tool-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;position:relative;z-index:1;}
+
+  .card{background:#fff;border-radius:16px;padding:32px;position:relative;box-shadow:0 24px 80px rgba(58,16,87,.08);}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--p),var(--pm),var(--coral));border-radius:16px 16px 0 0;}
+  .card-head{display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--g200);}
+  .card-icon{width:40px;height:40px;background:var(--lav-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  .card-title{font-size:.95rem;font-weight:700;color:var(--pp);text-transform:uppercase;letter-spacing:.04em;}
+  .card-title span{display:block;font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--g400);font-weight:400;text-transform:none;letter-spacing:0;margin-top:2px;}
+  .field{margin-bottom:8px;}
+  .field-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--pl);margin-bottom:4px;}
+  .field-select{width:100%;padding:12px 16px;background:var(--lav-f);border:1px solid var(--g200);border-radius:8px;font-size:.88rem;font-family:var(--sans);font-weight:600;color:var(--pp);cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%237B3BA8' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;transition:.2s;}
+  .field-select:focus{border-color:var(--pm);outline:none;background-color:#fff;}
+  .cta{display:block;width:100%;padding:16px;background:var(--p);color:#fff;border:none;border-radius:0;font-size:.95rem;font-weight:700;font-family:var(--sans);text-transform:uppercase;letter-spacing:.06em;cursor:pointer;margin-top:20px;transition:.2s;}
+  .cta:hover{background:var(--pp);}.cta:disabled{opacity:.15;cursor:default;}
+  .card-foot{text-align:center;font-size:.72rem;color:var(--g400);margin-top:12px;font-family:var(--serif);font-style:italic;}
+
+  .copy{padding-top:12px;}
+  .copy-kicker{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--pm);margin-bottom:10px;}
+  .copy h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;text-transform:uppercase;letter-spacing:-.03em;line-height:.95;color:var(--pp);margin-bottom:16px;}
+  .copy-desc{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--g500);line-height:1.6;margin-bottom:32px;}
+  .copy-steps{display:flex;flex-direction:column;gap:20px;}
+  .copy-step{display:flex;align-items:flex-start;gap:14px;}
+  .copy-step-num{width:36px;height:36px;background:var(--pp);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:800;color:#fff;flex-shrink:0;}
+  .copy-step-text{padding-top:2px;}
+  .copy-step-title{font-size:.88rem;font-weight:700;color:var(--g900);text-transform:uppercase;letter-spacing:.02em;margin-bottom:2px;}
+  .copy-step-sub{font-size:.82rem;color:var(--g400);line-height:1.5;}
+
+  .results{padding:64px 40px;background:#fff;display:none;}
+  .results.on{display:block;}
+  .results-inner{max-width:700px;margin:0 auto;}
+  .results-head{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:18px;border-bottom:2px solid var(--lav-s);}
+  .results-badge{width:44px;height:44px;background:var(--lav-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .results-profile{font-size:.88rem;color:var(--g400);}
+  .results-profile b{color:var(--g900);font-weight:700;text-transform:uppercase;letter-spacing:.02em;}
+  .r-sec{margin-bottom:28px;}.r-sec:last-of-type{margin-bottom:0;}
+  .r-cat{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--pm);margin-bottom:4px;}
+  .r-head{font-size:1.2rem;font-weight:800;color:var(--pp);margin-bottom:6px;line-height:1.2;}
+  .r-body{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--g500);line-height:1.65;}
+  .r-script{background:var(--lav-bg);padding:24px;margin-top:24px;position:relative;}
+  .r-script::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--p);}
+  .r-script-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--pm);margin-bottom:8px;}
+  .r-script p{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--pp);line-height:1.6;}
+  .r-actions{display:flex;gap:10px;margin-top:24px;}
+  .r-btn{padding:12px 28px;font-size:.82rem;font-weight:700;font-family:var(--sans);text-transform:uppercase;letter-spacing:.06em;cursor:pointer;transition:.2s;}
+  .r-btn.outline{background:none;border:1px solid var(--g200);color:var(--g700);}
+  .r-btn.outline:hover{border-color:var(--pm);color:var(--pp);}
+  .r-btn.fill{background:var(--p);color:#fff;border:none;}
+  .r-btn.fill:hover{background:var(--pp);}
+
+  .design-note{padding:40px;background:var(--lav-f);border-top:1px solid var(--lav-s);}
+  .design-note-inner{max-width:700px;margin:0 auto;font-size:.82rem;color:var(--pl);line-height:1.7;}
+  .design-note-inner b{font-weight:700;color:var(--pm);}
+  .foot{padding:20px 40px;text-align:center;font-size:.72rem;color:var(--g300);border-top:1px solid var(--g100);}
+
+  @media(max-width:820px){
+    .hero{min-height:400px;padding:0 24px 40px;}
+    .tool-inner{grid-template-columns:1fr;}
+    .stats-inner{grid-template-columns:1fr;gap:20px;}
+    .stat{padding:12px 0;border-right:none!important;border-bottom:1px solid rgba(255,255,255,.06);}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="#" class="nav-logo"><div class="nav-mark"></div><div class="nav-name">HPV Next Steps</div></a>
+  <div class="nav-tag">Visual refinement — Concept 4</div>
+</div>
+
+<div class="hero">
+  <div class="hero-grad"></div>
+  <svg class="hero-cells" viewBox="0 0 1440 520" fill="none">
+    <circle cx="200" cy="260" r="180" stroke="#A06AC4" stroke-width=".5"/>
+    <circle cx="200" cy="260" r="120" stroke="#C9A4E2" stroke-width=".3"/>
+    <circle cx="1200" cy="200" r="160" stroke="#A06AC4" stroke-width=".4"/>
+    <circle cx="1200" cy="200" r="90" stroke="#C9A4E2" stroke-width=".3"/>
+    <circle cx="700" cy="100" r="60" stroke="#E8D5F5" stroke-width=".4"/>
+    <ellipse cx="900" cy="400" rx="100" ry="70" stroke="#C9A4E2" stroke-width=".3"/>
+  </svg>
+  <div class="hero-content">
+    <h1>HPV causes 5% of all cancers. Almost all are preventable.</h1>
+    <p class="hero-sub">The HPV vaccine prevents 90% of HPV-related cancers. Screening catches what the vaccine doesn't. We're here to help you take the next step.</p>
+    <a href="#tool" class="hero-cta">Find out what to do next →</a>
+  </div>
+</div>
+
+<div class="tool" id="tool">
+  <svg class="tool-cells" viewBox="0 0 1440 600" fill="none">
+    <circle cx="100" cy="300" r="200" stroke="#C9A4E2" stroke-width=".5"/>
+    <circle cx="1350" cy="150" r="250" stroke="#E8D5F5" stroke-width=".4"/>
+    <circle cx="700" cy="500" r="120" stroke="#C9A4E2" stroke-width=".3"/>
+  </svg>
+  <div class="tool-inner">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" stroke="#7B3BA8" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#7B3BA8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="card-title">HPV Next Steps<span>Personalized screening guide</span></div>
+      </div>
+      <div id="fields"></div>
+      <button class="cta" id="mainCta" disabled onclick="showResults()">Get my results →</button>
+      <div class="card-foot">Free. Anonymous. Takes 2 minutes.</div>
+    </div>
+    <div class="copy">
+      <div class="copy-kicker">Free personalized tool</div>
+      <h2>HPV<br>Next Steps</h2>
+      <p class="copy-desc">A guide to HPV prevention and care built for you. Answer 5 quick questions and get tailored guidance on vaccination, screening, and what to discuss with your doctor.</p>
+      <div class="copy-steps">
+        <div class="copy-step"><div class="copy-step-num">01</div><div class="copy-step-text"><div class="copy-step-title">About you</div><div class="copy-step-sub">Age, sex assigned at birth, vaccination history</div></div></div>
+        <div class="copy-step"><div class="copy-step-num">02</div><div class="copy-step-text"><div class="copy-step-title">Health factors</div><div class="copy-step-sub">Immune status and tobacco use</div></div></div>
+        <div class="copy-step"><div class="copy-step-num">03</div><div class="copy-step-text"><div class="copy-step-title">Your guidance</div><div class="copy-step-sub">Personalized results to bring to your doctor</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="results" id="resultsPanel">
+  <div class="results-inner">
+    <div class="results-head">
+      <div class="results-badge"><svg viewBox="0 0 24 24" fill="none" width="22" height="22"><path d="M9 12l2 2 4-4" stroke="#7B3BA8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="results-profile" id="rProfile"></div>
+    </div>
+    <div id="rContent"></div>
+  </div>
+</div>
+
+<div class="design-note">
+  <div class="design-note-inner">
+    <b>Design note:</b> Visual refinement of Concept 4 matching the client’s site design system — Outfit + Instrument Serif, deep purple palette, duotone photography (mix-blend-mode: luminosity), organic cellular illustrations. In production, custom illustration and photography would be developed as a branded set across the product ecosystem. Branching logic and clinical content identical to working prototype.
+  </div>
+</div>
+
+<div class="foot">HPV Next Steps — Visual refinement, Concept 4</div>
+
+<script>
+const QS=[
+  {q:'age',label:'Your age',opts:[['9-14','9\u201314'],['15-20','15\u201320'],['21-26','21\u201326'],['27-45','27\u201345'],['over45','Over 45']]},
+  {q:'sex',label:'Sex assigned at birth',opts:[['female','Female'],['male','Male']]},
+  {q:'vax',label:'Vaccination status',opts:[['full','Completed all doses'],['partial','Started, didn\u2019t finish'],['no','No'],['unsure','Not sure']]},
+  {q:'immune',label:'Immune status',opts:[['hiv','Living with HIV'],['immunocomp','Weakened immune system'],['none','None of these'],['unsure','Not sure']]},
+  {q:'tobacco',label:'Tobacco use',opts:[['yes','Yes'],['former','Used to, quit'],['no','No']]}
+];
+const A={age:null,sex:null,vax:null,immune:null,tobacco:null};
+
+function init(){
+  const el=document.getElementById('fields');
+  QS.forEach(q=>{
+    const d=document.createElement('div');d.className='field';
+    let h='<div class="field-label">'+q.label+'</div><select class="field-select" onchange="pick(this,\''+q.q+'\')"><option value="">Select</option>';
+    q.opts.forEach(o=>{h+='<option value="'+o[0]+'">'+o[1]+'</option>';});
+    h+='</select>';d.innerHTML=h;el.appendChild(d);
+  });
+}
+function pick(sel,field){A[field]=sel.value||null;document.getElementById('mainCta').disabled=!(A.age&&A.sex&&A.vax&&A.immune&&A.tobacco);}
+
+function showResults(){
+  const{age,sex,vax,immune,tobacco}=A;const im=(immune==='hiv'||immune==='immunocomp');
+  const al={'9-14':'9\u201314','15-20':'15\u201320','21-26':'21\u201326','27-45':'27\u201345','over45':'over 45'}[age];
+  const sl=sex==='female'?'female':'male';
+  let fl=[];if(immune==='hiv')fl.push('HIV+');else if(immune==='immunocomp')fl.push('immunocompromised');
+  if(tobacco==='yes')fl.push('current tobacco');else if(tobacco==='former')fl.push('former tobacco');
+  document.getElementById('rProfile').innerHTML='<b>Your results</b> \u2014 Age '+al+', assigned '+sl+' at birth'+(fl.length?' \u00b7 '+fl.join(' \u00b7 '):'');
+  const v=vR(age,vax,im),s=sR(age,sex,im),r=rR(sex,immune,tobacco),n=nR(age,sex,vax,im);
+  let h='';
+  h+=sec('Vaccination',v.t,v.b);h+=sec('Screening',s.t,s.b);
+  if(r)h+=sec('Risk factors',r.t,r.b);h+=sec('Next step',n.t,n.b);
+  if(n.c)h+='<div class="r-script"><div class="r-script-label">Bring this to your appointment</div><p>'+n.c+'</p></div>';
+  h+='<div class="r-actions"><button class="r-btn outline" onclick="resetAll()">Start over</button><button class="r-btn fill" onclick="window.print()">Print results</button></div>';
+  document.getElementById('rContent').innerHTML=h;
+  document.getElementById('resultsPanel').classList.add('on');
+  document.getElementById('resultsPanel').scrollIntoView({behavior:'smooth'});
+}
+function sec(cat,title,body){return '<div class="r-sec"><div class="r-cat">'+cat+'</div><div class="r-head">'+title+'</div><div class="r-body">'+body+'</div></div>';}
+function resetAll(){A.age=A.sex=A.vax=A.immune=A.tobacco=null;document.querySelectorAll('.field-select').forEach(s=>s.selectedIndex=0);document.getElementById('mainCta').disabled=true;document.getElementById('resultsPanel').classList.remove('on');}
+
+function vR(a,v,im){if(v==='full')return{t:'You are vaccinated.',b:'Series complete. No additional doses needed.'};if(a==='9-14'){if(v==='partial')return{t:'Complete the 2-dose series.',b:'Before 15: only 2 doses, 6\u201312 months apart.'};return{t:'Ideal time to vaccinate.',b:'CDC recommends starting at 9. Before 15 requires only 2 doses.'};}if(a==='15-20'||a==='21-26'){const d=im?'3 doses required regardless of age':'3 doses when starting at 15+';if(v==='partial')return{t:'Complete the series.',b:d+'. No restart needed.'};return{t:'Get vaccinated \u2014 within the recommended window.',b:'Recommended through 26. '+d+'.'};}if(a==='27-45'){if(v==='partial')return{t:'Discuss completing with your doctor.',b:'27\u201345: shared clinical decision. Completing may still benefit.'};return{t:'Vaccination may benefit you.',b:'FDA-approved through 45. Shared decision-making. Depends on exposure history.'};}return{t:'Not recommended at this age.',b:'Not indicated over 45. Prior vaccination continues. Focus on screening.'};}
+function sR(a,sx,im){if(sx==='female'){if(a==='9-14')return{t:'No screening needed yet.',b:'Begins at 21 (or 25, ACS).'};if(a==='15-20')return{t:'Screening begins at 21.',b:im?'Immune status may warrant earlier screening.':'Not recommended before 21.'};if(a==='21-26')return{t:im?'More frequent screening.':'Begin cervical screening.',b:im?'Annual Pap, HPV, or co-testing.':'21\u201329: Pap every 3 years. 25+: HPV test every 5 (ACS).'};if(a==='27-45')return{t:im?'Annual screening.':'Continue cervical screening.',b:im?'Annual. Do not skip even if vaccinated.':'HPV test every 5, co-test every 5, or Pap every 3.'};return{t:im?'Continue annual screening.':'Continue through 65.',b:im?'Annual indefinitely.':'After 65, may stop with adequate prior results.'};}if(a==='9-14'||a==='15-20')return{t:'No routine screening for males.',b:'No FDA-approved test. Vaccination is the priority.'};return{t:'No routine screening. Symptom awareness matters.',b:im?'Discuss anal Pap. Report persistent sore throat, neck lump, ear pain.':'Oropharyngeal cancers rising in males. Watch for neck lump, sore throat, difficulty swallowing.'};}
+function rR(sx,im,tb){const f=[];if(im==='hiv')f.push('HIV increases persistent HPV and cancer risk. ART and screening critical.');else if(im==='immunocomp')f.push('Weakened immune system reduces HPV clearance. More frequent monitoring recommended.');if(tb==='yes')f.push(sx==='female'?'Tobacco co-factor for cervical cancer. Quitting reduces risk.':'Tobacco increases head/neck cancer risk with HPV. Quitting recommended.');else if(tb==='former')f.push('Prior tobacco use may have increased risk. Quitting reduces ongoing risk.');if(im==='unsure')f.push('If taking immunosuppressives, inform your doctor.');if(!f.length)return null;return{t:f.length===1?'One additional factor':f.length+' factors',b:f.join(' ')};}
+function nR(a,sx,v,im){if(a==='9-14'){if(v==='full')return{t:'No action needed.',b:'Continue routine visits.',c:null};return{t:'Talk to a parent or guardian.',b:'Best time is before 15.',c:'What to say: \u201cI\u2019d like the HPV vaccine. Can we schedule it?\u201d'};}if((v==='no'||v==='unsure')&&(a==='15-20'||a==='21-26'))return{t:'Ask your doctor about vaccination.',b:'Most insurance covers it through 26.',c:'What to say: \u201cI haven\u2019t been vaccinated against HPV. Can we start today?\u201d'};if((v==='no'||v==='unsure')&&a==='27-45')return{t:'Discuss vaccination with your doctor.',b:'Bring up status, history, risk factors.',c:'What to say: \u201cI\u2019m not vaccinated. Given my age, would you recommend it?\u201d'};if(v==='partial')return{t:'Schedule remaining doses.',b:'No restart. Pick up where you left off.',c:'What to say: \u201cI started HPV but didn\u2019t finish. Can we schedule remaining?\u201d'};if(a==='over45'&&(v==='no'||v==='unsure'))return{t:sx==='female'?'Confirm screening is current.':'Stay aware of symptoms.',b:sx==='female'?'Schedule Pap/HPV if overdue.':'Report persistent throat, neck, ear, or anal symptoms.',c:im?'Important: Discuss more frequent screening given immune status.':null};if(v==='full'&&sx==='female'&&(a==='21-26'||a==='27-45'||a==='over45'))return{t:'Stay current on cervical screening.',b:'Vaccination does not replace screening.',c:im?'Important: Annual screening even if vaccinated.':null};return{t:'Continue routine visits.',b:'Stay informed about HPV-related symptoms.',c:im?'Important: Closer monitoring may be appropriate.':null};}
+
+init();
+</script>
+</body>
+</html>
+
+</template>
+<template id="protoDoc2">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HPV Next Steps — Website Concept (Work in Progress)</title>
+    <style>
+        @page {
+            size: 11in 48in;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #FFFFFF;
+            color: #1A2530;
+            width: 11in;
+            line-height: 1.7;
+        }
+        
+        /* ==================== 
+           DESIGN PRINCIPLES APPLIED:
+           
+           TUFTE:
+           - Typography IS the design (no boxes, minimal color)
+           - Data integrated into prose
+           - Comparative data, not isolated numbers
+           - Maximum data-ink ratio
+           
+           NIELSEN:
+           - Question-based navigation (user mental model)
+           - Progressive disclosure
+           - Single primary action per viewport
+           - Clear system status
+           ==================== */
+        
+        /* ==================== 
+           HEADER: Question-based navigation
+           Users think in questions, not categories
+           ==================== */
+        
+        .header {
+            padding: 16px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E8E0F0;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        
+        .logo-mark {
+            width: 36px;
+            height: 36px;
+            background: #7B5BA6;
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .logo-mark::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border: 2px solid white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1A2530;
+        }
+        
+        .logo-text span {
+            color: #7B5BA6;
+        }
+        
+        /* NIELSEN: Question-based nav matches user mental model */
+        .main-nav {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+        
+        .nav-link {
+            font-size: 15px;
+            color: #2D3E50;
+            text-decoration: none;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .nav-link:hover {
+            color: #7B5BA6;
+            border-bottom-color: #7B5BA6;
+        }
+        
+        .nav-cta {
+            background: #7B5BA6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .nav-donate {
+            color: #7B5BA6;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        /* Crisis link - always visible, Nielsen: error prevention */
+        .crisis-bar {
+            background: #5C4080;
+            padding: 10px 60px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            font-size: 13px;
+        }
+        
+        .crisis-bar a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .crisis-bar a:first-child {
+            font-weight: 600;
+            color: #FFEEE5;
+        }
+        
+        /* ==================== 
+           HERO: One message, one number, one action
+           TUFTE: Integrate data into narrative
+           NIELSEN: Single primary action
+           ==================== */
+        
+        .hero {
+            padding: 80px 60px;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #1A2530;
+            margin-bottom: 24px;
+        }
+        
+        /* TUFTE: Data integrated into headline, not separate */
+        .hero h1 .data {
+            color: #7B5BA6;
+        }
+        
+        .hero-lead {
+            font-size: 22px;
+            line-height: 1.6;
+            color: #2D3E50;
+            margin-bottom: 32px;
+            max-width: 720px;
+        }
+        
+        /* NIELSEN: Single clear action */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #7B5BA6;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 4px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .hero-secondary {
+            margin-left: 24px;
+            color: #5C4080;
+            font-size: 17px;
+            text-decoration: underline;
+        }
+        
+        /* ==================== 
+           TUFTE: Comparative data visualization
+           Show relationships, not isolated numbers
+           ==================== */
+        
+        .data-story {
+            padding: 60px;
+            background: #F9F7FC;
+            border-top: 1px solid #E8E0F0;
+            border-bottom: 1px solid #E8E0F0;
+        }
+        
+        .data-story-inner {
+            max-width: 900px;
+        }
+        
+        .data-story h2 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #7B5BA6;
+            margin-bottom: 24px;
+        }
+        
+        /* TUFTE: Sparkline-style inline data */
+        .data-narrative {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #1A2530;
+        }
+        
+        .data-narrative strong {
+            color: #5C4080;
+            font-weight: 700;
+        }
+        
+        /* TUFTE: Small multiples - cancer types with relative scale */
+        .cancer-breakdown {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 2px;
+        }
+        
+        .cancer-bar {
+            text-align: center;
+        }
+        
+        .cancer-bar-fill {
+            background: #7B5BA6;
+            margin-bottom: 8px;
+            border-radius: 2px 2px 0 0;
+        }
+        
+        .cancer-bar:nth-child(1) .cancer-bar-fill { height: 100px; } /* Cervical - most common */
+        .cancer-bar:nth-child(2) .cancer-bar-fill { height: 70px; background: #9B7BC6; } /* Head/Neck */
+        .cancer-bar:nth-child(3) .cancer-bar-fill { height: 45px; background: #B8A5D3; } /* Anal */
+        .cancer-bar:nth-child(4) .cancer-bar-fill { height: 25px; background: #B8A5D3; } /* Vulvar */
+        .cancer-bar:nth-child(5) .cancer-bar-fill { height: 20px; background: #D4C8E5; } /* Vaginal */
+        .cancer-bar:nth-child(6) .cancer-bar-fill { height: 15px; background: #D4C8E5; } /* Penile */
+        
+        .cancer-bar-label {
+            font-size: 12px;
+            color: #2D3E50;
+            line-height: 1.3;
+        }
+        
+        .data-footnote {
+            margin-top: 16px;
+            font-size: 12px;
+            color: #5A6A7A;
+        }
+        
+        /* ==================== 
+           NIELSEN: Progressive disclosure
+           Start with questions, reveal answers on demand
+           ==================== */
+        
+        .questions-section {
+            padding: 60px;
+        }
+        
+        .questions-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1A2530;
+            margin-bottom: 12px;
+        }
+        
+        .questions-section > p {
+            font-size: 18px;
+            color: #5A6A7A;
+            margin-bottom: 40px;
+        }
+        
+        .question-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .question-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 24px;
+            background: #F9F7FC;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #1A2530;
+            border-left: 3px solid transparent;
+            transition: all 0.15s;
+        }
+        
+        .question-item:hover {
+            background: white;
+            border-left-color: #7B5BA6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .question-item span {
+            font-size: 17px;
+            font-weight: 500;
+        }
+        
+        .question-item::after {
+            content: '→';
+            margin-left: auto;
+            color: #7B5BA6;
+            font-size: 18px;
+        }
+        
+        /* ==================== 
+           TOOL: Clear process, visible status
+           NIELSEN: System status visibility
+           ==================== */
+        
+        .tool-section {
+            padding: 60px;
+            background: #5C4080;
+            color: white;
+        }
+        
+        .tool-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .tool-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .tool-section h2 em {
+            font-style: normal;
+            color: #FFEEE5;
+        }
+        
+        .tool-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+        
+        .tool-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: #5C4080;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        /* NIELSEN: Visible process steps */
+        .tool-process {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 32px;
+        }
+        
+        .tool-process-title {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+            margin-bottom: 24px;
+        }
+        
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .process-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-num {
+            width: 28px;
+            height: 28px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+        
+        .step-content span {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* ==================== 
+           WHO WE ARE: Credibility through specificity
+           TUFTE: Specific > general
+           ==================== */
+        
+        .about-section {
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            border-bottom: 1px solid #E8E0F0;
+        }
+        
+        .about-section h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1A2530;
+            margin-bottom: 20px;
+        }
+        
+        .about-section p {
+            font-size: 17px;
+            color: #2D3E50;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        
+        /* TUFTE: Specific credentials, not generic claims */
+        .founders-row {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+        }
+        
+        .founder {
+            flex: 1;
+        }
+        
+        .founder-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1A2530;
+            margin-bottom: 4px;
+        }
+        
+        .founder-title {
+            font-size: 14px;
+            color: #5C4080;
+            margin-bottom: 8px;
+        }
+        
+        .founder-bio {
+            font-size: 14px;
+            color: #5A6A7A;
+            line-height: 1.6;
+        }
+        
+        /* Partners - specific names, not vague claims */
+        .partners {
+            background: #F9F7FC;
+            padding: 32px;
+            border-radius: 4px;
+        }
+        
+        .partners h3 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #5C4080;
+            margin-bottom: 16px;
+        }
+        
+        .partners-list {
+            font-size: 14px;
+            color: #2D3E50;
+            line-height: 1.8;
+        }
+        
+        /* ==================== 
+           NEWS: Minimal, functional
+           TUFTE: Only what's necessary
+           ==================== */
+        
+        .news-section {
+            padding: 60px;
+        }
+        
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 32px;
+        }
+        
+        .news-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1A2530;
+        }
+        
+        .news-header a {
+            font-size: 14px;
+            color: #5C4080;
+        }
+        
+        .news-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        
+        .news-item {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .news-item:hover h3 {
+            color: #5C4080;
+        }
+        
+        .news-date {
+            font-size: 13px;
+            color: #7B5BA6;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .news-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1A2530;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .news-item p {
+            font-size: 14px;
+            color: #5A6A7A;
+            line-height: 1.5;
+        }
+        
+        /* ==================== 
+           CTA: One action, clear value
+           NIELSEN: Single primary action
+           ==================== */
+        
+        .final-cta {
+            padding: 80px 60px;
+            background: #F9F7FC;
+            text-align: center;
+            border-top: 1px solid #E8E0F0;
+        }
+        
+        .final-cta h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1A2530;
+            margin-bottom: 12px;
+        }
+        
+        .final-cta p {
+            font-size: 18px;
+            color: #5A6A7A;
+            margin-bottom: 32px;
+        }
+        
+        .final-cta .cta-primary {
+            background: #F4A27F;
+            color: #1A2530;
+            padding: 16px 36px;
+            border-radius: 4px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .final-cta .cta-secondary {
+            margin-left: 24px;
+            color: #5C4080;
+            font-size: 16px;
+        }
+        
+        /* ==================== 
+           FOOTER: Functional, compressed
+           TUFTE: Maximum information, minimum ink
+           ==================== */
+        
+        .footer {
+            padding: 40px 60px;
+            background: white;
+            border-top: 1px solid #E8E0F0;
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            font-size: 14px;
+            color: #5A6A7A;
+        }
+        
+        .footer-brand p {
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+        
+        .footer-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        
+        .footer-nav h4 {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #1A2530;
+            margin-bottom: 12px;
+        }
+        
+        .footer-nav ul {
+            list-style: none;
+        }
+        
+        .footer-nav li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-nav a {
+            color: #5A6A7A;
+            text-decoration: none;
+        }
+        
+        .footer-nav a:hover {
+            color: #5C4080;
+        }
+        
+        .footer-contact {
+            text-align: right;
+        }
+        
+        .footer-contact p {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .social-row {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .social-link {
+            width: 28px;
+            height: 28px;
+            background: #E8E0F0;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5C4080;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .footer-bottom {
+            grid-column: 1 / -1;
+            padding-top: 24px;
+            border-top: 1px solid #E8E0F0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        
+        .footer-bottom a {
+            color: #5A6A7A;
+            text-decoration: none;
+            margin-left: 24px;
+        }
+        
+        /* ==================== 
+           ANNOTATIONS
+           ==================== */
+        
+        .annotation {
+            background: #FFFBEB;
+            border-left: 4px solid #F4A27F;
+            padding: 16px 24px;
+            margin: 16px 60px;
+            font-size: 13px;
+        }
+        
+        .annotation-title {
+            font-weight: 700;
+            color: #5C4080;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+        
+        .annotation p {
+            color: #2D3E50;
+            line-height: 1.5;
+        }
+        
+        .annotation code {
+            background: #F3EFF8;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<div style="background:#3A1057;color:#fff;text-align:center;font-family:system-ui,-apple-system,sans-serif;font-size:0.68rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;padding:9px 12px;">Website concept &middot; Query-based navigation</div>
+
+    <!-- ANNOTATION: Design Philosophy -->
+    <div class="annotation">
+        <div class="annotation-title">V3 Design Philosophy</div>
+        <p><strong>Tufte:</strong> Typography IS the design. Data woven into prose. Comparative visualization. No decorative elements.<br>
+        <strong>Nielsen:</strong> Question-based navigation. Progressive disclosure. One primary action per section. Crisis paths always visible.</p>
+    </div>
+
+    <!-- Crisis Bar - Always visible -->
+    <div class="crisis-bar">
+        <a href="#">Just diagnosed? Start here →</a>
+        <a href="#">En Español</a>
+        <a href="#">For Healthcare Providers</a>
+        <a href="#">Search</a>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">
+            <div class="logo-mark"></div>
+            <div class="logo-text"><span>HPV</span> Next Steps</div>
+        </a>
+        <nav class="main-nav">
+            <a href="#" class="nav-link">What is HPV?</a>
+            <a href="#" class="nav-link">Am I at risk?</a>
+            <a href="#" class="nav-link">How do I prevent it?</a>
+            <a href="#" class="nav-link">I've been diagnosed</a>
+            <a href="#" class="nav-cta">Check My Risk</a>
+            <a href="#" class="nav-donate">Donate</a>
+        </nav>
+    </header>
+    
+    <!-- ANNOTATION -->
+    <div class="annotation">
+        <div class="annotation-title">Change: Question-Based Navigation</div>
+        <p><strong>Before:</strong> <code>What is HPV? | Prevention | Treatments | Resources | About</code><br>
+        <strong>After:</strong> <code>What is HPV? | Am I at risk? | How do I prevent it? | I've been diagnosed</code><br>
+        Users think in questions. Navigation should match their mental model, not our org structure.</p>
+    </div>
+
+    <!-- Hero: One message -->
+    <section class="hero">
+        <h1>HPV causes <span class="data">5%</span> of all cancers. Almost all are preventable.</h1>
+        <p class="hero-lead">If everyone got vaccinated, we'd prevent 1 million cancer diagnoses and 500,000 deaths every year. The vaccine is safe. Screening works. And we're here to help you take the next step.</p>
+        <a href="#" class="hero-cta">Find out what to do next →</a>
+        <a href="#" class="hero-secondary">Learn about HPV first</a>
+    </section>
+    
+    <!-- ANNOTATION -->
+    <div class="annotation">
+        <div class="annotation-title">Change: Data Integrated into Narrative</div>
+        <p><strong>Before:</strong> Stats in a separate card (5%, 1M+, 6 types) competing with hero text.<br>
+        <strong>After:</strong> Data woven into the sentence. "5%" is part of the headline. "1 million" and "500,000" are in the subhead. No separate stats box. Tufte: <em>"Data graphics should draw the viewer into the substance of the data."</em></p>
+    </div>
+
+    <!-- Data Story: Comparative visualization -->
+    <section class="data-story">
+        <div class="data-story-inner">
+            <h2>The HPV Story in Numbers</h2>
+            <p class="data-narrative">
+                <strong>80%</strong> of sexually active adults will get HPV in their lifetime—most will never know it. 
+                In <strong>90%</strong> of cases, the infection clears on its own within two years. 
+                But for the remaining <strong>10%</strong>, persistent infection can lead to cancer—sometimes decades later. 
+                The good news: the HPV vaccine prevents <strong>90%</strong> of these cancers, and it's now approved for adults up to age <strong>45</strong>.
+            </p>
+            
+            <!-- TUFTE: Small multiples showing relative scale -->
+            <div class="cancer-breakdown">
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Cervical</div>
+                </div>
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Head &<br>Neck</div>
+                </div>
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Anal</div>
+                </div>
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Vulvar</div>
+                </div>
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Vaginal</div>
+                </div>
+                <div class="cancer-bar">
+                    <div class="cancer-bar-fill"></div>
+                    <div class="cancer-bar-label">Penile</div>
+                </div>
+            </div>
+            <p class="data-footnote">Relative incidence of HPV-related cancers. Cervical cancer is most common globally; head and neck cancers are rising fastest in the US.</p>
+        </div>
+    </section>
+    
+    <!-- ANNOTATION -->
+    <div class="annotation">
+        <div class="annotation-title">Change: Comparative Visualization</div>
+        <p><strong>Before:</strong> "6 Types of cancer caused by HPV" — a flat list with no hierarchy.<br>
+        <strong>After:</strong> Bar chart showing relative prevalence. User immediately sees cervical is most common, head/neck is rising. Tufte: <em>"Show the data."</em> Not just list it.</p>
+    </div>
+
+    <!-- Questions: Progressive disclosure -->
+    <section class="questions-section">
+        <h2>What do you want to know?</h2>
+        <p>Click a question to get a clear, evidence-based answer.</p>
+        
+        <div class="question-list">
+            <a href="#" class="question-item">
+                <span>Should I get the HPV vaccine?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>I'm over 26. Is it too late?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>How do I know if I have HPV?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>What screening do I need?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>I tested positive. Now what?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>Can HPV be cured?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>How do I talk to my partner about HPV?</span>
+            </a>
+            <a href="#" class="question-item">
+                <span>Is the vaccine safe?</span>
+            </a>
+        </div>
+    </section>
+    
+    <!-- ANNOTATION -->
+    <div class="annotation">
+        <div class="annotation-title">Change: Progressive Disclosure via Questions</div>
+        <p><strong>Before:</strong> Generic category cards (Education, Screening, Vaccination) with paragraphs of text.<br>
+        <strong>After:</strong> Actual user questions as navigation. Shows empathy for user's real concerns ("Is it too late?", "Is it safe?"). Nielsen: <em>"Recognition rather than recall."</em> User sees their question, clicks it, gets answer.</p>
+    </div>
+
+    <!-- HPV Next Steps Tool -->
+    <section class="tool-section">
+        <div class="tool-content">
+            <h2>Not sure where to start? Try <em>HPV Next Steps</em></h2>
+            <p>Answer 2-3 quick, anonymous questions about your age and vaccination history. Get personalized guidance on what to do next—no guesswork, no confusion.</p>
+            <a href="#" class="tool-cta">Start now — takes 2 minutes →</a>
+        </div>
+        <div class="tool-process">
+            <div class="tool-process-title">How it works</div>
+            <div class="process-step">
+                <div class="step-num">1</div>
+                <div class="step-content">
+                    <strong>Answer 2-3 questions</strong>
+                    <span>Age, sex assigned at birth, vaccination status</span>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">2</div>
+                <div class="step-content">
+                    <strong>Get your personalized results</strong>
+                    <span>Vaccination, screening, and care recommendations</span>
+                </div>
+            </div>
+            <div class="process-step">
+                <div class="step-num">3</div>
+                <div class="step-content">
+                    <strong>Take action with confidence</strong>
+                    <span>Share results with your doctor or take the next step</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About: Credibility through specificity -->
+    <section class="about-section">
+        <div>
+            <h2>No one navigates HPV alone.</h2>
+            <p>The organization is a national nonprofit committed to reducing the burden of HPV through education, prevention, and advocacy. We provide evidence-based information on HPV infection, vaccination, and cancer prevention.</p>
+            <p>We work across medical specialties to unify prevention efforts. Whether you're a patient, caregiver, or healthcare provider—we're here to help.</p>
+            
+            <div class="founders-row">
+                <div class="founder">
+                    <div class="founder-name">Co-Founder &amp; CEO</div>
+                    <div class="founder-title">Survivor &amp; Advocate</div>
+                    <div class="founder-bio">A cancer survivor, public speaker, and entrepreneur who founded the organization to ensure no one faces HPV alone.</div>
+                </div>
+                <div class="founder">
+                    <div class="founder-name">Co-Founder &amp; Chair</div>
+                    <div class="founder-title">Survivor &amp; Advocate</div>
+                    <div class="founder-bio">A cancer survivor and advocate for removing stigma from HPV conversations.</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="partners">
+            <h3>Our Partners & Advisors Include</h3>
+            <p class="partners-list">
+                Leading cancer centers, comprehensive cancer institutes, national cancer societies, public health agencies, and prevention research programs.
+            </p>
+            <p style="margin-top: 16px; font-size: 13px; color: #5A6A7A;">35+ partner organizations across research, clinical care, and advocacy.</p>
+        </div>
+    </section>
+    
+    <!-- ANNOTATION -->
+    <div class="annotation">
+        <div class="annotation-title">Change: Specificity over Generality</div>
+        <p><strong>Before:</strong> "Founded by Survivors" badge with initials. Generic "national nonprofit" language.<br>
+        <strong>After:</strong> Clear leadership roles and one-line bios that explain why they founded this, plus named partner categories instead of a vague "35+ partners." Tufte: <em>"Specific is always more credible than general."</em></p>
+    </div>
+
+    <!-- News: Minimal -->
+    <section class="news-section">
+        <div class="news-header">
+            <h2>News & Events</h2>
+            <a href="#">View all →</a>
+        </div>
+        <div class="news-list">
+            <a href="#" class="news-item">
+                <div class="news-date">Save the Date</div>
+                <h3>Annual Benefit Soirée 2026</h3>
+                <p>October 19th in New York City. Join us for our annual fundraising gala.</p>
+            </a>
+            <a href="#" class="news-item">
+                <div class="news-date">Webinar Series</div>
+                <h3>Emerging Science in HPV</h3>
+                <p>Monthly webinars with leading researchers on prevention and treatment advances.</p>
+            </a>
+            <a href="#" class="news-item">
+                <div class="news-date">New Resource</div>
+                <h3>GI Provider Toolkit</h3>
+                <p>Evidence-based guidance for gastroenterologists on HPV-related cancer screening.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Help us eliminate HPV cancers.</h2>
+        <p>Every donation funds education, prevention tools, and support services.</p>
+        <a href="#" class="cta-primary">Donate now</a>
+        <a href="#" class="cta-secondary">Subscribe to newsletter</a>
+    </section>
+
+    <!-- Footer: Compressed, functional -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <a href="/" class="logo">
+                <div class="logo-mark"></div>
+                <div class="logo-text"><span>HPV</span> Next Steps</div>
+            </a>
+            <p>Empowering individuals with knowledge about HPV. Ensuring no one navigates alone.</p>
+        </div>
+        
+        <div class="footer-nav-grid">
+            <nav class="footer-nav">
+                <h4>Learn</h4>
+                <ul>
+                    <li><a href="#">What is HPV?</a></li>
+                    <li><a href="#">HPV Myth Busters</a></li>
+                    <li><a href="#">Vaccination Facts</a></li>
+                    <li><a href="#">Screening Guidelines</a></li>
+                </ul>
+            </nav>
+            <nav class="footer-nav">
+                <h4>Get Help</h4>
+                <ul>
+                    <li><a href="#">Just Diagnosed</a></li>
+                    <li><a href="#">Treatment Info</a></li>
+                    <li><a href="#">Support Services</a></li>
+                    <li><a href="#">Self Advocacy</a></li>
+                </ul>
+            </nav>
+            <nav class="footer-nav">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Survivor Stories</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                    <li><a href="#">For Providers</a></li>
+                </ul>
+            </nav>
+            <nav class="footer-nav">
+                <h4>About</h4>
+                <ul>
+                    <li><a href="#">Our Mission</a></li>
+                    <li><a href="#">Leadership</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="footer-contact">
+            <div class="social-row">
+                <a href="#" class="social-link">f</a>
+                <a href="#" class="social-link">in</a>
+                <a href="#" class="social-link">X</a>
+                <a href="#" class="social-link">▶</a>
+            </div>
+            <p>HPV Next Steps</p>
+        </div>
+        
+        <div class="footer-bottom">
+            <span>© 2026 HPV Next Steps</span>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ANNOTATION: Summary -->
+    <div class="annotation">
+        <div class="annotation-title">Summary: V2 → V3 Changes</div>
+        <p>
+        <strong>Sections reduced:</strong> 9 → 6 (removed redundant facts bar, combined paths into questions)<br>
+        <strong>CTAs per section:</strong> Multiple → One primary<br>
+        <strong>Navigation model:</strong> Org-centric → Question-based<br>
+        <strong>Data presentation:</strong> Isolated boxes → Integrated prose + comparative visualization<br>
+        <strong>Credibility:</strong> Generic claims → Specific names and institutions<br>
+        <strong>Visual design:</strong> Boxes, gradients, rounded corners → Typography-driven, minimal color
+        </p>
+    </div>
+
+</body>
+</html>
 
 </template>
 </body>
