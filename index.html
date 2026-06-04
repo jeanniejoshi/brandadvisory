@@ -67,17 +67,22 @@
 
   .hero-banner {
     position: relative;
-    width: 100vw;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    height: 320px;
-    border-radius: 0;
-    margin-bottom: 2.5rem;
+    width: 100%;
+    height: 260px;
+    border-radius: 12px;
+    margin: 0 0 2.5rem;
     overflow: hidden;
-    background: #B2A6DC;
+    background: var(--paper);
   }
+  .hero-field { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .hf { position: absolute; border-radius: 50%; filter: blur(44px); opacity: 0.13; will-change: transform; }
+  .hf1 { width: 300px; height: 220px; left: 6%; top: 14%; background: #A9C0EE; animation: hfA 28s ease-in-out infinite alternate; }
+  .hf2 { width: 240px; height: 240px; right: 10%; top: 24%; background: #CBB8E6; animation: hfB 34s ease-in-out infinite alternate; }
+  .hf3 { width: 260px; height: 180px; left: 42%; bottom: -16%; background: #BBD8D2; animation: hfC 40s ease-in-out infinite alternate; }
+  @keyframes hfA { from { transform: translate(0,0); } to { transform: translate(34px,-20px); } }
+  @keyframes hfB { from { transform: translate(0,0); } to { transform: translate(-28px,18px); } }
+  @keyframes hfC { from { transform: translate(0,0); } to { transform: translate(20px,-24px); } }
+  @media (prefers-reduced-motion: reduce) { .hf { animation: none; } }
   .hero-banner .mesh {
     position: absolute;
     inset: -25%;
@@ -94,7 +99,7 @@
     will-change: transform;
   }
   .hero-banner::after {
-    content: '';
+    content: none;
     position: absolute;
     inset: 0;
     z-index: 1;
@@ -111,21 +116,21 @@
   }
   .hero-banner svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
   .hcn { cursor: pointer; }
-  .hcn circle { fill: #fff; transition: r .35s ease, fill .35s ease; }
+  .hcn circle { fill: var(--accent); transition: r .35s ease, fill .35s ease; }
   .hcn text {
-    fill: #fff; font-family: var(--sans); font-size: 12px; font-weight: 500;
-    letter-spacing: .02em; opacity: .95; transition: opacity .35s ease;
+    fill: var(--ink-2); font-family: var(--sans); font-size: 11px; font-weight: 600;
+    letter-spacing: .14em; text-transform: uppercase; opacity: .95; transition: opacity .35s ease;
   }
-  .hcl { stroke: rgba(255,255,255,.42); stroke-width: 1; transition: stroke .35s, opacity .35s, stroke-width .35s; }
+  .hcl { stroke: rgba(0,47,167,.22); stroke-width: 0.75; transition: stroke .35s, opacity .35s, stroke-width .35s; }
   .hcg { animation: heroFloat 24s ease-in-out infinite alternate; will-change: transform; }
   .hcg.b { animation-name: heroFloatB; animation-duration: 30s; }
   @keyframes heroFloat  { 0%{transform:translate(0,0)} 100%{transform:translate(14px,-9px)} }
   @keyframes heroFloatB { 0%{transform:translate(0,0)} 100%{transform:translate(-12px,8px)} }
-  .hcn.lit circle { r: 5.5; fill: #fff; }
-  .hcn.lit text { opacity: 1; }
-  .hcn.dim circle { fill: rgba(255,255,255,.4); }
+  .hcn.lit circle { r: 5; fill: var(--accent); }
+  .hcn.lit text { opacity: 1; fill: var(--ink); }
+  .hcn.dim circle { fill: rgba(0,47,167,.28); }
   .hcn.dim text { opacity: .3; }
-  .hcl.lit { stroke: #fff; stroke-width: 1.8; }
+  .hcl.lit { stroke: var(--accent); stroke-width: 1.25; }
   .hcl.dim { opacity: .1; }
   @media (prefers-reduced-motion: reduce) {
     .hero-banner .mesh, .hcg { animation: none; }
@@ -186,6 +191,29 @@
     letter-spacing: 0;
     line-height: 1.65;
     margin-bottom: 0.2rem;
+  }
+
+  .hero-gateway {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1.1rem;
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    color: var(--ink-2);
+    margin-top: 1.5rem;
+    margin-bottom: 0.2rem;
+  }
+  .hero-gateway a {
+    color: #B92D69;
+    font-weight: 400;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .hero-gateway a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #B92D69;
   }
 
   /* ============== SECTION ============== */
@@ -1059,6 +1087,49 @@
   .proto-note { margin-top: 0.85rem; text-align: center; font-family: var(--sans); font-size: 0.7rem; }
   .proto-note a { color: var(--accent); text-decoration: none; }
   .proto-note a:hover { text-decoration: underline; text-underline-offset: 2px; }
+  .proto-cover-hint { color: var(--ink-4); margin-bottom: 0.1rem; line-height: 0; }
+  .proto-cover-meta { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0; text-transform: none; color: var(--ink-3); margin-top: 0.1rem; max-width: 360px; text-wrap: balance; }
+  .proto-device { display: flex; justify-content: center; padding: 1.6rem 1.2rem; background: #fff; }
+  .proto-device-screen { position: relative; overflow: hidden; background: #fff; }
+  .proto-device-viewport { position: relative; width: 100%; height: 100%; overflow: hidden; }
+  .proto-device-bar { display: none; }
+  .proto-device--phone .proto-device-screen { width: 360px; max-width: 100%; height: 640px; border: 9px solid #1A1A1A; border-radius: 40px; box-shadow: 0 18px 44px rgba(20,20,30,0.22); }
+  .proto-device--phone .proto-device-screen::before { content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 116px; height: 21px; background: #1A1A1A; border-radius: 0 0 13px 13px; z-index: 3; }
+  .proto-device--phone iframe { width: 100%; height: 100%; border: 0; transform: none; margin: 0; display: block; }
+  .proto-device--desktop .proto-device-screen { width: 100%; max-width: 880px; border: 1px solid var(--rule); border-radius: 10px; box-shadow: 0 16px 40px rgba(20,20,30,0.12); }
+  .proto-device--desktop .proto-device-bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px; background: #F0F1F4; border-bottom: 1px solid var(--rule); }
+  .proto-device--desktop .proto-device-bar span { width: 9px; height: 9px; border-radius: 50%; background: #CDD0D6; }
+  .proto-device--desktop iframe { width: 100%; height: 520px; border: 0; transform: none; margin: 0; display: block; }
+  @media (max-width: 700px) {
+    .proto-device { padding: 1rem 0.4rem; }
+    .proto-device--phone .proto-device-screen { width: 290px; height: 560px; border-width: 8px; border-radius: 34px; }
+    .proto-device--phone .proto-device-screen::before { width: 96px; height: 18px; }
+    .proto-device--desktop iframe { height: 420px; }
+  }
+  .proto-device-base { display: none; }
+  .proto-device--laptop { flex-direction: column; align-items: center; gap: 0; }
+  .proto-device--laptop .proto-device-screen { width: 100%; max-width: 680px; background: #1A1A1A; border-radius: 14px; padding: 12px; overflow: hidden; box-shadow: 0 10px 26px rgba(20,20,30,0.10); position: relative; z-index: 2; }
+  .proto-device--laptop .proto-device-bar { display: flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; background: #F0F1F4; border-radius: 5px 5px 0 0; border-bottom: 1px solid var(--rule); }
+  .proto-device--laptop .proto-device-bar span { width: 8px; height: 8px; border-radius: 50%; background: #CDD0D6; }
+  .proto-device--laptop .proto-device-viewport { height: 430px; border-radius: 0 0 4px 4px; }
+  .proto-device--laptop iframe { position: absolute; top: 0; left: 0; border: 0; margin: 0; display: block; background: #fff; }
+  .proto-support { padding: 0.4rem 1.2rem 1.4rem; background: #fff; }
+  .proto-support-head { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-4); margin: 0 0 0.55rem; text-align: center; }
+  .proto-support-tabs { display: flex; justify-content: center; gap: 0; margin-bottom: 0.8rem; }
+  .proto-support-tab { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-3); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.95rem; cursor: pointer; transition: color 0.18s ease, border-color 0.18s ease; }
+  .proto-support-tab:hover { color: var(--ink); }
+  .proto-support-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .proto-support-frame { border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: #fff; }
+  .proto-support-frame iframe { display: block; width: 100%; height: 460px; border: 0; }
+  .proto-concepts { display: flex; justify-content: center; gap: 0; padding: 0 1rem 0.4rem; }
+  .proto-concept-tab { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-3); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.95rem; cursor: pointer; transition: color 0.18s ease, border-color 0.18s ease; }
+  .proto-concept-tab:hover { color: var(--ink); }
+  .proto-concept-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  @media (max-width: 700px) {
+    .proto-device--laptop .proto-device-screen { max-width: 100%; padding: 9px; }
+    .proto-device--laptop .proto-device-viewport { height: 360px; }
+    .proto-support-frame iframe { height: 380px; }
+  }
   @media (max-width: 700px) {
     .proto-viewer { padding: 1.1rem 0.9rem 1rem; }
     .proto-stage iframe {
@@ -1324,6 +1395,8 @@
   .brand-roster {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
     margin-top: 1.5rem;
     border-top: 1px solid var(--ink);
   }
@@ -1336,13 +1409,10 @@
     color: var(--ink);
     padding: 1.4rem 0.5rem;
     text-align: center;
-    border-bottom: 1px solid var(--rule);
-    border-right: 1px solid var(--rule);
+    background: var(--paper-2);
     cursor: default;
   }
 
-  /* Remove right border on last column */
-  .brand-roster .brand-name:nth-child(4n) { border-right: none; }
   .brand-roster .brand-sub {
     display: block;
     font-family: var(--sans);
@@ -1354,7 +1424,7 @@
     margin-top: 0.45rem;
   }
   /* Remove bottom border on last row (last 4) */
-  .brand-roster .brand-name:nth-last-child(-n+4) { border-bottom: none; }
+  
 
   /* ============== CONTACT ============== */
   .contact {
@@ -1862,7 +1932,7 @@
     .container { padding: 0 1.25rem; }
 
     /* Hero banner — shorter on mobile, smaller constellation labels */
-    .hero-banner { height: 200px; margin-bottom: 1.75rem; }
+    .hero-banner { height: 170px; margin-bottom: 1.75rem; }
     .hcn text { font-size: 8.5px; }
 
     /* Career chart — horizontal scroll isolated to the chart from tablet down */
@@ -1968,7 +2038,7 @@
       grid-row: auto;
     }
     .gateway-pair::before { display: none; }
-    .gateway-pair-link { grid-column: 1; }
+    .gateway-pair-link { grid-column: 1; text-align: left; }
 
     /* People & Teams — stack blocks */
     .team-blocks-top { grid-template-columns: repeat(2, 1fr); }
@@ -1984,10 +2054,6 @@
 
     /* Brand roster — 3 cols */
     .brand-roster { grid-template-columns: repeat(3, 1fr); }
-    .brand-roster .brand-name:nth-child(4n) { border-right: 1px solid var(--rule); }
-    .brand-roster .brand-name:nth-child(3n) { border-right: none; }
-    .brand-roster .brand-name:nth-last-child(-n+4) { border-bottom: 1px solid var(--rule); }
-    .brand-roster .brand-name:nth-last-child(-n+3) { border-bottom: none; }
 
     /* Tabs — allow wrap */
     .tab-bar {
@@ -2062,11 +2128,7 @@
     .brand-roster .brand-name {
       font-size: 1.1rem;
       padding: 1.1rem 0.4rem;
-      border-right: 1px solid var(--rule);
-      border-bottom: 1px solid var(--rule);
     }
-    .brand-roster .brand-name:nth-child(2n) { border-right: none; }
-    .brand-roster .brand-name:nth-last-child(-n+2) { border-bottom: none; }
 
     /* Contact email breaks gracefully */
     .contact-line {
@@ -2092,6 +2154,39 @@
     }
   }
 
+  /* ===== Brand as Wayfinding — atmospheric cover + tighter frame (scoped) ===== */
+  .proto-viewer.live-example[aria-label="Apparel decision-path explorer"] .proto-cover {
+    background: linear-gradient(135deg, #E9EFFF 0%, #F1ECFA 38%, #FCEEF4 70%, #FFF7EE 100%);
+    min-height: 300px;
+    position: relative; overflow: hidden;
+  }
+  .proto-viewer.live-example[aria-label="Apparel decision-path explorer"] .proto-cover::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(42% 50% at 18% 18%, rgba(110,140,232,0.18), transparent 70%),
+      radial-gradient(46% 55% at 86% 84%, rgba(226,150,190,0.16), transparent 70%);
+  }
+  .proto-viewer.live-example[aria-label="Apparel decision-path explorer"] .proto-cover > * { position: relative; }
+  .proto-viewer.live-example[aria-label="Apparel decision-path explorer"] .proto-stage iframe {
+    transform: none; transform-origin: 0 0; width: 100%; height: 480px; margin-bottom: 0;
+    transition: height .25s ease;
+  }
+
+
+  /* ===== Skinspan Lexicon — restrained cover (cool key, scoped) ===== */
+  .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover {
+    background: linear-gradient(135deg, #EAF2FB 0%, #E9F4EF 34%, #F1ECF8 66%, #FBF4EA 100%);
+    position: relative; overflow: hidden;
+  }
+  .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(42% 44% at 16% 16%, rgba(86,168,178,0.16), transparent 70%),
+      radial-gradient(46% 48% at 86% 84%, rgba(150,130,210,0.15), transparent 70%),
+      radial-gradient(34% 30% at 78% 20%, rgba(196,160,106,0.12), transparent 70%);
+  }
+  .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover > * { position: relative; z-index: 1; }
+
 </style>
 </head>
 <body>
@@ -2101,7 +2196,7 @@
 
     <!-- ============== HERO ============== -->
     <section class="hero">
-      <div class="hero-banner"><div class="mesh" aria-hidden="true"></div><svg id="heroConst" aria-hidden="true" focusable="false" viewBox="0 0 1400 320" preserveAspectRatio="none"></svg></div>
+      <div class="hero-banner"><div class="hero-field" aria-hidden="true"><span class="hf hf1"></span><span class="hf hf2"></span><span class="hf hf3"></span></div><svg id="heroConst" aria-hidden="true" focusable="false" viewBox="0 0 1400 320" preserveAspectRatio="none"></svg></div>
       <div class="hero-eyebrow">Brand Advisory</div>
       <h1 class="hero-name">Jeannie Joshi</h1>
       <p class="hero-positioning">
@@ -2116,6 +2211,7 @@
       <p class="hero-supporting">
         Harmonizing the analytic and creative, seeking solutions that proclaim vitality over time for the established brand and achieve maximum initial impact for a new brand.
       </p>
+      <p class="hero-gateway">Explore the leadership summaries:<a href="https://jeanniejoshi.github.io/portfolio-healthcare-leadership/" target="_blank" rel="noopener">Healthcare &#9656;</a><a href="https://jeanniejoshi.github.io/portfolio-consumer-leadership/" target="_blank" rel="noopener">Consumer Brands &#9656;</a></p>
     </section>
 
     <!-- ============== OPENING QUESTIONS ============== -->
@@ -2157,6 +2253,24 @@
       </div>
     </section>
 
+    <!-- ============== STRATEGY IN PRACTICE ============== -->
+    <section class="section">
+      <div class="latest-sub">
+        <!-- Brand as Wayfinding case study — self-contained framed module. Explorer content lives in template#apparelDoc. -->
+        <div class="proto-viewer live-example" aria-label="Apparel decision-path explorer">
+          <div class="proto-eyebrow"><span id="apparelLabel">Case study</span><button type="button" class="proto-back" id="apparelBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
+          <div class="proto-stage">
+            <div class="proto-cover" id="apparelCover">
+              <span class="proto-cover-label">Strategy in Practice &middot; Case Study</span>
+              <p class="proto-cover-text"><span class="proto-cover-lead">Brand as Wayfinding</span>This case study examines how shoppers navigate a multi-brand apparel portfolio across categories and price tiers. Based on observed behavior, it shows that people do not follow one standard path to purchase. Some begin with a practical need. Others begin with a trusted brand.</p>
+              <button type="button" class="proto-launch" id="apparelLaunch">Explore the case study &#9656;</button>
+            </div>
+            <iframe id="apparelFrame" title="Brand as Wayfinding case study" loading="lazy" style="display:none"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============== THE LATEST ============== -->
     <section class="section">
       <h2 class="section-eyebrow">The Latest</h2>
@@ -2170,7 +2284,7 @@
 
             <div class="latest-row">
               <div class="latest-name">Skinspan Lexicon</div>
-              <div class="latest-desc">An original framework and digital tool developed combining category expertise, and longevity research. Built in Claude Code and UI/UX best practices, it maps familiar beauty terms to their scientific equivalents across four fields: legacy term, reframe, scientific basis, and client conversation. It is designed for salon consultation, education, and brand training.
+              <div class="latest-desc">A digital framework for translating the emerging science of skin longevity into language people can use. Developed through category expertise and longevity research, and built in Claude Code using UX principles, it connects familiar beauty terminology to a more precise longevity vocabulary across four dimensions: legacy term, longevity reframe, scientific basis, and client conversation. Designed for consultation, education, and brand training.
                 <a class="latest-link" href="https://www.modernsalon.com/1097515/what-salon-and-spa-professionals-need-to-know-about-skin-longevity" target="_blank" rel="noopener">Read in Modern Salon &rarr;</a>
               </div>
               <div class="latest-meta">
@@ -2181,11 +2295,12 @@
 
             <!-- Skinspan Lexicon — live working tool, embedded -->
             <div class="proto-viewer live-example" aria-label="Skinspan Lexicon live tool">
-              <div class="proto-eyebrow"><span id="skinLabel"><span class="live-badge">Live</span>Working digital tool</span><button type="button" class="proto-back" id="skinBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
+              <div class="proto-eyebrow"><span id="skinLabel"><span class="live-badge">Live</span></span><button type="button" class="proto-back" id="skinBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
               <div class="proto-stage">
                 <div class="proto-cover" id="skinCover">
-                  <span class="proto-cover-label">Skinspan Lexicon</span>
-                  <button type="button" class="proto-launch" id="skinLaunch">Open the tool &#9656;</button>
+                  <span class="proto-cover-label">Live digital tool</span>
+                  <span class="proto-cover-lead">Skinspan Lexicon</span>
+                  <button type="button" class="proto-launch" id="skinLaunch">Explore the lexicon &#9656;</button>
                 </div>
                 <iframe id="skinFrame" title="Skinspan Lexicon live tool" loading="lazy" style="display:none"></iframe>
               </div>
@@ -2264,39 +2379,38 @@
             <div class="proto-nav">
               <button type="button" class="proto-arrow" data-dir="-1" aria-label="Previous view">&#8249;</button>
               <div class="proto-tabs" role="tablist" aria-label="Prototype views">
-                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-i="0" data-src="hpvnextsteps-prototypes-flow.html">Product Flow</button>
-                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-i="1" data-src="hpvnextsteps-concept4-refined2-clean.html">Visual Refinement</button>
-                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-i="2" data-src="hpvnextsteps-website-clean.html">Query-Based Site Concept</button>
+                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="1">Visual Refinement</button>
+                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="0">Product Flow</button>
+                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="2">Website Concept</button>
               </div>
               <button type="button" class="proto-arrow" data-dir="1" aria-label="Next view">&#8250;</button>
             </div>
             <div class="proto-stage">
               <div class="proto-cover" id="protoCover">
-                <span class="proto-cover-label">Interactive prototype</span>
-                <p class="proto-cover-text">Three working views for a cancer nonprofit. Select a view above.</p>
-                <button type="button" class="proto-launch" id="protoLaunch">Launch prototype &#9656;</button>
+                <span class="proto-cover-hint" id="protoHint" aria-hidden="true"></span>
+                <span class="proto-cover-label">Working prototype</span>
+                <p class="proto-cover-text" id="protoBlurb">Explore how the experience guides users through a short question-based flow and delivers relevant information and next steps.</p>
+                <button type="button" class="proto-launch" id="protoLaunch">Open prototype &#9656;</button>
+                <span class="proto-cover-meta" id="protoMeta">Live and interactive. Test the full flow end to end.</span>
               </div>
-              <iframe id="protoFrame" title="Prototype view" loading="lazy" style="display:none"></iframe>
+              <div class="proto-concepts" id="protoConcepts" style="display:none" role="tablist" aria-label="Website concepts"></div>
+              <div class="proto-device" id="protoDevice" style="display:none">
+                <div class="proto-device-screen">
+                  <div class="proto-device-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                  <div class="proto-device-viewport"><iframe id="protoFrame" title="Prototype view" loading="lazy"></iframe></div>
+                </div>
+                <div class="proto-device-base" aria-hidden="true"></div>
+              </div>
+              <div class="proto-support" id="protoSupport" style="display:none">
+                <div class="proto-support-head">Supporting documentation</div>
+                <div class="proto-support-tabs" role="tablist" aria-label="Supporting documentation">
+                  <button type="button" class="proto-support-tab active" data-view="4">Intake flow</button>
+                  <button type="button" class="proto-support-tab" data-view="5">Developer spec</button>
+                </div>
+                <div class="proto-support-frame"><iframe id="protoSupportFrame" title="Supporting documentation" loading="lazy"></iframe></div>
+              </div>
             </div>
           </div>
-
-          <!-- PARKED FOR REUSE: Gala invitation live-example panel.
-               Removed from the portfolio per review (not resonating, not strong enough).
-               Markup, the gala script (further below), and the embedded content (template#galaDoc)
-               are all intact, so this cover / launch / srcdoc / back live-example treatment can be
-               reapplied to a stronger project. To restore, delete this comment opener and the closer.
-          <div class="proto-viewer live-example" aria-label="Gala invitation live example">
-            <div class="proto-eyebrow"><span id="galaLabel"><span class="live-badge">Live</span>Completed landing page</span><button type="button" class="proto-back" id="galaBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
-            <div class="proto-stage">
-              <div class="proto-cover" id="galaCover">
-                <span class="proto-cover-label">Gala Invitation</span>
-                <p class="proto-cover-text"><span class="proto-cover-lead">Computational Brand Experience</span>Motion, transitions, and color gradients are generated through live code.</p>
-                <button type="button" class="proto-launch" id="galaLaunch">View live page &#9656;</button>
-              </div>
-              <iframe id="galaFrame" title="Gala invitation live page" loading="lazy" style="display:none"></iframe>
-            </div>
-          </div>
-          end parked Gala panel -->
 
         </div>
       </div>
@@ -2526,7 +2640,7 @@
       <!-- Sub-section: Cross-Functional -->
       <div class="latest-sub">
         <h3 class="sub-eyebrow-serif">Cross-Functional Leadership</h3>
-        <p class="sub-intro">Builds and leads teams that work effectively across functions, disciplines, and changing conditions, from large organizations to an independent studio and the classroom.</p>
+        <p class="sub-intro">I lead teams across functions, disciplines, and changing conditions, from enterprise environments to an independent studio and the classroom.</p>
 
         <div class="pt-visual">
           <div class="pt-arc-labels">
@@ -2604,15 +2718,15 @@
         <div class="role-cards">
           <div class="role-card" style="background:linear-gradient(135deg,#DCD2EE,#D1EEDF); border-radius:4px 0 0 4px;">
             <div class="role-card-title">Team leader</div>
-            <div class="role-card-desc">Led studio teams, client-side project teams, and cross-functional enterprise teams.</div>
+            <div class="role-card-desc">As a team leader, I have led studio, client-side, and cross-functional enterprise teams.</div>
           </div>
           <div class="role-card" style="background:linear-gradient(120deg,#D1EEDF,#D6DCF0);">
             <div class="role-card-title">Facilitator</div>
-            <div class="role-card-desc">Facilitated workshops, team building, design critiques, and stakeholder alignment. Coaches and mentors through studio and classroom.</div>
+            <div class="role-card-desc">As a facilitator, I lead workshops, team-building sessions, design critiques, and stakeholder alignment. I also coach and mentor through studio and classroom practice.</div>
           </div>
           <div class="role-card" style="background:linear-gradient(135deg,#D6DCF0,#E3D8ED); border-radius:0 4px 4px 0;">
             <div class="role-card-title">Team member</div>
-            <div class="role-card-desc">Contributed as an active participant on leadership teams, task forces, and academic cohorts.</div>
+            <div class="role-card-desc">As a team member, I contribute actively to leadership teams, task forces, and academic cohorts.</div>
           </div>
         </div>
       </div>
@@ -2851,18 +2965,13 @@
     // Positions are fractions of the banner's width/height, so the layout
     // is identical at every screen size — it scales with the banner, never crops.
     var nodes = [
-      {id:'strategy',   fx:0.11, fy:0.40, label:'Brand Strategy'},
-      {id:'packaging',  fx:0.28, fy:0.62, label:'Packaging'},
-      {id:'imaging',    fx:0.42, fy:0.32, label:'Strategic Imaging'},
-      {id:'creative',   fx:0.61, fy:0.56, label:'Creative Direction'},
-      {id:'governance', fx:0.85, fy:0.40, label:'Brand Governance'},
-      {id:'digital',    fx:0.52, fy:0.76, label:'Digital Flagships'},
-      {id:'retail',     fx:0.27, fy:0.77, label:'Retail / Experience'}
+      {id:'lead',   fx:0.15, fy:0.42, label:'Lead'},
+      {id:'guide',  fx:0.38, fy:0.57, label:'Guide'},
+      {id:'do',     fx:0.62, fy:0.43, label:'Do'},
+      {id:'assist', fx:0.85, fy:0.58, label:'Assist'}
     ];
     var edges = [
-      ['strategy','packaging'],['strategy','imaging'],['packaging','imaging'],
-      ['imaging','creative'],['creative','governance'],['creative','digital'],
-      ['packaging','retail'],['digital','retail'],['imaging','digital']
+      ['lead','guide'],['guide','do'],['do','assist']
     ];
     var nodeMap = {}; nodes.forEach(function(n){ nodeMap[n.id]=n; });
     function conn(id){ var s={}; s[id]=1; edges.forEach(function(e){ if(e[0]===id)s[e[1]]=1; if(e[1]===id)s[e[0]]=1; }); return s; }
@@ -2894,8 +3003,10 @@
       var w=banner.clientWidth, h=banner.clientHeight;
       if(!w || !h) return;
       svg.setAttribute('viewBox','0 0 '+w+' '+h);
+      var padX = Math.min(110, w*0.10), padY = h*0.12;
+      var iw = w - padX*2, ih = h - padY*2;
       nodes.forEach(function(n){
-        n.x=n.fx*w; n.y=n.fy*h;
+        n.x = padX + n.fx*iw; n.y = padY + n.fy*ih;
         circEls[n.id].setAttribute('cx',n.x); circEls[n.id].setAttribute('cy',n.y);
         var t=textEls[n.id]; t.setAttribute('y', n.y-11);
         if(n.fx<0.18){ t.setAttribute('text-anchor','start'); t.setAttribute('x',n.x-4); }
@@ -2930,55 +3041,162 @@
     var tabs = Array.prototype.slice.call(viewer.querySelectorAll('.proto-tab'));
     var arrows = viewer.querySelectorAll('.proto-arrow');
     var frame = document.getElementById('protoFrame');
-    var openLink = document.getElementById('protoOpen');
+    var device = document.getElementById('protoDevice');
     var cover = document.getElementById('protoCover');
-    var note = document.getElementById('protoNote');
+    var blurb = document.getElementById('protoBlurb');
+    var hint = document.getElementById('protoHint');
     var launch = document.getElementById('protoLaunch');
     var label = document.getElementById('protoLabel');
     var back = document.getElementById('protoBack');
+    var support = document.getElementById('protoSupport');
+    var supportFrame = document.getElementById('protoSupportFrame');
+    var supportTabs = support ? Array.prototype.slice.call(support.querySelectorAll('.proto-support-tab')) : [];
+    var conceptsEl = document.getElementById('protoConcepts');
     if(!tabs.length || !frame) return;
-    var cur = -1;
-    function activate(i){
+
+    var PHONE = '<svg width="32" height="48" viewBox="0 0 32 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="28" height="44" rx="5"/><line x1="12" y1="7" x2="20" y2="7"/></svg>';
+    var LAPTOP = '<svg width="54" height="40" viewBox="0 0 54 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="4" width="36" height="25" rx="2"/><path d="M3 35h48l-3-4H6z"/></svg>';
+
+    var DATA = [
+      { doc:1, device:'phone',  try:'Live and interactive. Test the full flow end to end.', blurb:'Explore the refined visual direction for the experience, with type, color, and layout resolved toward a production-ready feel.' },
+      { doc:0, device:'phone',  try:'Live and interactive. Test the full flow end to end.', blurb:'Explore how the experience guides users through a short question-based flow and delivers relevant information and next steps.', support:true },
+      { doc:2, device:'laptop', concepts:[{doc:2,label:'Concept 2'},{doc:3,label:'Editorial Version'}], try:'Live and interactive. Move through the full site.', blurb:'Explore two desktop directions: a query-based structure and an editorial homepage, both organized around user questions.' }
+    ];
+
+    var cur = 0;
+    var webIdx = 0;
+    var supportView = 4;
+
+    function buildDoc(docId){
+      var tpl = document.getElementById('protoDoc'+docId);
+      if(!tpl) return '';
+      var killNav = '<script>document.addEventListener("click",function(e){var a=e.target&&e.target.closest?e.target.closest("a"):null;if(a)e.preventDefault();},true);<\/script>';
+      return '<!DOCTYPE html>' + tpl.innerHTML + killNav;
+    }
+
+    function scaleLaptop(){
+      if(!device || device.className.indexOf('laptop') < 0) return;
+      var vp = device.querySelector('.proto-device-viewport');
+      if(!vp) return;
+      var DESIGN_W = 1040;
+      var VH = (window.innerWidth <= 700) ? 360 : 430;
+      var w = vp.clientWidth;
+      if(!w) return;
+      var s = w / DESIGN_W;
+      frame.style.width = DESIGN_W + 'px';
+      frame.style.height = (VH / s) + 'px';
+      frame.style.transformOrigin = 'top left';
+      frame.style.transform = 'scale(' + s + ')';
+    }
+
+    function loadMain(docId, deviceType){
+      frame.style.transform = ''; frame.style.transformOrigin = ''; frame.style.width = ''; frame.style.height = '';
+      var mainExtra = (docId === 0) ? '<style>.tabs .tab:nth-child(5),.tabs .tab:nth-child(6){display:none}</style>' : '';
+      frame.setAttribute('data-doc', String(docId));
+      frame.setAttribute('srcdoc', buildDoc(docId) + mainExtra);
+      if(device){
+        device.className = 'proto-device proto-device--' + deviceType;
+        device.style.display = 'flex';
+        if(deviceType === 'laptop'){ setTimeout(scaleLaptop, 0); }
+      }
+    }
+
+    function renderConcepts(d){
+      if(!conceptsEl) return;
+      if(d.concepts && d.concepts.length > 1){
+        conceptsEl.innerHTML = '';
+        d.concepts.forEach(function(c, i){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'proto-concept-tab' + (i === 0 ? ' active' : '');
+          b.textContent = c.label;
+          b.addEventListener('click', function(){
+            webIdx = i;
+            Array.prototype.slice.call(conceptsEl.children).forEach(function(x, k){ x.classList.toggle('active', k === i); });
+            loadMain(d.concepts[i].doc, d.device);
+          });
+          conceptsEl.appendChild(b);
+        });
+        conceptsEl.style.display = 'flex';
+      } else {
+        conceptsEl.style.display = 'none';
+      }
+    }
+
+    function showCover(i){
       cur = (i + tabs.length) % tabs.length;
       tabs.forEach(function(t,j){
         t.classList.toggle('active', j===cur);
         t.setAttribute('aria-selected', j===cur ? 'true' : 'false');
       });
-      if(frame.getAttribute('data-doc') !== String(cur)){
-        var tpl = document.getElementById('protoDoc'+cur);
-        frame.setAttribute('data-doc', String(cur));
-        frame.setAttribute('srcdoc', tpl ? '<!DOCTYPE html>\n' + tpl.innerHTML : '');
-      }
-      if(cover) cover.style.display = 'none';
-      frame.style.display = 'block';
-      if(label) label.style.display = 'none';
-      if(back) back.style.display = 'inline-block';
-    }
-    tabs.forEach(function(t,j){ t.addEventListener('click', function(){ activate(j); }); });
-    arrows.forEach(function(a){
-      a.addEventListener('click', function(){
-        var d = parseInt(a.getAttribute('data-dir'),10);
-        activate(cur < 0 ? (d>0 ? 0 : tabs.length-1) : cur + d);
-      });
-    });
-    if(launch) launch.addEventListener('click', function(){ activate(0); });
-
-    function reset(){
-      cur = -1;
-      tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-      frame.style.display = 'none';
-      frame.removeAttribute('src'); frame.removeAttribute('srcdoc'); frame.removeAttribute('data-doc');
+      var d = DATA[cur] || DATA[0];
+      if(blurb) blurb.textContent = d.blurb;
+      var meta = document.getElementById('protoMeta');
+      if(meta && d.try) meta.textContent = d.try;
+      if(hint) hint.innerHTML = (d.device === 'laptop') ? LAPTOP : PHONE;
+      if(device) device.style.display = 'none';
+      if(support) support.style.display = 'none';
+      if(conceptsEl) conceptsEl.style.display = 'none';
       if(cover) cover.style.display = 'flex';
       if(label) label.style.display = '';
       if(back) back.style.display = 'none';
     }
-    if(back) back.addEventListener('click', reset);
+
+    function applySupport(){
+      try{ var w = supportFrame.contentWindow; if(w && w.showTab) w.showTab(supportView); }catch(e){}
+    }
+    if(supportFrame) supportFrame.addEventListener('load', applySupport);
+    frame.addEventListener('load', function(){ if(device && device.className.indexOf('laptop') > -1) scaleLaptop(); });
+    window.addEventListener('resize', function(){ if(device && device.style.display !== 'none' && device.className.indexOf('laptop') > -1) scaleLaptop(); });
+    function setSupport(v){
+      supportView = v;
+      supportTabs.forEach(function(t){ t.classList.toggle('active', parseInt(t.getAttribute('data-view'),10)===v); });
+      applySupport();
+    }
+    supportTabs.forEach(function(t){ t.addEventListener('click', function(){ setSupport(parseInt(t.getAttribute('data-view'),10)); }); });
+
+    function openProto(){
+      var d = DATA[cur] || DATA[0];
+      webIdx = 0;
+      renderConcepts(d);
+      var docId = (d.concepts && d.concepts.length) ? d.concepts[0].doc : d.doc;
+      loadMain(docId, d.device);
+      if(d.support && support && supportFrame){
+        if(supportFrame.getAttribute('data-doc') !== String(d.doc)){
+          supportView = 4;
+          supportFrame.setAttribute('data-doc', String(d.doc));
+          supportFrame.setAttribute('srcdoc', buildDoc(d.doc) + '<style>.bar{display:none}.tabs{display:none}</style>');
+        } else {
+          setSupport(4);
+        }
+        supportTabs.forEach(function(t){ t.classList.toggle('active', parseInt(t.getAttribute('data-view'),10)===4); });
+        support.style.display = 'block';
+      } else if(support){
+        support.style.display = 'none';
+      }
+      if(cover) cover.style.display = 'none';
+      if(label) label.style.display = 'none';
+      if(back) back.style.display = 'inline-block';
+    }
+
+    tabs.forEach(function(t,j){ t.addEventListener('click', function(){ showCover(j); }); });
+    arrows.forEach(function(a){
+      a.addEventListener('click', function(){
+        var dir = parseInt(a.getAttribute('data-dir'),10);
+        showCover(cur + dir);
+      });
+    });
+    if(launch) launch.addEventListener('click', openProto);
+    if(back) back.addEventListener('click', function(){ showCover(cur); });
+
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){ if(!e.isIntersecting && cur >= 0) reset(); });
+        entries.forEach(function(e){ if(!e.isIntersecting) showCover(cur); });
       }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
       io.observe(viewer);
     }
+
+    showCover(0);
   })();
 
   (function(){
@@ -3061,7 +3279,173 @@
       sio.observe(viewer);
     }
   })();
+
+  (function(){
+    var viewer = document.querySelector('.proto-viewer.live-example[aria-label="Apparel decision-path explorer"]');
+    if(!viewer) return;
+    var frame = document.getElementById('apparelFrame');
+    var cover = document.getElementById('apparelCover');
+    var launch = document.getElementById('apparelLaunch');
+    var label = document.getElementById('apparelLabel');
+    var back = document.getElementById('apparelBack');
+    if(!frame) return;
+    var open = false;
+    function fit(){
+      try{
+        var d = frame.contentDocument || (frame.contentWindow && frame.contentWindow.document);
+        if(!d) return;
+        var h = Math.max(d.documentElement.scrollHeight, d.body ? d.body.scrollHeight : 0);
+        if(h) frame.style.height = h + 'px';
+      }catch(e){}
+    }
+    function bindFit(){
+      fit(); setTimeout(fit, 120);
+      try{
+        var radios = frame.contentDocument.querySelectorAll('input[name="awtab"]');
+        radios.forEach(function(r){ r.addEventListener('change', function(){ setTimeout(fit, 40); }); });
+      }catch(e){}
+    }
+    frame.addEventListener('load', bindFit);
+    function show(){
+      var tpl = document.getElementById('apparelDoc');
+      if(!frame.getAttribute('srcdoc') && tpl) frame.setAttribute('srcdoc', '<!DOCTYPE html>' + '\n' + tpl.innerHTML);
+      cover.style.display = 'none'; frame.style.display = 'block';
+      if(label) label.style.display = 'none';
+      if(back) back.style.display = 'inline-block';
+      open = true;
+      setTimeout(fit, 60);
+    }
+    function reset(){
+      frame.style.display = 'none'; frame.removeAttribute('srcdoc');
+      cover.style.display = 'flex';
+      if(label) label.style.display = '';
+      if(back) back.style.display = 'none';
+      open = false;
+    }
+    if(launch) launch.addEventListener('click', show);
+    if(back) back.addEventListener('click', reset);
+    if('IntersectionObserver' in window){
+      var aio = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(!e.isIntersecting && open) reset(); });
+      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+      aio.observe(viewer);
+    }
+  })();
   </script>
+
+
+<template id="apparelDoc">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#23242c;background:linear-gradient(135deg,#E9EFFF 0%,#F1ECFA 38%,#FCEEF4 70%,#FFF7EE 100%);padding:22px 24px 22px;line-height:1.5;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+body::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(42% 36% at 16% 12%,rgba(110,140,232,.20),transparent 70%),radial-gradient(46% 40% at 88% 86%,rgba(226,150,190,.18),transparent 70%),radial-gradient(34% 30% at 78% 18%,rgba(196,160,106,.10),transparent 70%)}
+.explorer{position:relative;z-index:1}
+.framing{margin-bottom:16px}
+.frame-row{display:grid;grid-template-columns:150px 1fr;gap:8px 16px;align-items:baseline;margin-bottom:9px}
+.frame-tag{font-size:11px;font-weight:600;letter-spacing:.03em}
+.frame-tag.practical{color:#1F46B8}
+.frame-tag.emotional{color:#CE2E78}
+.frame-list{font-size:12.5px;color:#56586a;line-height:1.55;text-wrap:pretty}
+.frame-note{font-size:13px;color:#23242c;font-weight:500;line-height:1.55;margin-top:12px;max-width:64ch;text-wrap:balance}
+.paths{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 16px}
+.path-btn{font-family:inherit;font-size:12.5px;color:#3c3e4a;background:rgba(255,255,255,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.6);border-radius:999px;padding:7px 14px;cursor:pointer;transition:.18s;display:inline-block;box-shadow:0 2px 8px rgba(70,80,130,.06)}
+.path-btn:hover{color:#1F46B8;border-color:rgba(31,70,184,.4)}
+#awtab0:checked ~ .paths label[for="awtab0"],
+#awtab1:checked ~ .paths label[for="awtab1"],
+#awtab2:checked ~ .paths label[for="awtab2"]{background:rgba(0,47,167,.92);border-color:rgba(0,47,167,.5);color:#fff;box-shadow:0 4px 14px rgba(0,47,167,.22)}
+.explorer input[type=radio]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.panel{display:none}
+@keyframes awfade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+#awtab0:checked ~ .panel[data-panel="0"],
+#awtab1:checked ~ .panel[data-panel="1"],
+#awtab2:checked ~ .panel[data-panel="2"]{display:block;animation:awfade .28s ease}
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.glass{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(16px) saturate(1.15);backdrop-filter:blur(16px) saturate(1.15);border:1px solid rgba(255,255,255,.65);border-radius:13px;box-shadow:0 6px 22px rgba(60,70,120,.09),inset 0 1px 0 rgba(255,255,255,.55)}
+.step{flex:1 1 0;min-width:130px;padding:14px 13px;text-align:left;display:flex;flex-direction:column;align-items:flex-start}
+.step-ico{width:30px;height:30px;border-radius:8px;background:rgba(0,47,167,.10);display:flex;align-items:center;justify-content:center;margin-bottom:9px;color:#1F46B8}
+.step-label{font-size:13px;font-weight:600;color:#23242c;margin-bottom:5px}
+.step-frag{font-size:12px;color:#56586a;line-height:1.45;text-wrap:pretty}
+.arrow{display:flex;align-items:center;color:#aab0c8;font-size:16px;padding:0 6px;flex:none}
+.insight{margin-top:15px;display:flex;align-items:flex-start;gap:10px}
+.insight-pill{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#CE2E78;border:1px solid rgba(206,46,120,.55);border-radius:999px;padding:5px 10px;flex:none;margin-top:2px;background:rgba(255,255,255,.4)}
+.insight-txt{font-size:13.5px;color:#23242c;line-height:1.55;max-width:54ch;text-wrap:pretty}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vs-col{padding:15px 15px 14px}
+.vs-head{font-size:12.5px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#1F46B8}
+.vs-head .dot{width:8px;height:8px;border-radius:50%;background:#1F46B8;flex:none;box-shadow:0 0 8px rgba(31,70,184,.5)}
+.vs-col.value .vs-head{color:#CE2E78}
+.vs-col.value .vs-head .dot{background:#CE2E78;box-shadow:0 0 8px rgba(206,46,120,.5)}
+.vs-path{font-size:13px;font-weight:600;color:#23242c;margin-bottom:7px}
+.vs-arrow{color:#aab0c8;padding:0 3px}
+.vs-line{font-size:12px;color:#56586a;line-height:1.5;text-wrap:pretty}
+.vs-insight{font-size:13.5px;color:#23242c;line-height:1.55;margin-top:14px;border-top:1px solid rgba(120,130,170,.22);padding-top:14px;max-width:54ch;text-wrap:pretty}
+.finalnote{margin-top:18px;border-top:1px solid rgba(120,130,170,.22);padding-top:14px}
+.finalnote-title{font-size:12.5px;font-weight:600;color:#1F46B8;margin-bottom:7px;letter-spacing:.01em}
+.finalnote p{font-size:12.5px;color:#56586a;line-height:1.65;max-width:58ch;text-wrap:pretty}
+@media(max-width:540px){
+  .frame-row{grid-template-columns:1fr;gap:3px;margin-bottom:12px}
+  .flow{flex-direction:column}
+  .arrow{transform:rotate(90deg);padding:7px 0;justify-content:center;width:100%}
+  .vs{grid-template-columns:1fr}
+  .frame-note,.insight-txt,.vs-insight,.finalnote p{max-width:none}
+}
+</style>
+
+<div class="explorer">
+  <div class="framing">
+    <div class="frame-row"><span class="frame-tag practical">Practical questions</span><span class="frame-list">What they need &middot; What fits &middot; What qualifies</span></div>
+    <div class="frame-row"><span class="frame-tag emotional">Emotional questions</span><span class="frame-list">Who they trust &middot; What feels familiar &middot; Whether it feels like it is for someone like them</span></div>
+    <p class="frame-note">Decisions are not linear. Different categories follow different orders.</p>
+  </div>
+
+  <input type="radio" name="awtab" id="awtab0" checked>
+  <input type="radio" name="awtab" id="awtab1">
+  <input type="radio" name="awtab" id="awtab2">
+
+  <div class="paths">
+    <label class="path-btn" for="awtab0">Men's T-shirts</label>
+    <label class="path-btn" for="awtab1">Women's intimates</label>
+    <label class="path-btn" for="awtab2">Same category, different segments</label>
+  </div>
+
+  <div class="panel" data-panel="0">
+    <div class="flow">
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 3l4 3 4-3 3.5 2.5L17 9l-1.5-1v11h-7V8L7 9 4.5 5.5z"/></svg></span><span class="step-label">Silhouette</span><span class="step-frag">crew neck or v-neck</span></div>
+      <div class="arrow">&#8594;</div>
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span class="step-label">Tier</span><span class="step-frag">mainstream and premium tiers</span></div>
+      <div class="arrow">&#8594;</div>
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M3.5 12.5V4.5a1 1 0 011-1h8L21 12l-8.5 8.5z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span class="step-label">Brand</span><span class="step-frag">a specific brand</span></div>
+    </div>
+    <div class="insight"><span class="insight-pill">Insight</span><span class="insight-txt">The practical choice leads. The shopper decides what type of shirt they want and only then chooses who to buy it from.</span></div>
+  </div>
+
+  <div class="panel" data-panel="1">
+    <div class="flow">
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 20S4.5 15 4.5 9.5A3.5 3.5 0 0112 7a3.5 3.5 0 017.5 2.5C19.5 15 12 20 12 20z"/></svg></span><span class="step-label">Trusted brand</span><span class="step-frag">a brand they know and trust for comfort and fit</span></div>
+      <div class="arrow">&#8594;</div>
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2z"/></svg></span><span class="step-label">Style</span><span class="step-frag">style within that brand</span></div>
+      <div class="arrow">&#8594;</div>
+      <div class="step glass"><span class="step-ico"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="1"/><path d="M7.5 8v3M12 8v4M16.5 8v3"/></svg></span><span class="step-label">Fit and coverage</span><span class="step-frag">how it fits and how much of the body it covers</span></div>
+    </div>
+    <div class="insight"><span class="insight-pill">Insight</span><span class="insight-txt">The relationship leads. The shopper goes straight to a trusted brand and then finds the right option inside that brand's world.</span></div>
+  </div>
+
+  <div class="panel" data-panel="2">
+    <div class="vs">
+      <div class="vs-col glass premium"><div class="vs-head"><span class="dot"></span>Premium shopper</div><div class="vs-path">Brand <span class="vs-arrow">&#8594;</span> Style</div><div class="vs-line">Starts with brand, then chooses style.</div></div>
+      <div class="vs-col glass value"><div class="vs-head"><span class="dot"></span>Value shopper</div><div class="vs-path">Style or shape <span class="vs-arrow">&#8594;</span> Brand</div><div class="vs-line">Starts with style or shape, then chooses brand within a price range.</div></div>
+    </div>
+    <div class="vs-insight">It is the same type of product, but two different kinds of buyers and two different decision paths.</div>
+  </div>
+
+  <div class="finalnote">
+    <div class="finalnote-title">Brand as a wayfinding tool</div>
+    <p>People often head first to a brand they recognize, then make the detailed choices from there. The implication is that portfolio, retail, and digital experiences need to support different decision paths.</p>
+  </div>
+</div>
+</template>
 
 <template id="galaDoc">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300&family=Lora:ital,wght@1,400;1,500&family=Outfit:wght@300;400;600;700&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -4628,7 +5012,7 @@ c1Init();c2Init();c3Init();c4Init();
   <div class="hero-content">
     <h1>HPV causes 5% of all cancers. Almost all are preventable.</h1>
     <p class="hero-sub">The HPV vaccine prevents 90% of HPV-related cancers. Screening catches what the vaccine doesn't. We're here to help you take the next step.</p>
-    <a href="#tool" class="hero-cta">Find out what to do next →</a>
+    <a href="#tool" onclick="event.preventDefault();var t=document.getElementById('tool');if(t)t.scrollIntoView({behavior:'smooth'});" class="hero-cta">Find out what to do next →</a>
   </div>
 </div>
 
@@ -5816,6 +6200,1109 @@ init();
 </body>
 </html>
 
+</template>
+
+<template id="protoDoc3">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPV Next Steps — Preventing HPV-Related Cancers Through Education, Vaccination & Advocacy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* HPV Next Steps Brand Colors - purples & lavenders */
+    --purple-deep: #4A1A6B;
+    --purple: #6B2D8B;
+    --purple-mid: #8246A8;
+    --purple-light: #A76DC6;
+    --lavender: #C9A4E2;
+    --lavender-soft: #E8D5F5;
+    --lavender-bg: #F5EEFB;
+    --lavender-faint: #FAF6FD;
+
+    /* Neutrals - clean white look */
+    --white: #FFFFFF;
+    --off-white: #FDFCFE;
+    --gray-100: #F7F5F9;
+    --gray-200: #EDEBEF;
+    --gray-300: #D4D0D9;
+    --gray-500: #8A8490;
+    --gray-700: #4A4550;
+    --gray-900: #1E1A24;
+
+    /* Accent for CTAs */
+    --coral: #E8645A;
+    --coral-hover: #D4524A;
+
+    /* System */
+    --font: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --radius: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --shadow-sm: 0 1px 3px rgba(74,26,107,0.04);
+    --shadow: 0 4px 20px rgba(74,26,107,0.06);
+    --shadow-lg: 0 8px 40px rgba(74,26,107,0.1);
+    --shadow-purple: 0 8px 30px rgba(107,45,139,0.2);
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    color: var(--gray-900);
+    background: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===========================
+     ANNOUNCEMENT BAR
+     =========================== */
+  .announcement {
+    background: var(--purple-deep);
+    color: white;
+    text-align: center;
+    padding: 11px 24px;
+    font-size: 0.84rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  .announcement strong { font-weight: 600; }
+  .announcement a {
+    color: var(--lavender);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    font-weight: 500;
+    transition: var(--transition);
+  }
+  .announcement a:hover { color: white; }
+
+  /* ===========================
+     HEADER
+     =========================== */
+  header {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.95);
+  }
+  .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--purple-deep);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+  nav { display: flex; align-items: center; gap: 2px; }
+  nav a {
+    color: var(--gray-700);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: var(--transition);
+  }
+  nav a:hover { background: var(--lavender-bg); color: var(--purple); }
+  nav a.active { background: var(--lavender-bg); color: var(--purple); font-weight: 600; }
+  .nav-donate {
+    background: var(--purple) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 9px 22px !important;
+    border-radius: 50px !important;
+    margin-left: 10px;
+  }
+  .nav-donate:hover { background: var(--purple-deep) !important; }
+  .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .mobile-toggle svg { width: 22px; height: 22px; color: var(--gray-700); }
+
+  /* ===========================
+     HERO
+     =========================== */
+  .hero {
+    background: var(--white);
+    padding: 80px 24px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -15%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--lavender-bg) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+    position: relative;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--purple);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 18px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--purple);
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+    letter-spacing: -0.03em;
+  }
+  .hero h1 .accent {
+    color: var(--purple);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--gray-500);
+    max-width: 500px;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 14px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .btn-purple {
+    background: var(--purple);
+    color: white;
+  }
+  .btn-purple:hover { background: var(--purple-deep); transform: translateY(-1px); box-shadow: var(--shadow-purple); }
+  .btn-outline-purple {
+    background: transparent;
+    color: var(--purple);
+    border: 2px solid var(--lavender);
+  }
+  .btn-outline-purple:hover { background: var(--lavender-bg); border-color: var(--purple-light); }
+  .btn-coral {
+    background: var(--coral);
+    color: white;
+  }
+  .btn-coral:hover { background: var(--coral-hover); transform: translateY(-1px); }
+  .btn-white {
+    background: white;
+    color: var(--purple);
+  }
+  .btn-white:hover { background: var(--lavender-faint); }
+  .btn-sm { padding: 10px 20px; font-size: 0.88rem; }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* Hero stat cards */
+  .hero-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .stat-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 26px 28px;
+    transition: var(--transition);
+  }
+  .stat-card:hover { border-color: var(--lavender); box-shadow: var(--shadow); }
+  .stat-card-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .stat-card-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--purple);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .stat-card-detail {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    margin-top: 2px;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .stat-card.featured {
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 100%);
+    border-color: transparent;
+    color: white;
+  }
+  .stat-card.featured .stat-card-label { color: var(--lavender); }
+  .stat-card.featured .stat-card-value { color: white; }
+  .stat-card.featured .stat-card-detail { color: var(--lavender-soft); }
+
+  /* ===========================
+     HPV NEXT STEPS TOOL
+     =========================== */
+  .tool-section {
+    padding: 80px 24px;
+    background: var(--lavender-faint);
+  }
+  .tool-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--lavender-soft);
+    color: var(--purple);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--gray-900);
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .section-desc {
+    font-size: 1rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .steps-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+  .steps-list li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.92rem;
+    color: var(--gray-700);
+    font-weight: 400;
+  }
+  .step-dot {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    background: var(--purple);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  /* Tool mockup */
+  .tool-preview {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 36px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+  }
+  .tool-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .tool-preview-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--purple-light) 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+  }
+  .tool-preview-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gray-900);
+  }
+  .tool-preview-sub {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+  }
+  .mock-field {
+    background: var(--gray-100);
+    border-radius: 10px;
+    padding: 13px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.88rem;
+  }
+  .mock-field-label { color: var(--gray-500); font-weight: 400; }
+  .mock-field-value { color: var(--purple); font-weight: 600; }
+  .mock-btn {
+    width: 100%;
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 0.92rem;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .mock-btn:hover { background: var(--purple-deep); }
+
+  /* ===========================
+     INFO CARDS - ABOUT HPV
+     =========================== */
+  .info-section {
+    padding: 80px 24px;
+    background: var(--white);
+  }
+  .info-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 44px;
+  }
+  .info-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .info-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    padding: 32px 28px;
+    transition: var(--transition);
+  }
+  .info-card:hover {
+    border-color: var(--lavender);
+    box-shadow: var(--shadow);
+    transform: translateY(-3px);
+  }
+  .info-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--lavender-bg);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+  }
+  .info-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--gray-900);
+  }
+  .info-card p {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--purple);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: var(--transition);
+  }
+  .card-link:hover { gap: 9px; color: var(--purple-deep); }
+  .card-link::after { content: '→'; }
+
+  /* ===========================
+     SURVIVOR STORY
+     =========================== */
+  .story-section {
+    padding: 80px 24px;
+    background: var(--lavender-faint);
+  }
+  .story-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .story-quote-mark {
+    font-size: 4rem;
+    color: var(--lavender);
+    line-height: 1;
+    margin-bottom: -10px;
+    font-weight: 300;
+  }
+  .story-quote {
+    font-size: clamp(1.15rem, 2vw, 1.45rem);
+    line-height: 1.65;
+    color: var(--gray-900);
+    font-weight: 400;
+    margin-bottom: 30px;
+    font-style: italic;
+  }
+  .story-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .story-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-light), var(--lavender));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  .story-name { font-weight: 600; color: var(--gray-900); font-size: 0.95rem; }
+  .story-role { color: var(--gray-500); font-size: 0.82rem; }
+
+  /* ===========================
+     IMPACT STATS
+     =========================== */
+  .impact-section {
+    padding: 64px 24px;
+    background: linear-gradient(135deg, var(--purple-deep) 0%, var(--purple) 50%, var(--purple-mid) 100%);
+    color: white;
+  }
+  .impact-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+    text-align: center;
+  }
+  .impact-num {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+  }
+  .impact-label {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  /* ===========================
+     EVENT
+     =========================== */
+  .event-section {
+    padding: 80px 24px;
+    background: var(--white);
+  }
+  .event-card {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--gray-900);
+    border-radius: var(--radius-xl);
+    padding: 48px 52px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 36px;
+    align-items: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .event-card::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -5%;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(107,45,139,0.3) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .event-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200,164,226,0.15);
+    color: var(--lavender);
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .event-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .event-desc {
+    font-size: 0.92rem;
+    opacity: 0.65;
+    line-height: 1.6;
+  }
+  .event-cta { position: relative; z-index: 1; }
+
+  /* ===========================
+     NEWSLETTER
+     =========================== */
+  .newsletter-section {
+    padding: 80px 24px;
+    background: var(--lavender-faint);
+    text-align: center;
+  }
+  .newsletter-inner { max-width: 520px; margin: 0 auto; }
+  .newsletter-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .newsletter-input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid var(--gray-200);
+    border-radius: 50px;
+    font-size: 0.92rem;
+    font-family: var(--font);
+    outline: none;
+    transition: var(--transition);
+    background: var(--white);
+  }
+  .newsletter-input:focus { border-color: var(--purple-light); }
+  .newsletter-input::placeholder { color: var(--gray-300); }
+  .newsletter-note {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    margin-top: 12px;
+  }
+
+  /* ===========================
+     FOOTER
+     =========================== */
+  footer {
+    background: var(--gray-900);
+    color: white;
+    padding: 56px 24px 28px;
+  }
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 40px;
+  }
+  .footer-brand {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .footer-tagline {
+    font-size: 0.85rem;
+    opacity: 0.5;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .footer-social { display: flex; gap: 8px; }
+  .footer-social a {
+    width: 34px;
+    height: 34px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: var(--transition);
+  }
+  .footer-social a:hover { background: var(--purple); }
+  .footer-col h4 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .footer-col a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 0.88rem;
+    opacity: 0.6;
+    margin-bottom: 9px;
+    transition: var(--transition);
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-bottom {
+    max-width: 1080px;
+    margin: 36px auto 0;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    opacity: 0.35;
+  }
+  .footer-bottom a { color: white; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ===========================
+     NIELSEN ANNOTATIONS
+     =========================== */
+  .annotations-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 200;
+    background: var(--gray-900);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-family: var(--font);
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .annotations-btn:hover { transform: translateY(-2px); }
+
+  .nielsen {
+    display: none;
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    background: var(--coral);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-family: var(--font);
+    white-space: nowrap;
+    z-index: 50;
+    letter-spacing: 0.02em;
+  }
+  .nielsen::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 12px;
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid var(--coral);
+  }
+  body.show-notes .nielsen { display: block; }
+  body.show-notes [data-n] {
+    outline: 2px dashed var(--coral);
+    outline-offset: 4px;
+    position: relative;
+  }
+
+  /* ===========================
+     RESPONSIVE
+     =========================== */
+  @media (max-width: 920px) {
+    nav { display: none; }
+    .mobile-toggle { display: block; }
+    .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+    .hero { padding: 56px 24px 48px; }
+    .tool-inner { grid-template-columns: 1fr; gap: 36px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .impact-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+    .event-card { grid-template-columns: 1fr; text-align: center; padding: 36px 28px; }
+    .event-cta { justify-self: center; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
+    .newsletter-form { flex-direction: column; }
+  }
+  @media (max-width: 500px) {
+    .stat-row { grid-template-columns: 1fr; }
+    .impact-inner { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-inner > * { animation: fadeIn 0.6s ease-out both; }
+  .hero-inner > *:nth-child(2) { animation-delay: 0.1s; }
+</style>
+</head>
+<body>
+
+<!-- Announcement Bar -->
+<div class="announcement">
+  <strong>HPV vaccination can prevent up to 90% of HPV-related cancers.</strong>
+  <a href="#">Find a vaccination site near you →</a>
+</div>
+
+<!-- Header — Nielsen #6: Recognition over recall -->
+<header data-n>
+  <span class="nielsen">#6 Recognition: 5 clear nav items</span>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <span class="logo-mark">H</span>
+      HPV Next Steps
+    </a>
+    <nav>
+      <a href="#" class="active">About HPV</a>
+      <a href="#">Prevention</a>
+      <a href="#">Cancer Treatment</a>
+      <a href="#">News &amp; Resources</a>
+      <a href="#">About Us</a>
+      <a href="#" class="nav-donate">Donate</a>
+    </nav>
+    <button class="mobile-toggle" aria-label="Open menu">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- Hero — Nielsen #8: Aesthetic & minimalist design -->
+<section class="hero" data-n>
+  <span class="nielsen">#8 Minimalist: Single stat, two clear CTAs</span>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Education · Prevention · Advocacy</div>
+      <h1>
+        <span class="accent">1 million</span> cancers a year are preventable with the HPV vaccine.
+      </h1>
+      <p class="hero-sub">
+        HPV Next Steps unites patients, caregivers, and providers to eliminate HPV-related cancers. Co-founded by survivors.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-purple">How to Prevent HPV
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="#" class="btn btn-outline-purple">Donate to the Mission</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-card featured">
+        <div class="stat-card-label">The HPV vaccine prevents</div>
+        <div class="stat-card-value">6 types of cancer</div>
+        <div class="stat-card-detail">Cervical · Anal · Vaginal · Vulvar · Penile · Head &amp; Neck</div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-card-label">Annual deaths preventable</div>
+          <div class="stat-card-value">~500K</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Share of world cancers</div>
+          <div class="stat-card-value">5%</div>
+          <div class="stat-card-detail">caused by HPV</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HPV Next Steps — Nielsen #7: Flexibility & efficiency -->
+<section class="tool-section" data-n>
+  <span class="nielsen">#7 Efficiency: Key tool promoted to position 2</span>
+  <div class="tool-inner">
+    <div>
+      <div class="section-badge">✦ Free Personalized Tool</div>
+      <h2 class="section-title">HPV Next Steps — Your Personalized Guide</h2>
+      <p class="section-desc">Answer 2–3 quick, anonymous questions and get tailored guidance on vaccination, screening, and next steps for your health.</p>
+      <ul class="steps-list">
+        <li><span class="step-dot">1</span> Enter your age and sex assigned at birth</li>
+        <li><span class="step-dot">2</span> Share your vaccination history</li>
+        <li><span class="step-dot">3</span> Get personalized prevention &amp; screening guidance</li>
+      </ul>
+      <a href="#" class="btn btn-purple">Try HPV Next Steps
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+    <div class="tool-preview">
+      <div class="tool-preview-header">
+        <div class="tool-preview-icon">✦</div>
+        <div>
+          <div class="tool-preview-title">HPV Next Steps</div>
+          <div class="tool-preview-sub">Personalized screening guide</div>
+        </div>
+      </div>
+      <div class="mock-field">
+        <span class="mock-field-label">Your age</span>
+        <span class="mock-field-value">32</span>
+      </div>
+      <div class="mock-field">
+        <span class="mock-field-label">Sex assigned at birth</span>
+        <span class="mock-field-value">Female</span>
+      </div>
+      <div class="mock-field">
+        <span class="mock-field-label">Vaccinated?</span>
+        <span class="mock-field-value">Not sure</span>
+      </div>
+      <button class="mock-btn">Get My Results</button>
+    </div>
+  </div>
+</section>
+
+<!-- Understanding HPV — Nielsen #2: Real-world language -->
+<section class="info-section" data-n>
+  <span class="nielsen">#2 Real-world: Plain language, clear paths</span>
+  <div class="info-header">
+    <div class="section-badge">Learn</div>
+    <h2 class="section-title">Understanding HPV</h2>
+    <p class="section-desc">HPV is the most common STI — nearly all sexually active people get it. Most cases clear on their own, but some lead to cancer.</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">🦠</div>
+      <h3>What is HPV?</h3>
+      <p>Human papillomavirus has 200+ strains. Most are harmless, but about 14 high-risk types can cause cancer if they don't clear naturally.</p>
+      <a href="#" class="card-link">Learn more </a>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🛡️</div>
+      <h3>Prevention &amp; Vaccination</h3>
+      <p>The HPV vaccine is safe, effective, and recommended for ages 9–26. Catch-up vaccination is available through age 45.</p>
+      <a href="#" class="card-link">Stop HPV in its tracks </a>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🔬</div>
+      <h3>Screening &amp; Early Detection</h3>
+      <p>Regular screening catches HPV early, before it leads to cancer. Recommendations vary by age, sex, and risk factors.</p>
+      <a href="#" class="card-link">Screening guidelines </a>
+    </div>
+  </div>
+</section>
+
+<!-- Survivor Story — Nielsen #8: Emotional hook without clutter -->
+<section class="story-section" data-n>
+  <span class="nielsen">#8 Minimalist: Emotional hook on homepage</span>
+  <div class="story-inner">
+    <div class="section-badge">Survivor Stories</div>
+    <div class="story-quote-mark">"</div>
+    <p class="story-quote">
+      I was diagnosed with anal cancer and felt completely alone. I couldn't find anyone talking about it openly. That's exactly why we started HPV Next Steps — so no one has to navigate this alone.
+    </p>
+    <div class="story-author">
+      <div class="story-avatar"></div>
+      <div style="text-align:left;">
+        <div class="story-name">Co-founder</div>
+        <div class="story-role">Survivor and advocate</div>
+      </div>
+    </div>
+    <a href="#" class="btn btn-outline-purple btn-sm">Read More Survivor Stories</a>
+  </div>
+</section>
+
+<!-- Impact Stats — Nielsen #9: Help & documentation -->
+<section class="impact-section" data-n>
+  <span class="nielsen">#9 Help: Show impact to build donor trust</span>
+  <div class="impact-inner">
+    <div>
+      <div class="impact-num">6</div>
+      <div class="impact-label">Cancer types addressed</div>
+    </div>
+    <div>
+      <div class="impact-num">50+</div>
+      <div class="impact-label">Free educational resources</div>
+    </div>
+    <div>
+      <div class="impact-num">5</div>
+      <div class="impact-label">Emerging science webinar series</div>
+    </div>
+    <div>
+      <div class="impact-num">1st</div>
+      <div class="impact-label">Personalized HPV screening tool</div>
+    </div>
+  </div>
+</section>
+
+<!-- Event — Nielsen #4: Consistency (contained, not dominating) -->
+<section class="event-section" data-n>
+  <span class="nielsen">#4 Consistency: Event contained as card</span>
+  <div class="event-card">
+    <div>
+      <div class="event-date">📅 October 19, 2026</div>
+      <h3 class="event-title">Annual benefit soirée</h3>
+      <p class="event-desc">Join us for an evening of community, celebration, and fundraising in support of HPV cancer prevention and education.</p>
+    </div>
+    <div class="event-cta">
+      <a href="#" class="btn btn-white">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter — Nielsen #2: Set clear expectations -->
+<section class="newsletter-section" data-n>
+  <span class="nielsen">#2 Real-world: Clear value, not "nice to meet you"</span>
+  <div class="newsletter-inner">
+    <h2 class="section-title">Stay Informed</h2>
+    <p class="section-desc">One email a month with HPV research updates, prevention tips, and ways you can help.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed! (This is a prototype)');">
+      <input type="email" class="newsletter-input" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit" class="btn btn-purple btn-sm">Subscribe</button>
+    </form>
+    <p class="newsletter-note">No spam, ever. Join thousands of patients, caregivers, and providers.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">HPV Next Steps</div>
+      <p class="footer-tagline">A national nonprofit working to eliminate HPV-related cancers through education, prevention, and advocacy.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="X">𝕏</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="#" aria-label="YouTube">▶</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>About HPV</h4>
+      <a href="#">What is HPV?</a>
+      <a href="#">Myth Busters</a>
+      <a href="#">After Diagnosis</a>
+      <a href="#">Talk to Loved Ones</a>
+    </div>
+    <div class="footer-col">
+      <h4>Prevention</h4>
+      <a href="#">HPV Vaccination</a>
+      <a href="#">Screening</a>
+      <a href="#">HPV Next Steps Tool</a>
+      <a href="#">ANCHOR Study</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get Involved</h4>
+      <a href="#">Donate</a>
+      <a href="#">Survivor Stories</a>
+      <a href="#">Benefit soirée</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 HPV Next Steps</span>
+    <a href="#">Privacy Policy</a>
+  </div>
+</footer>
+
+<!-- Nielsen Toggle -->
+<button class="annotations-btn" onclick="document.body.classList.toggle('show-notes'); this.innerHTML = document.body.classList.contains('show-notes') ? '✕ Hide Nielsen Notes' : '📐 Show Nielsen Notes'">
+  📐 Show Nielsen Notes
+</button>
+
+</body>
+</html>
 </template>
 </body>
 </html>
