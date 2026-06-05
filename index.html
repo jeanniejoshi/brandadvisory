@@ -941,7 +941,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: #B92D69;
     text-decoration: none;
     font-weight: 500;
   }
@@ -1038,11 +1038,11 @@
   .proto-back {
     background: none; border: none; cursor: pointer; padding: 0;
     font-family: var(--sans); font-size: 0.62rem; font-weight: 600;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+    letter-spacing: 0.14em; text-transform: uppercase; color: #B92D69;
   }
   .proto-back:hover { text-decoration: underline; text-underline-offset: 2px; }
   .live-badge {
-    display: inline-block; background: #0A8169; color: #fff;
+    display: inline-block; background: #0A8169; color: #fff; text-decoration: none; cursor: pointer;
     font-size: 0.52rem; letter-spacing: 0.1em; font-weight: 700;
     padding: 0.18rem 0.5rem; border-radius: 999px; vertical-align: middle;
     margin-right: 0.5rem;
@@ -1054,7 +1054,7 @@
     width: 30px; height: 30px; border-radius: 50%;
     transition: color 0.2s ease, background 0.2s ease;
   }
-  .proto-arrow:hover { color: var(--accent); background: rgba(0,47,167,0.06); }
+  .proto-arrow:hover { color: #B92D69; background: rgba(185,45,105,0.08); }
   .proto-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
   .proto-tab {
     font-family: var(--sans); font-size: 0.66rem; letter-spacing: 0.1em;
@@ -1064,7 +1064,7 @@
     transition: color 0.2s ease, border-color 0.2s ease;
   }
   .proto-tab:hover { color: var(--ink); }
-  .proto-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .proto-tab.active { color: #B92D69; border-bottom-color: #B92D69; }
   .proto-stage {
     margin-top: 1.1rem; border-radius: 10px; overflow: hidden;
     background: #fff; box-shadow: 0 10px 30px rgba(40,30,60,0.10);
@@ -1097,14 +1097,14 @@
     margin-bottom: 0.35rem;
   }
   .proto-launch {
-    margin-top: 0.4rem; font-family: var(--sans); font-size: 0.7rem; letter-spacing: 0.1em;
+    margin-top: 0.4rem; font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.14em;
     text-transform: uppercase; font-weight: 600; color: #fff; background: var(--accent);
-    border: none; border-radius: 999px; padding: 0.7rem 1.5rem; cursor: pointer;
+    border: none; border-radius: 999px; padding: 0.4rem 0.85rem; cursor: pointer;
     transition: background 0.2s ease, transform 0.15s ease;
   }
   .proto-launch:hover { background: #00248a; transform: translateY(-1px); }
   .proto-note { margin-top: 0.85rem; text-align: center; font-family: var(--sans); font-size: 0.7rem; }
-  .proto-note a { color: var(--accent); text-decoration: none; }
+  .proto-note a { color: #B92D69; text-decoration: none; }
   .proto-note a:hover { text-decoration: underline; text-underline-offset: 2px; }
   .proto-cover-hint { color: var(--ink-4); margin-bottom: 0.1rem; line-height: 0; }
   .proto-cover-meta { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0; text-transform: none; color: var(--ink-3); margin-top: 0.1rem; max-width: 360px; text-wrap: balance; }
@@ -1137,13 +1137,13 @@
   .proto-support-tabs { display: flex; justify-content: center; gap: 0; margin-bottom: 0.8rem; }
   .proto-support-tab { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-3); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.95rem; cursor: pointer; transition: color 0.18s ease, border-color 0.18s ease; }
   .proto-support-tab:hover { color: var(--ink); }
-  .proto-support-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .proto-support-tab.active { color: #B92D69; border-bottom-color: #B92D69; }
   .proto-support-frame { border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; background: #fff; }
   .proto-support-frame iframe { display: block; width: 100%; height: 460px; border: 0; }
   .proto-concepts { display: flex; justify-content: center; gap: 0; padding: 0 1rem 0.4rem; }
   .proto-concept-tab { font-family: var(--sans); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; color: var(--ink-3); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0.4rem 0.95rem; cursor: pointer; transition: color 0.18s ease, border-color 0.18s ease; }
   .proto-concept-tab:hover { color: var(--ink); }
-  .proto-concept-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .proto-concept-tab.active { color: #B92D69; border-bottom-color: #B92D69; }
   @media (max-width: 700px) {
     .proto-device--laptop .proto-device-screen { max-width: 100%; padding: 9px; }
     .proto-device--laptop .proto-device-viewport { height: 360px; }
@@ -1208,6 +1208,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    flex-wrap: wrap;
+    row-gap: 0.55rem;
     margin-bottom: 1rem;
   }
   .re-pill {
@@ -1221,6 +1223,7 @@
     background: var(--accent);
     padding: 0.32rem 0.72rem;
     border-radius: 100px;
+    white-space: nowrap;
   }
   .re-banner-copy {
     font-family: var(--display);
@@ -1258,7 +1261,7 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 600;
-    color: var(--accent);
+    color: #B92D69;
     background: none;
     border: 0;
     padding: 0;
@@ -1268,6 +1271,96 @@
   .proto-collapse { margin-top: 0.85rem; }
 
   /* Skinspan: tool tucked into the blue banner as one card */
+  /* Leadership summaries — framed gateway card (matches Skinspan frame) */
+  .lead-summaries {
+    margin: 1.5rem 0 0.2rem;
+    border: 1px solid #D5DDF0;
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Collapsed bordered row — Explore the leadership summaries */
+  .lead-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.95rem;
+    padding: 1rem 1.4rem;
+  }
+  .lead-row-label {
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .lead-row-links { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 0.95rem; }
+  .lead-link {
+    cursor: pointer;
+    background: none;
+    border: 0;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #B92D69;
+    text-decoration: none;
+  }
+  .lead-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .lead-link.is-active { text-decoration: underline; text-underline-offset: 3px; }
+  /* Open in new tab — restrained link, lives inside the invitation line */
+  .lead-newtab {
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: var(--sans);
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: #B92D69;
+    text-decoration: none;
+  }
+  .lead-newtab:hover { text-decoration: underline; text-underline-offset: 3px; }
+  /* Frame actions: open-in-new-tab (left) and close (right), separated */
+  .lead-frame-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.65rem 0 0.5rem; }
+  .lead-close {
+    cursor: pointer;
+    background: none;
+    border: 1px solid rgba(185,45,105,0.5);
+    border-radius: 5px;
+    color: #B92D69;
+    font-family: var(--sans);
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.65rem;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .lead-close:hover { background: #B92D69; border-color: #B92D69; color: #fff; }
+
+  /* Live frame — scaled to fit so the full page (incl. nav) shows without clipping */
+  .lead-frame-wrap { padding: 0 1.4rem 1.2rem; }
+  .lead-frame-wrap[hidden] { display: none; }
+  .lead-frame-viewport {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #fff;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lead-frame-inner { position: relative; width: 100%; }
+  .lead-frame {
+    position: absolute;
+    top: 0; left: 0;
+    border: 0;
+    background: #fff;
+    display: block;
+  }
+
   .skin-card {
     margin-top: 1rem;
     border: 1px solid #D5DDF0;
@@ -1340,7 +1433,7 @@
 
   .row-list > a:hover { background: #EEF1F8; }
 
-  .row-detail a { color: var(--accent); text-decoration: none; }
+  .row-detail a { color: #B92D69; text-decoration: none; }
   .row-detail a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
   .row-tag {
@@ -2111,6 +2204,11 @@
       line-height: 1.2;
     }
 
+    /* Leadership summaries — tighter row, shorter frame */
+    .lead-row { gap: 0.45rem 0.85rem; padding: 0.9rem 1.1rem; }
+    .lead-frame-head { flex-wrap: wrap; row-gap: 0.45rem; }
+    .lead-frame-viewport { height: 340px; }
+
     /* Hero banner — shorter on mobile, smaller constellation labels */
     .hero-banner { height: 170px; margin-bottom: 1.75rem; }
     .hcn text { font-size: 8.5px; }
@@ -2369,6 +2467,7 @@
       radial-gradient(34% 30% at 78% 20%, rgba(196,160,106,0.12), transparent 70%);
   }
   .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover > * { position: relative; z-index: 1; }
+  .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] { --embed-scale: 0.7; }
 
 </style>
 </head>
@@ -2394,7 +2493,99 @@
       <p class="hero-supporting">
         Harmonizing the analytic and creative, seeking solutions that proclaim vitality over time for the established brand and achieve maximum initial impact for a new brand.
       </p>
-      <p class="hero-gateway">Explore the leadership summaries:<a href="https://jeanniejoshi.github.io/portfolio-healthcare-leadership/" target="_blank" rel="noopener">Healthcare &#9656;</a><a href="https://jeanniejoshi.github.io/portfolio-consumer-leadership/" target="_blank" rel="noopener">Consumer Brands &#9656;</a></p>
+      <div class="lead-summaries" id="leadSummaries">
+        <div class="lead-row">
+          <span class="lead-row-label">Explore the leadership summaries:</span>
+          <span class="lead-row-links">
+            <button type="button" class="lead-link" data-leadsum="health">Healthcare &#9656;</button>
+            <button type="button" class="lead-link" data-leadsum="consumer">Consumer Brands &#9656;</button>
+          </span>
+        </div>
+        <div class="lead-frame-wrap" id="leadFrameWrap" hidden>
+          <div class="lead-frame-head">
+            <a class="lead-newtab" id="leadOpen" href="https://jeanniejoshi.github.io/portfolio-healthcare-leadership/" target="_blank" rel="noopener">Open Healthcare in new tab &#8599;</a>
+            <button type="button" class="lead-close" id="leadClose" aria-label="Close summary">Close summary&nbsp;&times;</button>
+          </div>
+          <div class="lead-frame-viewport" id="leadViewport">
+            <div class="lead-frame-inner" id="leadInner">
+              <iframe class="lead-frame" id="leadFrame" title="Leadership summary preview" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+      (function(){
+        var root=document.getElementById('leadSummaries');
+        if(!root)return;
+        var links=root.querySelectorAll('.lead-link');
+        var openLink=document.getElementById('leadOpen');
+        var closeBtn=document.getElementById('leadClose');
+        var wrap=document.getElementById('leadFrameWrap');
+        var frame=document.getElementById('leadFrame');
+        var viewport=document.getElementById('leadViewport');
+        var inner=document.getElementById('leadInner');
+        if(!openLink||!closeBtn||!wrap||!frame||!viewport||!inner)return;
+        var urls={health:'https://jeanniejoshi.github.io/portfolio-healthcare-leadership/',consumer:'https://jeanniejoshi.github.io/portfolio-consumer-leadership/'};
+        var DESIGN_W=1200;
+        var current=null,loadedUrl='';
+        function ensureFrame(){if(loadedUrl!==urls[current]){frame.src=urls[current];loadedUrl=urls[current];}}
+        function scaleLead(){
+          var avail=viewport.clientWidth;
+          if(!avail)return;
+          var s=avail/DESIGN_W;
+          frame.style.width=DESIGN_W+'px';
+          frame.style.transformOrigin='top left';
+          frame.style.transform='scale('+s+')';
+          var contentH=0;
+          try{
+            var doc=frame.contentDocument||(frame.contentWindow&&frame.contentWindow.document);
+            if(doc){contentH=Math.max(doc.documentElement.scrollHeight,doc.body?doc.body.scrollHeight:0);}
+          }catch(e){}
+          if(contentH){
+            frame.style.height=contentH+'px';
+            inner.style.height=Math.ceil(contentH*s)+'px';
+          }else{
+            frame.style.height=(viewport.clientHeight/s)+'px';
+            inner.style.height=viewport.clientHeight+'px';
+          }
+        }
+        function setActive(key){
+          for(var i=0;i<links.length;i++){
+            links[i].classList.toggle('is-active',links[i].getAttribute('data-leadsum')===key);
+          }
+        }
+        var names={health:'Healthcare',consumer:'Consumer Brands'};
+        function openSummary(key){
+          current=key;setActive(key);
+          openLink.href=urls[key];
+          openLink.textContent='Open '+names[key]+' in new tab \u2197';
+          wrap.removeAttribute('hidden');ensureFrame();
+          setTimeout(scaleLead,0);
+        }
+        function closeSummary(){
+          wrap.setAttribute('hidden','');
+          current=null;setActive('');
+        }
+        function injectStyle(){
+          try{
+            var doc=frame.contentDocument||(frame.contentWindow&&frame.contentWindow.document);
+            if(!doc)return;
+            if(!doc.getElementById('leadInject')){
+              var st=doc.createElement('style');
+              st.id='leadInject';
+              st.textContent='.nav-name{display:none !important;}';
+              (doc.head||doc.documentElement).appendChild(st);
+            }
+          }catch(e){}
+        }
+        frame.addEventListener('load',function(){injectStyle();setTimeout(scaleLead,0);});
+        window.addEventListener('resize',function(){if(!wrap.hasAttribute('hidden'))scaleLead();});
+        for(var j=0;j<links.length;j++){
+          (function(a){a.addEventListener('click',function(){openSummary(a.getAttribute('data-leadsum'));});})(links[j]);
+        }
+        closeBtn.addEventListener('click',closeSummary);
+      })();
+      </script>
     </section>
 
     <!-- ============== OPENING QUESTIONS ============== -->
@@ -2479,20 +2670,21 @@
               <span class="latest-year">Modern Salon · 2026</span>
             </div>
           </div>
-          <p class="re-banner-copy">A working framework for translating the emerging science of skin longevity into usable language. Built from category expertise and longevity research, it aligns familiar beauty terminology with a more precise, longevity-oriented vocabulary. Structured across four dimensions: legacy term, longevity reframe, scientific basis, and client conversation, it's designed to support consultation, education, and brand training.</p>
+          <p class="re-banner-copy">A working framework for translating the emerging science of skin longevity into usable language.</p>
           <div class="skin-banner-actions">
             <a class="latest-link" href="https://www.modernsalon.com/1097515/what-salon-and-spa-professionals-need-to-know-about-skin-longevity" target="_blank" rel="noopener">Read in Modern Salon &rarr;</a>
-            <button type="button" class="re-proto-toggle skin-toggle" id="skinToggle" aria-expanded="true" aria-controls="skinCollapse">Collapse tool &#9652;</button>
+            <button type="button" class="re-proto-toggle skin-toggle" id="skinToggle" aria-expanded="true" aria-controls="skinCollapse">Close tool &#9652;</button>
           </div>
           </div>
 
           <div class="proto-collapse" id="skinCollapse">
             <div class="proto-viewer live-example" aria-label="Skinspan Lexicon live tool">
-              <div class="proto-eyebrow"><span id="skinLabel"><span class="live-badge">Live</span></span><button type="button" class="proto-back" id="skinBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
+              <div class="proto-eyebrow"><span id="skinLabel"><a class="live-badge" href="https://jeanniejoshi.github.io/skinspan-lexicon/" target="_blank" rel="noopener">Live</a></span><button type="button" class="proto-back" id="skinBack" style="display:none">&#8592;&nbsp;Back to overview</button></div>
               <div class="proto-stage">
                 <div class="proto-cover" id="skinCover">
                   <span class="proto-cover-label">Live digital tool</span>
                   <span class="proto-cover-lead">Skinspan Lexicon</span>
+                  <p class="proto-cover-text">A working framework for translating the emerging science of skin longevity into usable language. Built from category expertise and longevity research, it aligns familiar beauty terminology with a more precise, longevity-oriented vocabulary. Structured across four dimensions: legacy term, longevity reframe, scientific basis, and client conversation, it's designed to support consultation, education, and brand training.</p>
                   <button type="button" class="proto-launch" id="skinLaunch">Explore the lexicon &#9656;</button>
                 </div>
                 <iframe id="skinFrame" title="Skinspan Lexicon live tool" loading="lazy" style="display:none"></iframe>
@@ -2526,8 +2718,8 @@
             var b=document.getElementById('skinToggle'),w=document.getElementById('skinCollapse');
             if(!b||!w)return;
             b.addEventListener('click',function(){
-              if(w.hasAttribute('hidden')){w.removeAttribute('hidden');b.setAttribute('aria-expanded','true');b.innerHTML='Collapse tool \u25B4';}
-              else{w.setAttribute('hidden','');b.setAttribute('aria-expanded','false');b.innerHTML='Show tool \u25B8';}
+              if(w.hasAttribute('hidden')){w.removeAttribute('hidden');b.setAttribute('aria-expanded','true');b.innerHTML='Close tool \u25B4';}
+              else{w.setAttribute('hidden','');b.setAttribute('aria-expanded','false');b.innerHTML='Show tool \u25BE';}
             });
           })();
         </script>
@@ -2617,9 +2809,9 @@
             <div class="proto-nav">
               <button type="button" class="proto-arrow" data-dir="-1" aria-label="Previous view">&#8249;</button>
               <div class="proto-tabs" role="tablist" aria-label="Prototype views">
-                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="1">Visual Refinement</button>
-                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="0">Product Flow</button>
                 <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="2">Website Concept</button>
+                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="0">Product Flow</button>
+                <button type="button" class="proto-tab" role="tab" aria-selected="false" data-doc="1">Product Refinement</button>
               </div>
               <button type="button" class="proto-arrow" data-dir="1" aria-label="Next view">&#8250;</button>
             </div>
@@ -3332,9 +3524,9 @@
     var LAPTOP = '<svg width="54" height="40" viewBox="0 0 54 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="4" width="36" height="25" rx="2"/><path d="M3 35h48l-3-4H6z"/></svg>';
 
     var DATA = [
-      { doc:1, device:'phone',  try:'Live and interactive. Test the full flow end to end.', blurb:'Explore the refined visual direction for the experience, with type, color, and layout resolved toward a production-ready feel.' },
+      { doc:2, device:'laptop', concepts:[{doc:2,label:'Concept 2'},{doc:3,label:'Editorial Version'}], try:'Live and interactive. Move through the full site.', blurb:'Explore two desktop directions: a query-based structure and an editorial homepage, both organized around user questions.' },
       { doc:0, device:'phone',  try:'Live and interactive. Test the full flow end to end.', blurb:'Explore how the experience guides users through a short question-based flow and delivers relevant information and next steps.', support:true },
-      { doc:2, device:'laptop', concepts:[{doc:2,label:'Concept 2'},{doc:3,label:'Editorial Version'}], try:'Live and interactive. Move through the full site.', blurb:'Explore two desktop directions: a query-based structure and an editorial homepage, both organized around user questions.' }
+      { doc:1, device:'phone',  try:'Live and interactive. Test the full flow end to end.', blurb:'Explore the refined visual direction for the experience, with type, color, and layout resolved toward a production-ready feel.' }
     ];
 
     var cur = 0;
@@ -3352,7 +3544,9 @@
       if(!device || device.className.indexOf('laptop') < 0) return;
       var vp = device.querySelector('.proto-device-viewport');
       if(!vp) return;
-      var DESIGN_W = 1040;
+      var DOCW = { 2:1040, 3:1180 };
+      var dnow = parseInt(frame.getAttribute('data-doc'),10);
+      var DESIGN_W = DOCW[dnow] || 1040;
       var VH = (window.innerWidth <= 700) ? 360 : 430;
       var w = vp.clientWidth;
       if(!w) return;
