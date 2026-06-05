@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jeannie Joshi · Brand Advisory</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500;1,6..96,700&family=Jost:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;1,6..96,400;1,6..96,500;1,6..96,700&family=Jost:wght@300;400;500;600;700&family=Zilla+Slab:wght@400;500;600&display=swap');
 
   :root {
     /* Skinspan Lexicon palette */
@@ -40,6 +40,7 @@
     --serif: 'Jost', system-ui, sans-serif;
     --sans: 'Jost', system-ui, sans-serif;
     --display: 'Bodoni Moda', Georgia, serif;
+    --slab: 'Zilla Slab', Georgia, serif;
     --embed-scale: 0.88;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -75,14 +76,26 @@
     background: var(--paper);
   }
   .hero-field { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-  .hf { position: absolute; border-radius: 50%; filter: blur(44px); opacity: 0.13; will-change: transform; }
-  .hf1 { width: 300px; height: 220px; left: 6%; top: 14%; background: #A9C0EE; animation: hfA 28s ease-in-out infinite alternate; }
-  .hf2 { width: 240px; height: 240px; right: 10%; top: 24%; background: #CBB8E6; animation: hfB 34s ease-in-out infinite alternate; }
-  .hf3 { width: 260px; height: 180px; left: 42%; bottom: -16%; background: #BBD8D2; animation: hfC 40s ease-in-out infinite alternate; }
-  @keyframes hfA { from { transform: translate(0,0); } to { transform: translate(34px,-20px); } }
-  @keyframes hfB { from { transform: translate(0,0); } to { transform: translate(-28px,18px); } }
-  @keyframes hfC { from { transform: translate(0,0); } to { transform: translate(20px,-24px); } }
-  @media (prefers-reduced-motion: reduce) { .hf { animation: none; } }
+  .hf { position: absolute; border-radius: 50%; filter: blur(52px); opacity: 0.26; will-change: transform; }
+  .hf1 { width: 300px; height: 220px; left: 6%; top: 14%; background: #9AB0EC; animation: hfA 22s ease-in-out infinite alternate; }
+  .hf2 { width: 240px; height: 240px; right: 10%; top: 24%; background: #E1A6C8; animation: hfB 26s ease-in-out infinite alternate; }
+  .hf3 { width: 260px; height: 180px; left: 42%; bottom: -16%; background: #C4ACEC; animation: hfC 30s ease-in-out infinite alternate; }
+  @keyframes hfA { from { transform: translate(0,0) scale(1); } to { transform: translate(52px,-30px) scale(1.16); } }
+  @keyframes hfB { from { transform: translate(0,0) scale(1); } to { transform: translate(-44px,26px) scale(1.12); } }
+  @keyframes hfC { from { transform: translate(0,0) scale(1); } to { transform: translate(34px,-36px) scale(1.18); } }
+  @media (prefers-reduced-motion: reduce) { .hf, .hero-banner .kal { animation: none; } }
+  .hero-banner .kal {
+    position: absolute; left: 50%; top: 50%;
+    width: 150vw; height: 150vw;
+    z-index: 0; pointer-events: none;
+    background: conic-gradient(from 0deg at 50% 50%, #8EA6E6, #B294D6, #E191BB, #79C6BE, #C0A6E4, #9AAEE8, #8EA6E6);
+    filter: blur(74px) saturate(1.1);
+    opacity: 0.66;
+    transform: translate(-50%,-50%) rotate(0deg);
+    animation: kalSpin 58s linear infinite;
+    will-change: transform;
+  }
+  @keyframes kalSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
   .hero-banner .mesh {
     position: absolute;
     inset: -25%;
@@ -116,22 +129,22 @@
   }
   .hero-banner svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
   .hcn { cursor: pointer; }
-  .hcn circle { fill: var(--accent); transition: r .35s ease, fill .35s ease; }
+  .hcn circle { fill: #fff; transition: r .35s ease, fill .35s ease; }
   .hcn text {
-    fill: var(--ink-2); font-family: var(--sans); font-size: 11px; font-weight: 600;
-    letter-spacing: .14em; text-transform: uppercase; opacity: .95; transition: opacity .35s ease;
+    fill: #fff; font-family: var(--slab); font-size: 11px; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase; opacity: .95; transition: opacity .35s ease;
   }
-  .hcl { stroke: rgba(0,47,167,.22); stroke-width: 0.75; transition: stroke .35s, opacity .35s, stroke-width .35s; }
+  .hcl { stroke: rgba(255,255,255,.6); stroke-width: 0.5; transition: stroke .35s, opacity .35s, stroke-width .35s; }
   .hcg { animation: heroFloat 24s ease-in-out infinite alternate; will-change: transform; }
   .hcg.b { animation-name: heroFloatB; animation-duration: 30s; }
   @keyframes heroFloat  { 0%{transform:translate(0,0)} 100%{transform:translate(14px,-9px)} }
   @keyframes heroFloatB { 0%{transform:translate(0,0)} 100%{transform:translate(-12px,8px)} }
-  .hcn.lit circle { r: 5; fill: var(--accent); }
-  .hcn.lit text { opacity: 1; fill: var(--ink); }
-  .hcn.dim circle { fill: rgba(0,47,167,.28); }
-  .hcn.dim text { opacity: .3; }
-  .hcl.lit { stroke: var(--accent); stroke-width: 1.25; }
-  .hcl.dim { opacity: .1; }
+  .hcn.lit circle { r: 5; fill: #fff; }
+  .hcn.lit text { opacity: 1; fill: #fff; }
+  .hcn.dim circle { fill: rgba(255,255,255,.5); }
+  .hcn.dim text { opacity: .4; }
+  .hcl.lit { stroke: #fff; stroke-width: 0.9; }
+  .hcl.dim { opacity: .15; }
   @media (prefers-reduced-motion: reduce) {
     .hero-banner .mesh, .hcg { animation: none; }
   }
@@ -1381,6 +1394,7 @@
   }
   .skin-banner-actions .latest-link { margin-top: 0; }
   .skin-toggle { margin-top: 0; }
+  .skin-foot { text-align: center; margin-top: 0.4rem; padding-bottom: 0.2rem; }
   .skin-card .proto-collapse { margin-top: 0; }
   .skin-card .proto-viewer { margin-top: 0; background: #fff; border-radius: 0; padding: 1.1rem 1.4rem 1.3rem; }
   @media (max-width: 700px) {
@@ -1942,6 +1956,7 @@
   .eng-timeline { position: relative; margin-top: 1rem; }
   /* extra breathing room after the last bar (Product design) in Active engagements */
   #engtab-recent .eng-timeline { margin-bottom: 2rem; }
+  /* soft color wash so the live/active section registers on a quick scroll */
   .eng-timeline-item { position: relative; display: grid; grid-template-columns: 22px 1fr; align-items: stretch; }
   .eng-timeline-item + .eng-timeline-item { margin-top: 0.85rem; }
   .eng-timeline-marker { position: relative; }
@@ -2206,8 +2221,11 @@
       line-height: 1.2;
     }
 
-    /* Leadership summaries — tighter row, shorter frame */
-    .lead-row { gap: 0.45rem 0.85rem; padding: 0.9rem 1.1rem; }
+    /* Leadership summaries — label over a clean hairline-divided index, no boxes */
+    .lead-row { flex-direction: column; align-items: stretch; gap: 0; padding: 0.9rem 1.2rem 1rem; }
+    .lead-row-label { margin-bottom: 0.35rem; }
+    .lead-row-links { flex-direction: column; align-items: stretch; gap: 0; width: 100%; }
+    .lead-link { width: 100%; text-align: left; padding: 0.7rem 0; border-top: 1px solid var(--rule); }
     .lead-frame-head { flex-direction: column; align-items: center; gap: 0.65rem; }
     .lead-newtab { text-align: center; padding: 0.45rem 0.95rem; }
     .lead-close { text-align: center; padding: 0.45rem 0.95rem; }
@@ -2464,11 +2482,28 @@
     position: relative; overflow: hidden;
   }
   .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover::before {
-    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    content: ""; position: absolute; inset: -25%; pointer-events: none; z-index: 0;
     background:
-      radial-gradient(42% 44% at 16% 16%, rgba(86,168,178,0.16), transparent 70%),
-      radial-gradient(46% 48% at 86% 84%, rgba(150,130,210,0.15), transparent 70%),
-      radial-gradient(34% 30% at 78% 20%, rgba(196,160,106,0.12), transparent 70%);
+      radial-gradient(38% 40% at 18% 22%, rgba(86,168,178,0.30), transparent 64%),
+      radial-gradient(42% 44% at 82% 78%, rgba(150,130,210,0.28), transparent 64%),
+      radial-gradient(34% 36% at 72% 16%, rgba(196,160,106,0.22), transparent 64%),
+      radial-gradient(40% 42% at 28% 82%, rgba(185,45,105,0.16), transparent 64%);
+    filter: blur(6px);
+    animation: skinOrbA 22s ease-in-out infinite alternate;
+  }
+  .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover::after {
+    content: ""; position: absolute; inset: -25%; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(30% 32% at 58% 58%, rgba(110,140,232,0.20), transparent 60%),
+      radial-gradient(26% 28% at 14% 64%, rgba(196,160,106,0.16), transparent 60%);
+    filter: blur(8px);
+    animation: skinOrbB 28s ease-in-out infinite alternate;
+  }
+  @keyframes skinOrbA { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(3%,-2%,0) scale(1.06); } }
+  @keyframes skinOrbB { from { transform: translate3d(0,0,0) scale(1.05); } to { transform: translate3d(-3%,2%,0) scale(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover::before,
+    .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover::after { animation: none; }
   }
   .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] .proto-cover > * { position: relative; z-index: 1; }
   .proto-viewer.live-example[aria-label="Skinspan Lexicon live tool"] { --embed-scale: 0.7; }
@@ -2482,7 +2517,7 @@
 
     <!-- ============== HERO ============== -->
     <section class="hero">
-      <div class="hero-banner"><div class="hero-field" aria-hidden="true"><span class="hf hf1"></span><span class="hf hf2"></span><span class="hf hf3"></span></div><svg id="heroConst" aria-hidden="true" focusable="false" viewBox="0 0 1400 320" preserveAspectRatio="none"></svg></div>
+      <div class="hero-banner"><div class="kal" aria-hidden="true"></div><div class="hero-field" aria-hidden="true"><span class="hf hf1"></span><span class="hf hf2"></span><span class="hf hf3"></span></div><svg id="heroConst" aria-hidden="true" focusable="false" viewBox="0 0 1400 320" preserveAspectRatio="none"></svg></div>
       <div class="hero-eyebrow">Brand Advisory</div>
       <h1 class="hero-name">Jeannie Joshi</h1>
       <p class="hero-positioning">
@@ -2705,6 +2740,7 @@
               </div>
               <p class="proto-note" id="skinNote" style="display:none"><a id="skinOpen" href="https://jeanniejoshi.github.io/skinspan-lexicon/" target="_blank" rel="noopener">Open in a new tab &#8599;</a></p>
             </div>
+            <div class="skin-foot"><button type="button" class="re-proto-toggle" id="skinToggleFoot">Close tool &#9652;</button></div>
         </div>
         </div>
             </div>
@@ -2731,10 +2767,13 @@
           (function(){
             var b=document.getElementById('skinToggle'),w=document.getElementById('skinCollapse');
             if(!b||!w)return;
-            b.addEventListener('click',function(){
-              if(w.hasAttribute('hidden')){w.removeAttribute('hidden');b.setAttribute('aria-expanded','true');b.innerHTML='Close tool \u25B4';}
+            function setState(open){
+              if(open){w.removeAttribute('hidden');b.setAttribute('aria-expanded','true');b.innerHTML='Close tool \u25B4';}
               else{w.setAttribute('hidden','');b.setAttribute('aria-expanded','false');b.innerHTML='Show tool \u25BE';}
-            });
+            }
+            b.addEventListener('click',function(){ setState(w.hasAttribute('hidden')); });
+            var foot=document.getElementById('skinToggleFoot');
+            if(foot){ foot.addEventListener('click',function(){ setState(false); b.scrollIntoView({behavior:'smooth',block:'center'}); }); }
           })();
         </script>
       </div>
@@ -3209,8 +3248,9 @@
         </div>
       </div>
 
-      <!-- Teaching + Mentoring (split panel) -->
-      <div class="duo" style="margin-top:5.5rem;padding-top:3rem;border-top:1px solid var(--rule);">
+      <!-- Additional: Teaching + Mentoring (split panel) -->
+      <h3 class="sub-eyebrow-serif" style="margin:5.5rem 0 1.5rem;padding-top:3rem;border-top:1px solid var(--rule);">Additional</h3>
+      <div class="duo" style="margin-top:0;">
 
         <div class="duo-col">
           <div class="duo-eyebrow">Teaching</div>
@@ -3819,7 +3859,7 @@
 <template id="apparelDoc">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Jost:wght@400;500;600&family=Zilla+Slab:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Jost',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color:#2b2c33;background:#FCFCFD;padding:22px 24px;line-height:1.5;-webkit-font-smoothing:antialiased}
