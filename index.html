@@ -1193,7 +1193,7 @@
 
   .latest-status {
     font-family: var(--sans);
-    font-size: 0.62rem;
+    font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -1329,7 +1329,7 @@
     font-family: var(--sans);
     font-size: 0.74rem;
     font-weight: 500;
-    color: #B92D69;
+    color: var(--ink-3);
     text-decoration: none;
   }
   .lead-newtab:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -1338,19 +1338,15 @@
   .lead-close {
     cursor: pointer;
     background: none;
-    border: 1px solid rgba(185,45,105,0.5);
-    border-radius: 5px;
-    color: #B92D69;
+    border: 0;
+    padding: 0;
+    color: var(--ink-3);
     font-family: var(--sans);
-    font-size: 0.64rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 0.3rem 0.65rem;
+    font-size: 0.74rem;
+    font-weight: 500;
     white-space: nowrap;
-    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   }
-  .lead-close:hover { background: #B92D69; border-color: #B92D69; color: #fff; }
+  .lead-close:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* Live frame — scaled to fit so the full page (incl. nav) shows without clipping */
   .lead-frame-wrap { padding: 0 1.4rem 1.2rem; }
@@ -1402,6 +1398,10 @@
     .re-banner-copy { font-size: 1.12rem; }
     .re-card { grid-template-columns: 1fr; gap: 0.65rem; padding: 1.15rem 1.2rem; }
     .re-card .latest-meta { flex-direction: row; align-items: center; gap: 0.7rem; padding-top: 0; }
+    /* Skinspan header: clean stack so meta and actions don't jam */
+    .re-banner-top { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    .re-banner .latest-meta { flex-direction: row; align-items: baseline; gap: 0.5rem; }
+    .skin-banner-actions { flex-direction: column; align-items: flex-start; gap: 0.55rem; }
   }
 
   /* ============== THINKING + TEACHING TWO-COLUMN ============== */
@@ -2221,14 +2221,16 @@
       line-height: 1.2;
     }
 
-    /* Leadership summaries — label over a clean hairline-divided index, no boxes */
-    .lead-row { flex-direction: column; align-items: stretch; gap: 0; padding: 0.9rem 1.2rem 1rem; }
-    .lead-row-label { margin-bottom: 0.35rem; }
-    .lead-row-links { flex-direction: column; align-items: stretch; gap: 0; width: 100%; }
-    .lead-link { width: 100%; text-align: left; padding: 0.7rem 0; border-top: 1px solid var(--rule); }
-    .lead-frame-head { flex-direction: column; align-items: center; gap: 0.65rem; }
-    .lead-newtab { text-align: center; padding: 0.45rem 0.95rem; }
-    .lead-close { text-align: center; padding: 0.45rem 0.95rem; }
+    /* Leadership summaries — quiet stacked links, no rules, lighter weight */
+    .lead-row { flex-direction: column; align-items: flex-start; gap: 0; padding: 0.9rem 1.2rem 1rem; }
+    .lead-row-label { margin-bottom: 0.55rem; font-weight: 500; }
+    .lead-row-links { display: flex; flex-direction: column; align-items: stretch; gap: 0.45rem; width: 100%; }
+    .lead-link { display: block; width: 100%; text-align: left; font-weight: 500; padding: 0.4rem 0; }
+    .lead-frame-head { flex-direction: column; align-items: center; gap: 0.6rem; }
+    .lead-newtab { text-align: center; }
+    .lead-close { text-align: center; }
+    /* thinner accent rails on mobile */
+    .gateway-current, .re-banner, .lead-summaries, .skin-card { border-left-width: 2px; }
     .lead-frame-viewport { height: 340px; }
 
     /* Hero banner — shorter on mobile, smaller constellation labels */
