@@ -1278,6 +1278,7 @@
     border-left: 3px solid var(--accent);
     border-radius: 10px;
     overflow: hidden;
+    background: linear-gradient(135deg, #E9EFFF 0%, #F1ECFA 38%, #FCEEF4 70%, #FFF7EE 100%);
   }
 
   /* Collapsed bordered row — Explore the leadership summaries */
@@ -1350,6 +1351,7 @@
     border: 1px solid var(--rule);
     border-radius: 6px;
     background: #fff;
+    box-shadow: 0 6px 22px rgba(30,45,90,0.12);
     -webkit-overflow-scrolling: touch;
   }
   .lead-frame-inner { position: relative; width: 100%; }
@@ -2206,7 +2208,9 @@
 
     /* Leadership summaries — tighter row, shorter frame */
     .lead-row { gap: 0.45rem 0.85rem; padding: 0.9rem 1.1rem; }
-    .lead-frame-head { flex-wrap: wrap; row-gap: 0.45rem; }
+    .lead-frame-head { flex-direction: column; align-items: center; gap: 0.65rem; }
+    .lead-newtab { text-align: center; padding: 0.45rem 0.95rem; }
+    .lead-close { text-align: center; padding: 0.45rem 0.95rem; }
     .lead-frame-viewport { height: 340px; }
 
     /* Hero banner — shorter on mobile, smaller constellation labels */
@@ -2529,6 +2533,7 @@
         var DESIGN_W=1200;
         var current=null,loadedUrl='';
         function ensureFrame(){if(loadedUrl!==urls[current]){frame.src=urls[current];loadedUrl=urls[current];}}
+        var lastH=0,ro=null;
         function scaleLead(){
           var avail=viewport.clientWidth;
           if(!avail)return;
@@ -2542,12 +2547,21 @@
             if(doc){contentH=Math.max(doc.documentElement.scrollHeight,doc.body?doc.body.scrollHeight:0);}
           }catch(e){}
           if(contentH){
-            frame.style.height=contentH+'px';
+            if(contentH!==lastH){lastH=contentH;frame.style.height=contentH+'px';}
             inner.style.height=Math.ceil(contentH*s)+'px';
           }else{
             frame.style.height=(viewport.clientHeight/s)+'px';
             inner.style.height=viewport.clientHeight+'px';
           }
+        }
+        function watchFrame(){
+          try{
+            var doc=frame.contentDocument||(frame.contentWindow&&frame.contentWindow.document);
+            if(!doc||!('ResizeObserver' in window))return;
+            if(ro)ro.disconnect();
+            ro=new ResizeObserver(function(){scaleLead();});
+            ro.observe(doc.documentElement);
+          }catch(e){}
         }
         function setActive(key){
           for(var i=0;i<links.length;i++){
@@ -2578,7 +2592,7 @@
             }
           }catch(e){}
         }
-        frame.addEventListener('load',function(){injectStyle();setTimeout(scaleLead,0);});
+        frame.addEventListener('load',function(){lastH=0;injectStyle();scaleLead();watchFrame();setTimeout(scaleLead,300);setTimeout(scaleLead,1000);});
         window.addEventListener('resize',function(){if(!wrap.hasAttribute('hidden'))scaleLead();});
         for(var j=0;j<links.length;j++){
           (function(a){a.addEventListener('click',function(){openSummary(a.getAttribute('data-leadsum'));});})(links[j]);
